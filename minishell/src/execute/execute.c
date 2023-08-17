@@ -1,25 +1,24 @@
 #include "minishell.h"
 
-void	execute(t_list *list)
+void	execute(t_data *data)
 {
 	t_node	*cur;
 	int		idx_fd;
 
-	cur = list->head;
-	idx_fd = 0;
+	cur = data->list->head;
 	while (cur != NULL)
 	{
 		if (cur->cmd_args[0])
 		{
 			if (cur->redir_type != NO_REDIR && cur->pipe_type == NO_PIPE)
 			{
-				exec_redir(cur->cmd_args);
+				exec_redir(cur);
 				break ;
 			}
 			if (is_builtin(cur->cmd_args) && cur->pipe_type == NO_PIPE)
 				exec_builtin(cur->cmd_args);
 			else
-				exec_pipe(cur, idx_fd++);
+				exec_pipe(data, cur);
 		}
 		cur = cur->next;
 	}
@@ -67,15 +66,90 @@ void	exec_builtin(char **cmd_args)
 	return (1);
 }
 
-void	exec_pipe(t_node *node, int idx_fd)
+void	exec_pipe(t_data *data, t_node *node)
 {
 	if (node->pipe_type == NO_PIPE)
-		exec_cmd(node->cmd_args);
+		exec_cmd(data, node);
 	else
-		ft_pipe(node, idx_fd);
+		ft_pipe(data, node);
 	ft_fork(node);
 	if (node->pid == 0)
-		exec_cmd(node->cmd_args);
+		exec_cmd(data, node);
 	else if (node->pid > 0)
-	/* pipe 재 구현 해보기 */
+	{
+		if (node->pipe_type == W_PIPE)
+		{
+			close_pipes(data);
+			wait_child(data);
+		}
+	}
+}
+
+void	wait_child(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i++ < data->list->cnt)
+		ft_wait();
+	waitpid(data->list->tail->prev->pid, &data->status, 0);
+}
+
+void	exec_cmd(t_data *data, t_node *node)
+{
+	char	*cmd;
+
+	connect_pipe(data, node);
+	cmd = get_cmd(data->path_tab, node->cmd_args[0]);
+	if (!cmd)
+		/*error cmd not found*/
+	if (execve(cmd, node->cmd_args, data->envp) < 0)
+		/*error execve*/
+}
+
+void	connect_pipe(t_data *data, t_node *node)
+{
+	if (node->pipe_type == NO_PIPE)
+		return ;
+	else if (node->pipe_type == W_PIPE)
+	{
+		ft_dup2(data->pipe_fd[node->idx][1], 1);
+		ft_close(data->pipe_fd[node->idx][0]);
+	}
+	else if (node->pipe_type == RW_PIPE)
+	{
+		ft_dup2(data->pipe_fd[node->idx - 1][0], 0);
+		ft_dup2(data->pipe_fd[node->idx][1], 1);
+		ft_close(data->pipe_fd[node->idx - 1][1]);
+		ft_close(data->pipe_fd[node->idx][0]);
+		close_pipes(data);
+	}
+	else
+	{
+		ft_dup2(data->pipe_fd[node->idx - 1][0], 0);
+		ft_close(data->pipe_fd[node->idx - 1][1]);
+		ft_close(data->pipe_fd[node->idx][0]);
+		ft_close(data->pipe_fd[node->idx][1]);
+		close_pipes(data);
+	}
+}
+
+char	*get_cmd(char **path_tab, char *cmd_uncertain)
+{
+	char	*tmp;
+	char	*cmd;
+
+	if (!cmd_uncertain)
+		return (NULL);
+	while (*path_tab)
+	{
+		tmp = ft_strjoin(*path_tab, "/");
+		cmd = ft_strjoin(tmp, cmd_uncertain);
+		free(tmp);
+		if (access(cmd, X_OK) == 0)
+			return (cmd);
+		free(cmd);
+		path_tab++;
+	}
+	return (NULL);
 }
