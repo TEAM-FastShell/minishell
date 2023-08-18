@@ -2,6 +2,8 @@
 # define MINISHELL_H
 
 # include "execute.h"
+# include "../libft/libft.h"
+# include <fcntl.h>
 
 typedef enum e_pipe_type
 {
@@ -30,7 +32,7 @@ typedef struct s_node
 {
 	t_node			*prev;
 	t_node			*next;
-	char			**cmd_args;
+	char			**cmd_args; /* cmd [redir file or lim] [options] 리다먼저 */
 	t_pipe_type		pipe_type;
 	t_redir_type	redir_type;
 	pid_t			pid;
@@ -51,6 +53,8 @@ typedef struct s_data
 	char	**path_tab;
 	int		*pipe_fd[2];
 	int		status;
+	int		input_fd;
+	int		output_fd;
 }	t_data;
 
 #endif

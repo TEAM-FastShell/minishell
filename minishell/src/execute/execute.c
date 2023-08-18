@@ -12,7 +12,8 @@ void	execute(t_data *data)
 		{
 			if (cur->redir_type != NO_REDIR && cur->pipe_type == NO_PIPE)
 			{
-				exec_redir(cur);
+				exec_redir(data, cur);
+				// exec_cmd(data, cur);
 				break ;
 			}
 			if (is_builtin(cur->cmd_args) && cur->pipe_type == NO_PIPE)
@@ -68,16 +69,17 @@ void	exec_builtin(char **cmd_args)
 
 void	exec_pipe(t_data *data, t_node *node)
 {
-	if (node->pipe_type == NO_PIPE)
-		exec_cmd(data, node);
-	else
+	if (node->pipe_type != NO_PIPE)
 		ft_pipe(data, node);
+	if (node->redir_type != NO_REDIR)
+		exec_redir(data, node);
 	ft_fork(node);
 	if (node->pid == 0)
 		exec_cmd(data, node);
 	else if (node->pid > 0)
 	{
-		if (node->pipe_type == W_PIPE)
+		/*리다 복구 혹은 포크 하고 리다*/
+		if (node->pipe_type == W_PIPE || NO_PIPE)
 		{
 			close_pipes(data);
 			wait_child(data);
@@ -107,7 +109,7 @@ void	exec_cmd(t_data *data, t_node *node)
 		/*error execve*/
 }
 
-void	connect_pipe(t_data *data, t_node *node)
+void	connect_pipe(t_data *data, t_node *node) /*파이프 안에 리다이렉션 처리 echo hi > a.txt | wc*/
 {
 	if (node->pipe_type == NO_PIPE)
 		return ;
