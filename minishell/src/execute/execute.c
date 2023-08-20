@@ -3,7 +3,6 @@
 void	execute(t_data *data)
 {
 	t_node	*cur;
-	int		idx_fd;
 
 	cur = data->list->head;
 	while (cur != NULL)
@@ -13,7 +12,6 @@ void	execute(t_data *data)
 			if (cur->redir_type != NO_REDIR && cur->pipe_type == NO_PIPE)
 			{
 				exec_redir(data, cur);
-				// exec_cmd(data, cur);
 				break ;
 			}
 			if (is_builtin(cur->cmd_args) && cur->pipe_type == NO_PIPE)
@@ -26,59 +24,27 @@ void	execute(t_data *data)
 	/* list clear */
 }
 
-int	is_builtin(char **cmd_args)
-{
-	char	*cmd;
-	int		len_cmd;
-
-	cmd = cmd_args[0];
-	len_cmd = ft_strlen(cmd);
-	if (!ft_strncmp(cmd, "echo", len_cmd) || !ft_strncmp(cmd, "cd", len_cmd)
-	|| !ft_strncmp(cmd, "pwd", len_cmd) || !ft_strncmp(cmd, "export", len_cmd)
-	|| !ft_strncmp(cmd, "unset", len_cmd) || !ft_strncmp(cmd, "env", len_cmd)
-	|| !ft_strncmp(cmd, "exit", len_cmd))
-		return (1);
-	return (0);
-}
-
-void	exec_builtin(char **cmd_args)
-{
-	char	*cmd;
-	int		len_cmd;
-
-	cmd = cmd_args[0];
-	len_cmd = ft_strlen(cmd); /* len 구하지 않으면 이상한 cmd 실행 가능 */
-	if (!ft_strncmp(cmd, "echo", len_cmd))
-		builtin_echo(cmd_args);
-	else if (!ft_strncmp(cmd, "cd", len_cmd))
-		builtin_cd(cmd_args);
-	else if (!ft_strncmp(cmd, "pwd", len_cmd))
-		builtin_pwd(cmd_args);
-	else if (!ft_strncmp(cmd, "export", len_cmd))
-		builtin_export(cmd_args);
-	else if (!ft_strncmp(cmd, "unset", len_cmd))
-		builtin_unset(cmd_args);
-	else if (!ft_strncmp(cmd, "env", len_cmd))
-		builtin_env(cmd_args);
-	else if (!ft_strncmp(cmd, "exit", len_cmd))
-		builtin_exit(cmd_args);
-	else
-		return (0);
-	return (1);
-}
-
 void	exec_pipe(t_data *data, t_node *node)
 {
+	if (node->redir_type != NO_REDIR)
+	{
+		exec_redir(data, node);
+		return ;
+	}
 	if (node->pipe_type != NO_PIPE)
 		ft_pipe(data, node);
-	if (node->redir_type != NO_REDIR)
-		exec_redir(data, node);
 	ft_fork(node);
 	if (node->pid == 0)
 		exec_cmd(data, node);
 	else if (node->pid > 0)
 	{
 		/*리다 복구 혹은 포크 하고 리다*/
+		if (data->input_fd != 0)
+			ft_close(data->input_fd);
+		if (data->output_fd != 1)
+			ft_close(data->output_fd);
+		data->input_fd = 0;
+		data->output_fd = 1;
 		if (node->pipe_type == W_PIPE || NO_PIPE)
 		{
 			close_pipes(data);
@@ -109,30 +75,41 @@ void	exec_cmd(t_data *data, t_node *node)
 		/*error execve*/
 }
 
-void	connect_pipe(t_data *data, t_node *node) /*파이프 안에 리다이렉션 처리 echo hi > a.txt | wc*/
+void	connect_pipe(t_data *data, t_node *node)
+{
+	cntl_pipe(data, node);
+	dup2(data->input_fd, STDIN_FILENO);
+	dup2(data->output_fd, STDOUT_FILENO);
+}
+
+void	cntl_pipe(t_data *data, t_node *node)
 {
 	if (node->pipe_type == NO_PIPE)
 		return ;
 	else if (node->pipe_type == W_PIPE)
 	{
-		ft_dup2(data->pipe_fd[node->idx][1], 1);
-		ft_close(data->pipe_fd[node->idx][0]);
+		if (data->output_fd == STDOUT_FILENO)
+			data->output_fd = data->pipe_fd[node->idx][1];
+		if (data->input_fd != STDIN_FILENO)
+			ft_close(STDIN_FILENO);
 	}
 	else if (node->pipe_type == RW_PIPE)
 	{
-		ft_dup2(data->pipe_fd[node->idx - 1][0], 0);
-		ft_dup2(data->pipe_fd[node->idx][1], 1);
-		ft_close(data->pipe_fd[node->idx - 1][1]);
-		ft_close(data->pipe_fd[node->idx][0]);
-		close_pipes(data);
+		if (data->input_fd == STDIN_FILENO)
+			data->input_fd = data->pipe_fd[node->idx - 1][0];
+		else
+			ft_close(data->pipe_fd[node->idx - 1][0]);
+		if (data->output_fd == STDOUT_FILENO)
+			data->output_fd = data->pipe_fd[node->idx][1];
+		else
+			ft_close(data->pipe_fd[node->idx][1]);
 	}
-	else
+	else if (node->pipe_type == R_PIPE)
 	{
-		ft_dup2(data->pipe_fd[node->idx - 1][0], 0);
-		ft_close(data->pipe_fd[node->idx - 1][1]);
-		ft_close(data->pipe_fd[node->idx][0]);
-		ft_close(data->pipe_fd[node->idx][1]);
-		close_pipes(data);
+		if (data->input_fd == STDIN_FILENO)
+			data->input_fd = data->pipe_fd[node->idx - 1][0];
+		else
+			ft_close(data->pipe_fd[node->idx - 1][0]);
 	}
 }
 

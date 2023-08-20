@@ -5,6 +5,7 @@
 # include "../libft/libft.h"
 # include <fcntl.h>
 
+
 typedef enum e_pipe_type
 {
 	NO_PIPE = 0,
@@ -32,11 +33,11 @@ typedef struct s_node
 {
 	t_node			*prev;
 	t_node			*next;
-	char			**cmd_args; /* cmd [redir file or lim] [options] 리다먼저 */
+	char			**cmd_args; /* cmd [options] or re_file(hd_rd!) [lim]*/
 	t_pipe_type		pipe_type;
 	t_redir_type	redir_type;
 	pid_t			pid;
-	int				idx;
+	int				idx; /* cmd 부터 idx++ */
 }	t_node;
 
 typedef struct s_list
@@ -44,6 +45,7 @@ typedef struct s_list
 	t_node	*head;
 	t_node	*tail;
 	int		cnt;
+	int		redir_cnt;
 }	t_list;
 
 typedef struct s_data
