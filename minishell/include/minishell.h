@@ -1,10 +1,13 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "execute.h"
 # include "../libft/libft.h"
 # include <fcntl.h>
+# include <limits.h>
 
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1024
+# endif
 
 typedef enum e_pipe_type
 {
@@ -46,6 +49,7 @@ typedef struct s_list
 	t_node	*tail;
 	int		cnt;
 	int		redir_cnt;
+	int		cmd_cnt;
 }	t_list;
 
 typedef struct s_data
@@ -53,7 +57,7 @@ typedef struct s_data
 	t_list	*list;
 	char	**envp;
 	char	**path_tab;
-	int		*pipe_fd[2];
+	int		*pipe_fd[2]; /* cmd - 1 */
 	int		status;
 	int		input_fd;
 	int		output_fd;

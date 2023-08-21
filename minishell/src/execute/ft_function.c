@@ -17,19 +17,20 @@ void	ft_dup2(int	new_fd, int origin_fd)
 {
 	if (dup2(new_fd, origin_fd) < 0)
 		/*error dup2*/
-}
+}/*to pipe.c*/
 
-void	close_pipes(t_data *data)
+void	close_all_pipes(t_data *data)
 {
 	int	i;
+
 	i = 0;
-	while (i < data->list->cnt)
+	while (i < data->list->cmd_cnt - 1)
 	{
 		ft_close(data->pipe_fd[i][0]);
 		ft_close(data->pipe_fd[i][1]);
 		i++;
 	}
-}
+}/*to execute.c*/
 
 void	ft_close(int fd)
 {
