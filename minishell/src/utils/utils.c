@@ -6,7 +6,7 @@
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 20:30:14 by youyoon           #+#    #+#             */
-/*   Updated: 2023/08/17 15:29:37 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/08/24 13:39:46 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,11 @@ int	is_whitespace(char *str)
 		return (1);
 	while (str[i])
 	{
-		if (str[i] == '\r' || str[i] == '\v' || str[i] == '\t' || str[i] == '\f')
+		if (str[i] == '\r' || str[i] == '\v' || \
+				str[i] == '\t' || str[i] == '\f')
 			return (1);
-		else if (str[i] == ' ') space++;
+		else if (str[i] == ' ')
+			space++;
 		i++;
 	}
 	if ((int) ft_strlen(str) == space)

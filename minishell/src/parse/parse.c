@@ -6,7 +6,7 @@
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 19:57:43 by youyoon           #+#    #+#             */
-/*   Updated: 2023/08/23 18:27:13 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/08/24 14:47:01 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 static int	count_word(char *str)
 {
 	int	cnt;
-	
+
 	cnt = 0;
 	while (*str)
 	{
@@ -49,10 +49,12 @@ void	put_buff_to_cmd(t_parse *parse)
 	ft_bzero(parse->buff, ft_strlen(parse->buff) + 1);
 	parse->b_idx = 0;
 }
+
 /*
 	SUCCESS : 1
 	ERROR : -1
 */
+
 int	parse_char(t_double_list *list, t_parse *parse, char *input, int *i)
 {
 	int	ret;
@@ -92,7 +94,7 @@ int	parse_char(t_double_list *list, t_parse *parse, char *input, int *i)
 	return (ret);
 }
 
-void	parser(char *input, char **envp)
+void	parser(char *input)
 {
 	int				i;
 	t_double_list	*list;
@@ -103,8 +105,8 @@ void	parser(char *input, char **envp)
 	token_cnt = count_word(input);
 	if (!(list = init_list()))
 		return (parse_error(NULL, NULL, MALLOC_ERROR));
-	if (!(parse = init_parse(token_cnt, (int) ft_strlen(input), envp)))
-		return (parse_error(list, parse, MALLOC_ERROR));	
+	if (!(parse = init_parse(token_cnt, (int) ft_strlen(input))))
+		return (parse_error(list, parse, MALLOC_ERROR));
 	i = 0;
 	while (input[i])
 	{
@@ -121,20 +123,21 @@ void	parser(char *input, char **envp)
 	if (list->cmd_cnt > 1)
 		set_pipe_type(list);
 	set_list_idx(list);
-	
+
 	/* 출력 테스트 */
 	t_node *cur = list->head;
 	while (cur)
 	{
 		int i = 0;
+		printf("|");
 		while (cur->cmd_args[i])
-		{	printf("%s! ", cur->cmd_args[i]); i++; }
-		printf(" red %d pipe %d idx %d -> ", cur->redir_type, cur->pipe_type, cur->idx);
+		{	printf(" %s, ", cur->cmd_args[i]); i++; }
+		printf(" red %d pipe %d idx %d | -> ", cur->redir_type, cur->pipe_type, cur->idx);
 		cur = cur->next;
 	}
 	printf("\n");
 	/* **** */
-	
+
 	free_list(list);
-	free_parse(parse);	
+	free_parse(parse);
 }

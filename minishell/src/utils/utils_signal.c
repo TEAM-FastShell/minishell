@@ -6,7 +6,7 @@
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 23:47:04 by youyoon           #+#    #+#             */
-/*   Updated: 2023/08/24 13:14:49 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/08/24 17:39:25 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,10 @@
 
 void	signal_handler(int signo)
 {
-	pid_t	pid;
-	int		stat;
-
-	pid = waitpid(-1, &stat, WNOHANG);
 	if (signo == SIGINT)
 	{
-		if (pid == -1)
-		{
-			ft_putendl_fd("pid -1", STDOUT);
-		}
-		else
-		{
-			ft_putchar_fd('\n', STDOUT);
-		}
+		ft_putstr_fd("\b\b  \n", STDOUT);
+		show_prompt();
 	}
 }
 
@@ -36,4 +26,5 @@ void	set_signal(void)
 {
 	signal(SIGINT, signal_handler);
 	signal(SIGQUIT, SIG_IGN);
+
 }

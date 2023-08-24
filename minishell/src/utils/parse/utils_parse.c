@@ -6,14 +6,14 @@
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 15:52:10 by youyoon           #+#    #+#             */
-/*   Updated: 2023/08/23 23:45:10 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/08/24 14:46:33 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 #include "../../../include/parse.h"
 
-t_double_list	*init_list()
+t_double_list	*init_list(void)
 {
 	t_double_list	*ret;
 
@@ -31,15 +31,12 @@ t_double_list	*init_list()
 	buff : input의 길이 + 1
 	나머지 모두 0으로 초기화
 */
-t_parse	*init_parse(int token_cnt, int input_len, char **envp)
+t_parse	*init_parse(int token_cnt, int input_len)
 {
 	t_parse	*ret;
 
 	ret = (t_parse *) malloc(sizeof(t_parse));
 	if (!(ret))
-		return (NULL);
-	ret->env = set_env(envp);
-	if (!(ret->env))
 		return (NULL);
 	ret->cmd = (char **) ft_calloc(token_cnt + 1, sizeof(char *));
 	if (!(ret->cmd))

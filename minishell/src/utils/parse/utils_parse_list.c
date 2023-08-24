@@ -6,14 +6,14 @@
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 17:01:30 by youyoon           #+#    #+#             */
-/*   Updated: 2023/08/23 18:17:50 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/08/24 14:45:45 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 #include "../../../include/parse.h"
 
-static void	copy_strings(char ***dest, char **src, int len, t_parse *parse)
+static void	copy_strings(char ***dest, char **src, int len)
 {
 	int	i;
 
@@ -23,10 +23,7 @@ static void	copy_strings(char ***dest, char **src, int len, t_parse *parse)
 	i = 0;
 	while (i < len)
 	{
-		if (ft_strchr(src[i], '$') && !ft_strchr(src[i], '\''))
-			(*dest)[i] = find_env(src[i], parse->env);
-		if (!(*dest)[i])
-			(*dest)[i] = ft_strdup(src[i]);
+		(*dest)[i] = ft_strdup(src[i]);
 		i++;
 	}
 	(*dest)[i] = NULL;
@@ -41,7 +38,7 @@ t_node	*make_node(t_parse *parse)
 		return (NULL);
 	new_node->prev = NULL;
 	new_node->next = NULL;
-	copy_strings(&(new_node->cmd_args), parse->cmd, parse->c_idx, parse);
+	copy_strings(&(new_node->cmd_args), parse->cmd, parse->c_idx);
 	new_node->pipe_type = parse->pipe_type;
 	new_node->redir_type = parse->redir_type;
 	new_node->pid = 0;
