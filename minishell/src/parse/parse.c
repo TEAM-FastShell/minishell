@@ -6,7 +6,7 @@
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 19:57:43 by youyoon           #+#    #+#             */
-/*   Updated: 2023/08/24 14:47:01 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/08/25 17:57:13 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	parse_char(t_double_list *list, t_parse *parse, char *input, int *i)
 	else if (!parse->quote && input[*i] == ' ')
 		put_buff_to_cmd(parse);
 	else if (!parse->quote && input[*i] == ';')
-		ret = add_node(list, parse);
+		ret = ERROR;
 	else if (!parse->quote && input[*i] == '|')
 	{	
 		ret = add_node(list, parse);

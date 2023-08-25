@@ -6,7 +6,7 @@
 #    By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/16 16:13:42 by youyoon           #+#    #+#              #
-#    Updated: 2023/08/24 17:23:39 by youyoon          ###   ########.fr        #
+#    Updated: 2023/08/25 13:29:55 by youyoon          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,19 +23,24 @@ SRCS = src/parse/parse_error.c\
 	src/utils/parse/utils_parse_list.c\
 	src/utils/utils.c\
 	src/utils/utils_signal.c\
-	src/main.c\
+	src/main.c
 
-OBJS = $(SRCS:%.c=%.o)
+OBJS_DIR = objs
+OBJS = $(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))
 
 all : $(NAME)
 
+$(OBJS_DIR)/%.o: %.c
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -c $< -o $@
+
 $(NAME) : $(OBJS)
 	make -C ./libft
-	$(CC) $(CFLAGS) $(SRCS) -o $@ libft/libft.a $(LDFLAGS)
+	$(CC) $(CFLAGS) $(OBJS) -o $@ libft/libft.a $(LDFLAGS)
 
 clean:
 	make clean -C ./libft
-	rm -rf $(OBJS)
+	rm -rf $(OBJS_DIR)
 
 fclean: clean
 	make fclean -C ./libft

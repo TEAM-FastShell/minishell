@@ -6,7 +6,7 @@
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 15:52:10 by youyoon           #+#    #+#             */
-/*   Updated: 2023/08/24 14:46:33 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/08/25 15:19:22 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ t_double_list	*init_list(void)
 {
 	t_double_list	*ret;
 
-	if (!(ret = (t_double_list *) malloc(sizeof(t_double_list))))
+	ret = (t_double_list *) malloc(sizeof(t_double_list));
+	if (!ret)
 		return (NULL);
 	ret->head = NULL;
 	ret->tail = NULL;

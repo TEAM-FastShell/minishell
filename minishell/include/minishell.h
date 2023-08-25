@@ -78,9 +78,6 @@ typedef struct s_parse
 	t_redir_type	redir_type;
 }	t_parse;
 
-/* src/main.c */
-void	show_prompt(void);
-
 /* src/utils/utils.c */
 int		is_whitespace(char *str);
 
