@@ -16,15 +16,21 @@
 /*
 	malloc이 안됐을 때 에러 처리 생각
 */
-void	parse_error(t_double_list *list, t_parse *parse, t_data *data, \
-		char *error_msg)
+void	parse_error(t_double_list *list, t_parse *parse, t_data *data, char *error_msg)
 {
+	int	i;
+
+	i = -1;
 	if (list)
 		free_list(list);
 	if (parse)
 		free_parse(parse);
 	if (data)
-		free_data(data);
-	ft_putendl_fd(error_msg, STDERR);
+	{
+		while (++i < 2)
+			free(data->pipe_fd[i]);
+	}
+	if (error_msg)
+		ft_putendl_fd(error_msg, STDERR);
 	return ;
 }

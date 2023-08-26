@@ -15,8 +15,6 @@
 # define STDOUT 		1
 # define STDERR 		2
 
-int	g_exit_status;
-
 typedef enum e_pipe_type
 {
 	NO_PIPE = 0,
@@ -75,6 +73,7 @@ typedef struct s_parse
 {
 	char			**cmd;
 	char			*buff;
+	char			**env;
 	char			quote;
 	int				c_idx;
 	int				b_idx;

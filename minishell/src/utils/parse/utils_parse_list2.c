@@ -60,3 +60,44 @@ void	set_list_idx(t_double_list *list)
 		cur = cur->next;
 	}
 }
+
+static char   *get_envv(char *envp[], char *envv)
+{
+	char	*address;
+	char	c;
+
+	envv++;
+    while (*envp && *envv)
+    {
+        if (!ft_strncmp(*envp, envv, ft_strlen(envv)))
+		{
+			address = *envp + ft_strlen(envv);
+			c = *address;
+			if (c == '=')
+				return (*envp + ft_strlen(envv) + 1);
+		}
+        envp++;
+    }
+    return ("");
+}
+
+void	change_env(t_node *node, t_parse *parse)
+{
+	int		i;
+	char	*tmp;
+	char	*env_val;
+
+	i = -1;
+	while (node->cmd_args[++i])
+	{
+		if (!ft_strncmp(node->cmd_args[i], "$?", ft_strlen(node->cmd_args[i])))
+			continue;
+		if (ft_strchr(node->cmd_args[i], '$'))
+		{
+			tmp = node->cmd_args[i];
+			env_val = get_envv(parse->env, node->cmd_args[i]);
+			node->cmd_args[i] = ft_strdup(env_val);
+			free(tmp);
+		}
+	}
+}

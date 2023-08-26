@@ -89,27 +89,22 @@ int	parse_char(t_double_list *list, t_parse *parse, char *input, int *i)
 	}
 	else
 	{
-		if (parse->quote != '\'' && input[*i] == '\\' && input[*i])
-			(*i)++;
+		// if (parse->quote != '\'' && input[*i] == '\\' && input[*i])
+		// 	(*i)++;
 		parse->buff[parse->b_idx++] = input[*i];
 	}
 	return (ret);
 }
 
-void	parser(char *input, char **envp)
+void	parser(char *input, char **envp,  t_double_list *list, t_parse *parse)
 {
 	int				i;
-	t_double_list	*list;
-	t_parse			*parse;
-	t_data			*data;
 	int				token_cnt;
 
 	input = ft_strtrim(input, " ");
 	token_cnt = count_word(input);
-	list = init_list();
-	parse = init_parse(token_cnt, (int) ft_strlen(input));
-	if (!list || !parse)
-		return (parse_error(list, parse, NULL, MALLOC_ERROR));
+	init_list(list);
+	init_parse(parse, token_cnt, (int) ft_strlen(input), envp);
 	i = -1;
 	while (input[++i])
 	{
@@ -124,30 +119,7 @@ void	parser(char *input, char **envp)
 		return (parse_error(list, parse, NULL, SYNTAX_ERROR));
 	set_pipe_type(list);
 	set_list_idx(list);
-	data = init_data(envp, list);
-	if (!data)
-		return (parse_error(list, parse, data, MALLOC_ERROR));
-	set_data_env(data);
-
-	// /* 출력 테스트 */
-	t_node *cur = list->head;
-	while (cur)
-	{
-		int i = 0;
-		printf("|");
-		while (cur->cmd_args[i])
-		{	printf(" %s, ", cur->cmd_args[i]); i++; }
-		printf(" red %d pipe %d idx %d | -> ", cur->redir_type, cur->pipe_type, cur->idx);
-		cur = cur->next;
-	}
-	printf("\n");
-	/* **** */
-	printf("print over\n");
-
-	free_parse(parse);
-	free_list(list);
-	printf("free_listtt\n");
-	//free_data(data);
+	parse_error(list, parse, NULL, NULL);
 }
 
 		

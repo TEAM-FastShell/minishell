@@ -13,18 +13,15 @@
 #include "../../../include/minishell.h"
 #include "../../../include/parse.h"
 
-t_double_list	*init_list(void)
+void	init_list(t_double_list *list)
 {
-	t_double_list	*ret;
-
-	ret = (t_double_list *) malloc(sizeof(t_double_list));
-	if (!ret)
-		return (NULL);
-	ret->head = NULL;
-	ret->tail = NULL;
-	ret->cnt = 0;
-	ret->cmd_cnt = 0;
-	return (ret);
+	// list = (t_double_list *) malloc(sizeof(t_double_list));
+	// if (!list)
+	// 	return (parse_error(NULL, NULL, MALLOC_ERROR));
+	list->head = NULL;
+	list->tail = NULL;
+	list->cnt = 0;
+	list->cmd_cnt = 0;
 }
 
 /*
@@ -32,65 +29,43 @@ t_double_list	*init_list(void)
 	buff : input의 길이 + 1
 	나머지 모두 0으로 초기화
 */
-t_parse	*init_parse(int token_cnt, int input_len)
+char	**copy_env(char **env)
 {
-	t_parse	*ret;
-
-	ret = (t_parse *) malloc(sizeof(t_parse));
-	if (!(ret))
-		return (NULL);
-	ret->cmd = (char **) ft_calloc(token_cnt + 1, sizeof(char *));
-	if (!(ret->cmd))
-		return (NULL);
-	ret->buff = (char *) ft_calloc(input_len + 1, sizeof(char));
-	if (!(ret->buff))
-		return (NULL);
-	ret->quote = 0;
-	ret->c_idx = 0;
-	ret->b_idx = 0;
-	ret->pipe_type = NO_PIPE;
-	ret->redir_type = NO_REDIR;
-	return (ret);
-}
-
-static char	**copy_evnp(char **envp)
-{
-	int		i;
 	char	**ret;
+	int		i;
 
 	i = 0;
-	while (envp[i])
+	while (env[i])
 		i++;
 	ret = (char **) malloc(sizeof(char *) * (i + 1));
+	if (!ret)
+		return (NULL);
 	i = -1;
-	while (envp[++i])
-		ret[i] = ft_strdup(envp[i]);
+	while (env[++i])
+		ret[i] = ft_strdup(env[i]);
 	ret[i] = NULL;
 	return (ret);
 }
 
-t_data	*init_data(char **envp, t_double_list *list)
+void	init_parse(t_parse *parse, int token_cnt, int input_len, char **env)
 {
-	t_data	*ret;
-	int		i;
-
-	ret = (t_data *) malloc(sizeof(t_data));
-	if (!ret)
-		return (NULL);
-	ret->envp = copy_evnp(envp);
-	if (!ret->envp)
-		return (NULL);
-	ret->list = list;
-	i = -1;
-	while (list->cmd_cnt > 1 && (++i < 2))
-	{
-		ret->pipe_fd[i] = (int *) malloc(sizeof(int) * (list->cmd_cnt - 1));
-		if (!ret->pipe_fd[i])
-			return (NULL);
-	}
-	ret->input_fd = 0;
-	ret->output_fd = 1;
-	return (ret);
+	// parse = (t_parse *) malloc(sizeof(t_parse));
+	// if (!(parse))
+	// 	return (parse_error(NULL, NULL, MALLOC_ERROR));
+	parse->cmd = (char **) ft_calloc(token_cnt + 1, sizeof(char *));
+	if (!parse->cmd)
+		return (parse_error(NULL, NULL, NULL, MALLOC_ERROR));
+	parse->buff = (char *) ft_calloc(input_len + 1, sizeof(char));
+	if (!parse->buff)
+		return (parse_error(NULL, parse, NULL, MALLOC_ERROR));
+	parse->env = copy_env(env);
+	if (!parse->env)
+		return (parse_error(NULL, parse, NULL, MALLOC_ERROR));
+	parse->quote = 0;
+	parse->c_idx = 0;
+	parse->b_idx = 0;
+	parse->pipe_type = NO_PIPE;
+	parse->redir_type = NO_REDIR;
 }
 
 int	check_redir(char input, char input_next)
@@ -110,4 +85,25 @@ int	check_redir(char input, char input_next)
 			return (W_REDIR);
 	}
 	return (NO_REDIR);
+}
+
+void	init_data(t_data *data, t_double_list *list, t_parse *parse)
+{
+	int	i;
+
+	if (!list || !parse)
+		return ;
+	data = (t_data *) malloc(sizeof(t_data));
+	if (!data)
+		return (parse_error(list, parse, data, MALLOC_ERROR));
+	data->envp = parse->env;
+	i = -1;
+	while (++i < 2)
+	{
+		data->pipe_fd[i] = (int *) malloc(sizeof(int));
+		if (!data->pipe_fd[i])
+			return (parse_error(list, parse, data, MALLOC_ERROR));
+	}
+	data->input_fd = 0;
+	data->output_fd = 0;
 }

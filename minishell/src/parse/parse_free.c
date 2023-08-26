@@ -23,9 +23,12 @@ void	free_parse(t_parse *parse)
 	i = 0;
 	while (parse->cmd[i])
 		free(parse->cmd[i++]);
+	i = -1;
+	while (parse->env[++i])
+		free(parse->env[i]);
 	free(parse->cmd);
 	free(parse->buff);
-	free(parse);
+	free(parse->env);
 }
 
 void	free_list(t_double_list *list)
@@ -50,24 +53,5 @@ void	free_list(t_double_list *list)
 		free(del->cmd_args);
 		free(del);
 	}
-	free(list);
 	printf("free_list\n");
-}
-
-void	free_data(t_data *data)
-{
-	int	i;
-
-	if (!data)
-		return ;
-	i = -1;
-	while (data->envp[++i])
-		free(data->envp[i]);
-	free(data->envp);
-	i = -1;
-	while (++i < 2)
-		free(data->pipe_fd[i]);
-	free(data->pipe_fd);
-	free(data);
-	printf("free_data\n");
 }

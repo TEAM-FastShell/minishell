@@ -21,10 +21,12 @@ void check()
 int	main(int argc, char *argv[], char *envp[])
 {
 	char			*input;
+	t_double_list	list;
+	t_parse			parse;
+	//t_data			data;
 
 	while (argc && argv)
 	{
-		//system("leaks minishell");
 		set_signal();
 		input = readline("Minishell$ ");
 		if (input == NULL)
@@ -36,7 +38,8 @@ int	main(int argc, char *argv[], char *envp[])
 		{
 			add_history(input);
 			if (!is_whitespace(input))
-				parser(input, envp);
+				parser(input, envp, &list, &parse);
+			//init_data(&data, &list, &parse);
 		}
 		free(input);
 	}
