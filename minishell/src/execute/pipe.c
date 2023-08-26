@@ -1,5 +1,8 @@
 #include "minishell.h"
 
+static void	cntl_pipe(t_data *data, t_node *node);
+static void	close_pipe(t_data *data, t_node *node);
+
 void	connect_pipe(t_data *data, t_node *node)
 {
 	cntl_pipe(data, node);
@@ -8,7 +11,7 @@ void	connect_pipe(t_data *data, t_node *node)
 	close_pipe(data, node);
 }
 
-void	cntl_pipe(t_data *data, t_node *node)
+static void	cntl_pipe(t_data *data, t_node *node)
 {
 	if (node->pipe_type == NO_PIPE)
 		return ;
@@ -30,7 +33,7 @@ void	cntl_pipe(t_data *data, t_node *node)
 	}
 }
 
-void	close_pipe(t_data *data, t_node *node)
+static void	close_pipe(t_data *data, t_node *node)
 {
 	if (node->pipe_type == NO_PIPE)
 		return ;

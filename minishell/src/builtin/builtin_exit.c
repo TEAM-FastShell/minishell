@@ -1,5 +1,7 @@
 #include "minishell.h"
 
+static int	is_num_str(char *n);
+
 void	builtin_exit(t_data *data, t_node *node)
 {
 	int	i;
@@ -21,4 +23,17 @@ void	builtin_exit(t_data *data, t_node *node)
 	else
 		error_str_str_code(node, NUM_ARG_REQ, 255);
 	exit(g_exit_status);
+}/*long long*/
+
+static int	is_num_str(char *n)
+{
+	int	i;
+
+	i = 0;
+	while (n[i])
+	{
+		if (!ft_isdigit(n[i]))
+			return (0);
+	}
+	return (1);
 }

@@ -1,5 +1,8 @@
 #include "minishell.h"
 
+static void	ft_open_redir(t_data *data, t_node *node);
+static void	get_heredoc(t_data *data, t_node *node);
+
 void	exec_redir(t_data *data, t_node *node)
 {
 	int	i;
@@ -14,10 +17,10 @@ void	exec_redir(t_data *data, t_node *node)
 	if (node->redir_type == H_REDIR)
 		get_heredoc(data, node);
 	if (data->input_fd < 0 || data->output_fd < 0)
-		/*error open*/
+		ft_putendl_fd(strerror(errno), STDERR_FILENO);
 }
 
-void	ft_open_redir(t_data *data, t_node *node)
+static void	ft_open_redir(t_data *data, t_node *node)
 {
 	t_redir_type	type;
 	char			*file_name;
@@ -39,7 +42,7 @@ void	ft_open_redir(t_data *data, t_node *node)
 	}
 }
 
-void	get_heredoc(t_data *data, t_node *node)
+static void	get_heredoc(t_data *data, t_node *node)
 {
 	char	*line;
 

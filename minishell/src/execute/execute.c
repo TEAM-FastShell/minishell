@@ -1,5 +1,10 @@
 #include "minishell.h"
 
+static void	exec_pipe(t_data *data, t_node *node);
+static void	wait_child(t_data *data);
+static void	exec_child(t_data *data, t_node *node);
+static char	*get_cmd(char **path_tab, char *cmd_uncertain);
+
 /*실행될 때 마다 fd 초기화*/
 void	execute(t_data *data)
 {
@@ -22,10 +27,11 @@ void	execute(t_data *data)
 		}
 		cur = cur->next;
 	}
-	/* list clear  free  close*/
+	double_list_clear(&data->list);
+	free(data->pipe_fd);
 }
 
-void	exec_pipe(t_data *data, t_node *node)
+static void	exec_pipe(t_data *data, t_node *node)
 {
 	if (node->redir_type != NO_REDIR)
 	{
@@ -53,17 +59,17 @@ void	exec_pipe(t_data *data, t_node *node)
 	}
 }
 
-void	wait_child(t_data *data)
+static void	wait_child(t_data *data)
 {
 	int	i;
 
 	i = 0;
-	while (i++ < data->list->cnt)
+	while (i++ < data->list->cmd_cnt)
 		ft_wait();
-	waitpid(data->list->tail->prev->pid, &g_exit_status, 0);
+	waitpid(data->list->tail->pid, &g_exit_status, 0);
 }
 
-void	exec_child(t_data *data, t_node *node)
+static void	exec_child(t_data *data, t_node *node)
 {
 	char	*cmd;
 
@@ -75,4 +81,24 @@ void	exec_child(t_data *data, t_node *node)
 		error_str_code(node, CMD_NOT_FOUND, 127);
 	if (execve(cmd, node->cmd_args, data->envp) < 0)
 		ft_putendl_fd(strerror(errno), STDERR_FILENO);
+}
+
+static char	*get_cmd(char **path_tab, char *cmd_uncertain)
+{
+	char	*tmp;
+	char	*cmd;
+
+	if (!cmd_uncertain)
+		return (NULL);
+	while (*path_tab)
+	{
+		tmp = ft_strjoin(*path_tab, "/");
+		cmd = ft_strjoin(tmp, cmd_uncertain);
+		free(tmp);
+		if (access(cmd, X_OK) == 0)
+			return (cmd);
+		free(cmd);
+		path_tab++;
+	}
+	return (NULL);
 }

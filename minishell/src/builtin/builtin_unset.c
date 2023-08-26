@@ -1,5 +1,7 @@
 #include "minishell.h"
 
+static void	exex_unset(t_data *data, char *unset);
+
 void	buitin_unset(t_data *data, t_node *node)
 {
 	if (node->pipe_type != NO_PIPE || !node->cmd_args[1])
@@ -10,9 +12,10 @@ void	buitin_unset(t_data *data, t_node *node)
 			error_str_str_code(node, NON_VALID_ID, 1);
 		exec_unset(data, node->cmd_args[1]);
 	}
+	g_exit_status = 0;
 }
 
-void	exex_unset(t_data *data, char *unset)
+static void	exex_unset(t_data *data, char *unset)
 {
 	int		i;
 	int		flag;

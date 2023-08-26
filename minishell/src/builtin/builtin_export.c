@@ -1,5 +1,8 @@
 #include "minishell.h"
 
+void		exec_export(t_data *data, char *export);
+static int	is_exist(t_data *data, char	*export);
+
 void	builtin_export(t_data *data, t_node *node)
 {
 	if (node->pipe_type != NO_PIPE)
@@ -12,7 +15,8 @@ void	builtin_export(t_data *data, t_node *node)
 			error_str_str_code(node, NON_VALID_ID, 1);
 		exec_export(data, node->cmd_args[1]);
 	}
-}
+	g_exit_status = 0;
+}/*unset export 인자 여러개*/
 
 void	exec_export(t_data *data, char *export)
 {
@@ -35,10 +39,10 @@ void	exec_export(t_data *data, char *export)
 	new_envp[++i] = NULL;
 	tmp = data->envp;
 	data->envp = new_envp;
-	free(tmp);
+	free_envp(tmp);
 }
 
-int	is_exist(t_data *data, char	*export)
+static int	is_exist(t_data *data, char	*export)
 {
 	int		i;
 

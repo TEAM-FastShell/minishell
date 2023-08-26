@@ -7,10 +7,12 @@
 # include <unistd.h>
 # include <errno.h>
 
+/* GNL BUFFER_SIZE */
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1024
 # endif
 
+/* ERR STRING */
 # define NO_FILE_DIR "No such file or directory"
 # define HOME_NOT_SET "HOME not set"
 # define TOO_MANY_ARG "too many arguments"
@@ -41,11 +43,11 @@ typedef struct s_node
 {
 	t_node			*prev;
 	t_node			*next;
-	char			**cmd_args; /* cmd [options] or re_file(hd_rd!) [lim]*/
+	char			**cmd_args;
 	t_pipe_type		pipe_type;
 	t_redir_type	redir_type;
 	pid_t			pid;
-	int				idx; /* cmd 부터 idx++ */
+	int				idx;
 }	t_node;
 
 typedef struct s_double_list
@@ -65,5 +67,44 @@ typedef struct s_data
 	int				input_fd;
 	int				output_fd;
 }	t_data;
+
+/* execute */
+void	execute(t_data *data);
+void	connect_pipe(t_data *data, t_node *node);
+void	exec_redir(t_data *data, t_node *node);
+
+/* builtin */
+int		is_builtin(char **cmd_args);
+void	exec_builtin(t_data *data, t_node *node);
+void	builtin_cd(t_data *data, t_node *node);
+void	builtin_echo(t_data *data, t_node *node);
+void	builtin_env(t_data *data, t_node *node);
+void	builtin_exit(t_data *data, t_node *node);
+void	builtin_export(t_data *data, t_node *node);
+void	exec_export(t_data *data, char *export);
+void	builtin_pwd(t_data *data, t_node *node);
+void	buitin_unset(t_data *data, t_node *node);
+
+/* error */
+void	error_code(int code);
+void	error_str_code(t_node *node, char *str, int code);
+void	error_str_str_code(t_node *node, char *str, int code);
+
+/* utils */
+void	ft_pipe(t_data *data, t_node *node);
+void	ft_fork(t_node *node);
+void	ft_dup2(int	new_fd, int origin_fd);
+void	ft_close(int fd);
+void	ft_wait(void);
+void	double_list_clear(t_double_list *list);
+void	free_tab(char **tab);
+void	close_all_pipes(t_data *data);
+
+/* gnl */
+char	*get_next_line(int fd);
+char	*ft_strjoin_gnl(char const *s1, char const *s2);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
+char	*ft_strdup(const char *s1);
+char	*ft_strchr(const char *s, int c);
 
 #endif
