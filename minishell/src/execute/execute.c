@@ -1,5 +1,6 @@
 #include "minishell.h"
 
+/*실행될 때 마다 fd 초기화*/
 void	execute(t_data *data)
 {
 	t_node	*cur;
@@ -15,13 +16,13 @@ void	execute(t_data *data)
 				break ;
 			}
 			if (is_builtin(cur->cmd_args) && cur->pipe_type == NO_PIPE)
-				exec_builtin(cur->cmd_args);
+				exec_builtin(data, cur);
 			else
 				exec_pipe(data, cur);
 		}
 		cur = cur->next;
 	}
-	/* list clear  free */
+	/* list clear  free  close*/
 }
 
 void	exec_pipe(t_data *data, t_node *node)
@@ -59,7 +60,7 @@ void	wait_child(t_data *data)
 	i = 0;
 	while (i++ < data->list->cnt)
 		ft_wait();
-	waitpid(data->list->tail->prev->pid, &data->status, 0);
+	waitpid(data->list->tail->prev->pid, &g_exit_status, 0);
 }
 
 void	exec_child(t_data *data, t_node *node)
@@ -67,9 +68,11 @@ void	exec_child(t_data *data, t_node *node)
 	char	*cmd;
 
 	connect_pipe(data, node);
+	if (is_builtin(node->cmd_args))
+		exec_builtin(data, node);
 	cmd = get_cmd(data->path_tab, node->cmd_args[0]);
 	if (!cmd)
-		/*error cmd not found*/
+		error_str_code(node, CMD_NOT_FOUND, 127);
 	if (execve(cmd, node->cmd_args, data->envp) < 0)
-		/*error execve*/
+		ft_putendl_fd(strerror(errno), STDERR_FILENO);
 }

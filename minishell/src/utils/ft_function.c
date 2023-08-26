@@ -3,21 +3,21 @@
 void	ft_pipe(t_data *data, t_node *node)
 {
 	if (pipe(data->pipe_fd[node->idx]) < 0)
-		/*error pipe*/
+		ft_putendl_fd(strerror(errno), STDERR_FILENO);
 }
 
 void	ft_fork(t_node *node)
 {
 	node->pid = fork();
 	if (node->pid < 0)
-		/*error fork*/
+		ft_putendl_fd(strerror(errno), STDERR_FILENO);
 }
 
 void	ft_dup2(int	new_fd, int origin_fd)
 {
 	if (dup2(new_fd, origin_fd) < 0)
-		/*error dup2*/
-}/*to pipe.c*/
+		ft_putendl_fd(strerror(errno), STDERR_FILENO);
+}
 
 void	close_all_pipes(t_data *data)
 {
@@ -30,16 +30,16 @@ void	close_all_pipes(t_data *data)
 		ft_close(data->pipe_fd[i][1]);
 		i++;
 	}
-}/*to execute.c*/
+}
 
 void	ft_close(int fd)
 {
 	if (close(fd) < 0)
-		/*error close*/
+		ft_putendl_fd(strerror(errno), STDERR_FILENO);
 }
 
 void	ft_wait(void)
 {
 	if (wait(NULL) < 0)
-		/*error wait*/
+		ft_putendl_fd(strerror(errno), STDERR_FILENO);
 }

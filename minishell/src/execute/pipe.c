@@ -12,7 +12,7 @@ void	cntl_pipe(t_data *data, t_node *node)
 {
 	if (node->pipe_type == NO_PIPE)
 		return ;
-	else if (node->pipe_type == W_PIPE || node->pipe_type == RW_PIPE)
+	if (node->pipe_type == W_PIPE || node->pipe_type == RW_PIPE)
 	{
 		ft_close(data->pipe_fd[node->idx][0]);
 		if (data->output_fd == STDOUT_FILENO)
@@ -20,7 +20,7 @@ void	cntl_pipe(t_data *data, t_node *node)
 		else
 			ft_close(data->pipe_fd[node->idx][1]);
 	}
-	else if (node->pipe_type == R_PIPE || node->pipe_type == RW_PIPE)
+	if (node->pipe_type == R_PIPE || node->pipe_type == RW_PIPE)
 	{
 		ft_close(data->pipe_fd[node->idx - 1][1]);
 		if (data->input_fd == STDIN_FILENO)
@@ -34,13 +34,13 @@ void	close_pipe(t_data *data, t_node *node)
 {
 	if (node->pipe_type == NO_PIPE)
 		return ;
-	else if (node->pipe_type == W_PIPE || node->pipe_type == RW_PIPE)
+	if (node->pipe_type == W_PIPE || node->pipe_type == RW_PIPE)
 	{
 		ft_close(data->output_fd);
 		if (data->input_fd != STDIN_FILENO)
 			ft_close(data->input_fd);
 	}
-	else if (node->pipe_type == R_PIPE || node->pipe_type == RW_PIPE)
+	if (node->pipe_type == R_PIPE || node->pipe_type == RW_PIPE)
 	{
 		ft_close(data->input_fd);
 		if (data->output_fd != STDOUT_FILENO)
