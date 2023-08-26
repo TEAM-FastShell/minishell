@@ -120,6 +120,7 @@ void	parser(char *input, char **envp,  t_double_list *list, t_parse *parse)
 	set_pipe_type(list);
 	set_list_idx(list);
 	parse_error(list, parse, NULL, NULL);
+	
 }
 
 		
