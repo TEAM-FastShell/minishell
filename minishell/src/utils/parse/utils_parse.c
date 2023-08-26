@@ -6,7 +6,7 @@
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 15:52:10 by youyoon           #+#    #+#             */
-/*   Updated: 2023/08/25 15:19:22 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/08/26 19:29:30 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,46 @@ t_parse	*init_parse(int token_cnt, int input_len)
 	return (ret);
 }
 
+static char	**copy_evnp(char **envp)
+{
+	int		i;
+	char	**ret;
+
+	i = 0;
+	while (envp[i])
+		i++;
+	ret = (char **) malloc(sizeof(char *) * (i + 1));
+	i = -1;
+	while (envp[++i])
+		ret[i] = ft_strdup(envp[i]);
+	ret[i] = NULL;
+	return (ret);
+}
+
+t_data	*init_data(char **envp, t_double_list *list)
+{
+	t_data	*ret;
+	int		i;
+
+	ret = (t_data *) malloc(sizeof(t_data));
+	if (!ret)
+		return (NULL);
+	ret->envp = copy_evnp(envp);
+	if (!ret->envp)
+		return (NULL);
+	ret->list = list;
+	i = -1;
+	while (list->cmd_cnt > 1 && (++i < 2))
+	{
+		ret->pipe_fd[i] = (int *) malloc(sizeof(int) * (list->cmd_cnt - 1));
+		if (!ret->pipe_fd[i])
+			return (NULL);
+	}
+	ret->input_fd = 0;
+	ret->output_fd = 1;
+	return (ret);
+}
+
 int	check_redir(char input, char input_next)
 {
 	if (input == '<')
@@ -70,35 +110,4 @@ int	check_redir(char input, char input_next)
 			return (W_REDIR);
 	}
 	return (NO_REDIR);
-}
-
-void	set_pipe_type(t_double_list *list)
-{
-	t_node	*cur;
-
-	cur = list->head;
-	while (cur->pipe_type == 0)
-		cur = cur->next;
-	if (cur->pipe_type == RW_PIPE)
-		cur->pipe_type = W_PIPE;
-	cur = list->tail;
-	while (cur->pipe_type == 0)
-		cur = cur->prev;
-	if (cur->pipe_type == RW_PIPE)
-		cur->pipe_type = R_PIPE;
-}
-
-void	set_list_idx(t_double_list *list)
-{
-	t_node	*cur;
-	int		i;
-
-	i = 0;
-	cur = list->head;
-	while (cur)
-	{
-		cur->idx = i;
-		i++;
-		cur = cur->next;
-	}
 }

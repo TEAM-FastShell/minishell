@@ -6,7 +6,7 @@
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 23:47:04 by youyoon           #+#    #+#             */
-/*   Updated: 2023/08/25 14:45:07 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/08/26 19:34:25 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	signal_handler(int signo)
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
+		g_exit_status = 1;
 	}
 	else if (signo == SIGQUIT)
 	{

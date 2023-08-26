@@ -6,7 +6,7 @@
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 17:01:30 by youyoon           #+#    #+#             */
-/*   Updated: 2023/08/25 17:41:48 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/08/26 17:30:34 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,26 +50,25 @@ int	add_node(t_double_list *list, t_parse *parse)
 	t_node	*new_node;
 	int		i;
 
-	if ((parse->buff[0]))
+	if (parse->buff[0])
 		put_buff_to_cmd(parse);
-	if (!(parse->cmd[0]) && (parse->pipe_type > 0 || parse->redir_type > 0))
-		return (ERROR);
-	else if (!(parse->cmd[0]))
-		return (ERROR);
-	new_node = make_node(parse);
-	ms_listadd_back(list, new_node);
-	i = 0;
-	while (parse->cmd[i])
+	if (parse->cmd[0] && parse->cmd[0][0] != 0)
 	{
-		ft_bzero(parse->cmd[i], ft_strlen(parse->cmd[i]) + 1);
-		i++;
+		new_node = make_node(parse);
+		if (!new_node)
+			return (ERROR);
+		ms_listadd_back(list, new_node);
+		i = -1;
+		while (parse->cmd[++i])
+			ft_bzero(parse->cmd[i], ft_strlen(parse->cmd[i]) + 1);
+		parse->quote = 0;
+		parse->c_idx = 0;
+		parse->b_idx = 0;
+		parse->pipe_type = NO_PIPE;
+		parse->redir_type = NO_REDIR;
+		return (SUCCESS);
 	}
-	parse->quote = 0;
-	parse->c_idx = 0;
-	parse->b_idx = 0;
-	parse->pipe_type = NO_PIPE;
-	parse->redir_type = NO_REDIR;
-	return (SUCCESS);
+	return (ERROR);
 }
 
 void	ms_listadd_back(t_double_list *list, t_node *new_node)
@@ -81,7 +80,8 @@ void	ms_listadd_back(t_double_list *list, t_node *new_node)
 		list->head = new_node;
 		list->tail = new_node;
 	}
-	else if (new_node->redir_type > 0)
+	else if (new_node->redir_type > 0 && (list->tail->pipe_type == 0) && \
+		(list->tail->redir_type == 0))
 		ms_listadd_back_redir(list, new_node);
 	else
 	{
@@ -96,7 +96,7 @@ void	ms_listadd_back(t_double_list *list, t_node *new_node)
 
 void	ms_listadd_back_redir(t_double_list *list, t_node *new_node)
 {
-	t_node	*cur;
+	t_node			*cur;
 
 	cur = list->tail;
 	while (cur->prev && (cur->redir_type == 0 && cur->pipe_type == 0))

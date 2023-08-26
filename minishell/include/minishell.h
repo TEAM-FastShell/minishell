@@ -15,6 +15,8 @@
 # define STDOUT 		1
 # define STDERR 		2
 
+int	g_exit_status;
+
 typedef enum e_pipe_type
 {
 	NO_PIPE = 0,
@@ -61,10 +63,12 @@ typedef struct s_double_list
 
 typedef struct s_data
 {
-	t_list	*list;
-	char	**envp;
-	int		*pipe_fd[2];
-	int		status;
+	t_double_list	*list;
+	char			**envp;
+	char			**path_tab;
+	int				*pipe_fd[2];
+	int				input_fd;
+	int				output_fd;
 }	t_data;
 
 typedef struct s_parse

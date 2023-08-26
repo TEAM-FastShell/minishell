@@ -6,7 +6,7 @@
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 15:39:09 by youyoon           #+#    #+#             */
-/*   Updated: 2023/08/25 16:53:44 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/08/26 18:25:07 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include "minishell.h"
 
 /* src/parse/parse.c */
-void				parser(char *input);
+void				parser(char *input, char **envp);
 void				put_buff_to_cmd(t_parse *parse);
 int					parse_char(t_double_list *list, t_parse *parse, \
 					char *input, int *i);
@@ -32,23 +32,28 @@ int					parse_char(t_double_list *list, t_parse *parse, \
 t_double_list		*init_list(void);
 t_parse				*init_parse(int token_cnt, int input_len);
 int					check_redir(char input, char input_next);
-void				set_pipe_type(t_double_list *list);
-void				set_list_idx(t_double_list *list);
+t_data				*init_data(char **envp, t_double_list *list);
 
-/* src/utils/parse/utils_parse_env.c */
-char				**set_env(char **envp);
-char				*find_env(char *s, char **env);
+/* src/utils/parse/utils_parse2.c */
+void				set_data_env(t_data *data);
 
 /* src/utils/parse/utils_parse_list.c */
 t_node				*make_node(t_parse *parse);
 int					add_node(t_double_list *list, t_parse *parse);
 void				ms_listadd_back(t_double_list *list, t_node *new_node);
-void				ms_listadd_back_redir(t_double_list *list, t_node *new_node);
+void				ms_listadd_back_redir(t_double_list *list, \
+							t_node *new_node);
+
+/* src/utils/parse/utils_list_parse2.c */
+void				set_pipe_type(t_double_list *list);
+void				set_list_idx(t_double_list *list);
 
 /* src/parse/parse_error.c */
-void				parse_error(t_double_list *list, t_parse *parse, char *error_msg);
+void				parse_error(t_double_list *list, t_parse *parse, \
+						t_data *data, char *error_msg);
 
 /* src/parse/parse_free.c */
 void				free_parse(t_parse *parse);
 void				free_list(t_double_list *list);
+void				free_data(t_data *data);
 #endif

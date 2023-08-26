@@ -6,7 +6,7 @@
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 17:13:46 by youyoon           #+#    #+#             */
-/*   Updated: 2023/08/24 14:42:59 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/08/26 19:59:22 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,8 @@ void	free_list(t_double_list *list)
 	t_node	*del;
 	int		i;
 
-	printf("free list\n");
 	if (!list)
 		return ;
-
 	cur = list->head;
 	while (cur)
 	{
@@ -53,4 +51,23 @@ void	free_list(t_double_list *list)
 		free(del);
 	}
 	free(list);
+	printf("free_list\n");
+}
+
+void	free_data(t_data *data)
+{
+	int	i;
+
+	if (!data)
+		return ;
+	i = -1;
+	while (data->envp[++i])
+		free(data->envp[i]);
+	free(data->envp);
+	i = -1;
+	while (++i < 2)
+		free(data->pipe_fd[i]);
+	free(data->pipe_fd);
+	free(data);
+	printf("free_data\n");
 }
