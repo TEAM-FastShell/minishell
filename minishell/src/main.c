@@ -23,7 +23,7 @@ int	main(int argc, char *argv[], char *envp[])
 	char			*input;
 	t_double_list	list;
 	t_parse			parse;
-	//t_data			data;
+	t_data			data;
 
 	while (argc && argv)
 	{
@@ -38,11 +38,12 @@ int	main(int argc, char *argv[], char *envp[])
 		{
 			add_history(input);
 			if (!is_whitespace(input))
+			{	
 				parser(input, envp, &list, &parse);
-			//init_data(&data, &list, &parse);
+				init_data(&data, &list, &parse);
+			}
 		}
 		free(input);
 	}
-	free(input);
 	return (0);
 }

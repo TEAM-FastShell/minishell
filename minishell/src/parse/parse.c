@@ -119,8 +119,7 @@ void	parser(char *input, char **envp,  t_double_list *list, t_parse *parse)
 		return (parse_error(list, parse, NULL, SYNTAX_ERROR));
 	set_pipe_type(list);
 	set_list_idx(list);
-	parse_error(list, parse, NULL, NULL);
-	
+	//parse_error(list, parse, NULL, NULL);
 }
 
 		

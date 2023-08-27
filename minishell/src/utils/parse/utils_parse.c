@@ -96,14 +96,35 @@ void	init_data(t_data *data, t_double_list *list, t_parse *parse)
 	data = (t_data *) malloc(sizeof(t_data));
 	if (!data)
 		return (parse_error(list, parse, data, MALLOC_ERROR));
-	data->envp = parse->env;
+	data->envp = parse->env; /* 한번 만 초기화?.. */
 	i = -1;
 	while (++i < 2)
 	{
-		data->pipe_fd[i] = (int *) malloc(sizeof(int));
+		data->pipe_fd[i] = (int *) malloc(sizeof(int) * (list->cmd_cnt - 1));
 		if (!data->pipe_fd[i])
 			return (parse_error(list, parse, data, MALLOC_ERROR));
 	}
 	data->input_fd = 0;
 	data->output_fd = 0;
+	data->list = list;
+
+	i = 0;
+	while (data->envp[i])
+	{
+		printf("env %s\n", data->envp[i]);
+		i++;
+	}
+	t_node *cur = data->list->head;
+	while (cur)
+	{
+		int i = 0;
+		printf("|");
+		while (cur->cmd_args[i])
+		{	printf(" %s, ", cur->cmd_args[i]); i++; }
+		printf(" red %d pipe %d idx %d | -> ", cur->redir_type, cur->pipe_type, cur->idx);
+		cur = cur->next;
+	}
+	printf("\n");
+	/* **** */
+	printf("print over\n");
 }
