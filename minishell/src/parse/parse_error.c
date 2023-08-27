@@ -29,6 +29,7 @@ void	parse_error(t_double_list *list, t_parse *parse, t_data *data, char *error_
 	{
 		while (++i < 2)
 			free(data->pipe_fd[i]);
+		free(data);
 	}
 	if (error_msg)
 		ft_putendl_fd(error_msg, STDERR);

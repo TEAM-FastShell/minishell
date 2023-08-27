@@ -33,7 +33,7 @@ void				init_list(t_double_list *list);
 void				init_parse(t_parse *parse, int token_cnt, int input_len, char **env);
 int					check_redir(char input, char input_next);
 char				**copy_env(char **env);
-void				init_data(t_data *data, t_double_list *list, t_parse *parse);
+void				init_data(t_data **data_ptr, t_double_list *list, t_parse *parse);
 
 /* src/utils/parse/utils_parse2.c */
 

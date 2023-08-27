@@ -50,10 +50,7 @@ void	put_buff_to_cmd(t_parse *parse)
 	parse->b_idx = 0;
 }
 
-/*
-	SUCCESS : 1
-	ERROR : -1
-*/
+/* 25줄 맞춰서 분할 필요*/
 
 int	parse_char(t_double_list *list, t_parse *parse, char *input, int *i)
 {
@@ -88,11 +85,7 @@ int	parse_char(t_double_list *list, t_parse *parse, char *input, int *i)
 			(*i)++;
 	}
 	else
-	{
-		// if (parse->quote != '\'' && input[*i] == '\\' && input[*i])
-		// 	(*i)++;
 		parse->buff[parse->b_idx++] = input[*i];
-	}
 	return (ret);
 }
 
@@ -119,7 +112,6 @@ void	parser(char *input, char **envp,  t_double_list *list, t_parse *parse)
 		return (parse_error(list, parse, NULL, SYNTAX_ERROR));
 	set_pipe_type(list);
 	set_list_idx(list);
-	//parse_error(list, parse, NULL, NULL);
 }
 
 		

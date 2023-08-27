@@ -17,7 +17,6 @@ void	free_parse(t_parse *parse)
 {
 	int	i;
 
-	printf("free parse\n");
 	if (!parse)
 		return ;
 	i = 0;
@@ -53,5 +52,4 @@ void	free_list(t_double_list *list)
 		free(del->cmd_args);
 		free(del);
 	}
-	printf("free_list\n");
 }

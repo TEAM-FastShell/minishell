@@ -87,15 +87,17 @@ int	check_redir(char input, char input_next)
 	return (NO_REDIR);
 }
 
-void	init_data(t_data *data, t_double_list *list, t_parse *parse)
+void	init_data(t_data **data_ptr, t_double_list *list, t_parse *parse)
 {
-	int	i;
+	int		i;
+	t_data	*data;
 
-	if (!list || !parse)
+	if (!list->head || !parse->env)
 		return ;
-	data = (t_data *) malloc(sizeof(t_data));
-	if (!data)
-		return (parse_error(list, parse, data, MALLOC_ERROR));
+	*data_ptr = (t_data *) malloc(sizeof(t_data));
+	if (!(*data_ptr))
+		return (parse_error(list, parse, *data_ptr, MALLOC_ERROR));
+	data = *data_ptr;
 	data->envp = parse->env; /* 한번 만 초기화?.. */
 	i = -1;
 	while (++i < 2)
@@ -107,24 +109,4 @@ void	init_data(t_data *data, t_double_list *list, t_parse *parse)
 	data->input_fd = 0;
 	data->output_fd = 0;
 	data->list = list;
-
-	i = 0;
-	while (data->envp[i])
-	{
-		printf("env %s\n", data->envp[i]);
-		i++;
-	}
-	t_node *cur = data->list->head;
-	while (cur)
-	{
-		int i = 0;
-		printf("|");
-		while (cur->cmd_args[i])
-		{	printf(" %s, ", cur->cmd_args[i]); i++; }
-		printf(" red %d pipe %d idx %d | -> ", cur->redir_type, cur->pipe_type, cur->idx);
-		cur = cur->next;
-	}
-	printf("\n");
-	/* **** */
-	printf("print over\n");
 }
