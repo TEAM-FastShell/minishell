@@ -1,24 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/17 00:44:58 by youyoon           #+#    #+#             */
-/*   Updated: 2023/08/26 12:50:22 by youyoon          ###   ########.fr       */
+/*   Created: 2023/08/15 20:30:14 by youyoon           #+#    #+#             */
+/*   Updated: 2023/08/26 17:30:49 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../include/minishell.h"
+#include "../../include/parse.h"
 
-void	*ft_calloc(size_t nmemb, size_t size)
+int	is_whitespace(char *str)
 {
-	void	*tmp;
+	int	i;
+	int	space;
 
-	tmp = malloc(size * nmemb);
-	if (!tmp)
-		return (0);
-	ft_memset(tmp, 0, size * nmemb);
-	return (tmp);
+	i = 0;
+	space = 0;
+	if ((int) ft_strlen(str) == 0)
+		return (1);
+	while (str[i])
+	{
+		if (str[i] == '\r' || str[i] == '\v' || \
+				str[i] == '\t' || str[i] == '\f')
+			return (1);
+		else if (str[i] == ' ')
+			space++;
+		i++;
+	}
+	if ((int) ft_strlen(str) == space)
+		return (1);
+	return (0);
 }
