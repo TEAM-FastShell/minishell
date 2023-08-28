@@ -6,7 +6,7 @@
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 15:52:10 by youyoon           #+#    #+#             */
-/*   Updated: 2023/08/28 16:42:20 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/08/28 23:35:20 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,10 @@ int	check_redir(char input, char input_next)
 	}
 	return (NO_REDIR);
 }
-
+/*
+while 시작 전 초기화 부분:
+while문 안에서 필요시 초기화:
+*/
 void	init_data(t_data **data_ptr, t_double_list *list, t_parse *parse)
 {
 	int		i;
