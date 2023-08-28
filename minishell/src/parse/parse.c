@@ -6,7 +6,7 @@
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 19:57:43 by youyoon           #+#    #+#             */
-/*   Updated: 2023/08/26 20:00:00 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/08/28 13:01:15 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	parse_char(t_double_list *list, t_parse *parse, char *input, int *i)
 	return (ret);
 }
 
-void	parser(char *input, char **envp,  t_double_list *list, t_parse *parse)
+void	parser(char *input, char **envp, t_double_list *list, t_parse *parse)
 {
 	int				i;
 	int				token_cnt;
@@ -113,19 +113,3 @@ void	parser(char *input, char **envp,  t_double_list *list, t_parse *parse)
 	set_pipe_type(list);
 	set_list_idx(list);
 }
-
-		
-// /* 출력 테스트 */
-// t_node *cur = list->head;
-// while (cur)
-// {
-// 	int i = 0;
-// 	printf("|");
-// 	while (cur->cmd_args[i])
-// 	{	printf(" %s, ", cur->cmd_args[i]); i++; }
-// 	printf(" red %d pipe %d idx %d | -> ", cur->redir_type, cur->pipe_type, cur->idx);
-// 	cur = cur->next;
-// }
-// printf("\n");
-// /* **** */
-// printf("print over\n");

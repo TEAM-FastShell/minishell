@@ -6,7 +6,7 @@
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/26 16:41:40 by youyoon           #+#    #+#             */
-/*   Updated: 2023/08/26 16:51:01 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/08/28 12:59:05 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,24 +61,24 @@ void	set_list_idx(t_double_list *list)
 	}
 }
 
-static char   *get_envv(char *envp[], char *envv)
+static char	*get_envv(char *envp[], char *envv)
 {
 	char	*address;
 	char	c;
 
 	envv++;
-    while (*envp && *envv)
-    {
-        if (!ft_strncmp(*envp, envv, ft_strlen(envv)))
+	while (*envp && *envv)
+	{
+		if (!ft_strncmp(*envp, envv, ft_strlen(envv)))
 		{
 			address = *envp + ft_strlen(envv);
 			c = *address;
 			if (c == '=')
 				return (*envp + ft_strlen(envv) + 1);
 		}
-        envp++;
-    }
-    return ("");
+		envp++;
+	}
+	return ("");
 }
 
 void	change_env(t_node *node, t_parse *parse)
@@ -91,7 +91,7 @@ void	change_env(t_node *node, t_parse *parse)
 	while (node->cmd_args[++i])
 	{
 		if (!ft_strncmp(node->cmd_args[i], "$?", ft_strlen(node->cmd_args[i])))
-			continue;
+			continue ;
 		if (ft_strchr(node->cmd_args[i], '$'))
 		{
 			tmp = node->cmd_args[i];

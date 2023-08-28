@@ -6,7 +6,7 @@
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 15:52:10 by youyoon           #+#    #+#             */
-/*   Updated: 2023/08/26 19:29:30 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/08/28 13:00:44 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,12 @@
 
 void	init_list(t_double_list *list)
 {
-	// list = (t_double_list *) malloc(sizeof(t_double_list));
-	// if (!list)
-	// 	return (parse_error(NULL, NULL, MALLOC_ERROR));
 	list->head = NULL;
 	list->tail = NULL;
 	list->cnt = 0;
 	list->cmd_cnt = 0;
 }
 
-/*
-	cmt : token개수 + 1
-	buff : input의 길이 + 1
-	나머지 모두 0으로 초기화
-*/
 char	**copy_env(char **env)
 {
 	char	**ret;
@@ -49,9 +41,6 @@ char	**copy_env(char **env)
 
 void	init_parse(t_parse *parse, int token_cnt, int input_len, char **env)
 {
-	// parse = (t_parse *) malloc(sizeof(t_parse));
-	// if (!(parse))
-	// 	return (parse_error(NULL, NULL, MALLOC_ERROR));
 	parse->cmd = (char **) ft_calloc(token_cnt + 1, sizeof(char *));
 	if (!parse->cmd)
 		return (parse_error(NULL, NULL, NULL, MALLOC_ERROR));
@@ -98,7 +87,7 @@ void	init_data(t_data **data_ptr, t_double_list *list, t_parse *parse)
 	if (!(*data_ptr))
 		return (parse_error(list, parse, *data_ptr, MALLOC_ERROR));
 	data = *data_ptr;
-	data->envp = parse->env; /* 한번 만 초기화?.. */
+	data->envp = parse->env;
 	i = -1;
 	while (++i < 2)
 	{
@@ -107,6 +96,6 @@ void	init_data(t_data **data_ptr, t_double_list *list, t_parse *parse)
 			return (parse_error(list, parse, data, MALLOC_ERROR));
 	}
 	data->input_fd = 0;
-	data->output_fd = 0;
+	data->output_fd = 1;
 	data->list = list;
 }
