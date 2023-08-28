@@ -6,7 +6,7 @@
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 15:52:10 by youyoon           #+#    #+#             */
-/*   Updated: 2023/08/28 13:00:44 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/08/28 15:43:44 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,11 +89,14 @@ void	init_data(t_data **data_ptr, t_double_list *list, t_parse *parse)
 	data = *data_ptr;
 	data->envp = parse->env;
 	i = -1;
-	while (++i < 2)
+	if (list->cnt > 1)
 	{
-		data->pipe_fd[i] = (int *) malloc(sizeof(int) * (list->cmd_cnt - 1));
-		if (!data->pipe_fd[i])
-			return (parse_error(list, parse, data, MALLOC_ERROR));
+		while (++i < 2)
+		{
+			data->pipe_fd[i] = (int *)malloc(sizeof(int) * (list->cmd_cnt - 1));
+			if (!data->pipe_fd[i])
+				return (parse_error(list, parse, data, MALLOC_ERROR));
+		}
 	}
 	data->input_fd = 0;
 	data->output_fd = 1;

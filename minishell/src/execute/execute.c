@@ -6,11 +6,12 @@
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:35:58 by seokklee          #+#    #+#             */
-/*   Updated: 2023/08/28 15:34:41 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/08/28 15:46:24 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+#include "../../include/parse.h"
 
 static void	exec_pipe(t_data *data, t_node *node);
 static void	wait_child(t_data *data);
@@ -39,8 +40,9 @@ void	execute(t_data *data)
 		}
 		cur = cur->next;
 	}
-	double_list_clear(data->list);
-	free(data->pipe_fd);
+	free_list(data->list);
+	if (data->list->cmd_cnt > 1)
+		free(data->pipe_fd);
 }
 
 static void	exec_pipe(t_data *data, t_node *node)
