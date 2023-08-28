@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:35:35 by seokklee          #+#    #+#             */
-/*   Updated: 2023/08/28 13:35:36 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/08/28 15:22:13 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../include/minishell.h"
 
-void	builtin_env(t_data *data, t_node *node)
+void	builtin_env(t_data *data)
 {
 	int	i;
 

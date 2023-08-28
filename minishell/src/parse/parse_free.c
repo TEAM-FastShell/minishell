@@ -6,7 +6,7 @@
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 17:13:46 by youyoon           #+#    #+#             */
-/*   Updated: 2023/08/26 19:59:22 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/08/28 14:04:58 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	free_parse(t_parse *parse)
 	free(parse->cmd);
 	free(parse->buff);
 	free(parse->env);
+	parse = NULL;
 }
 
 void	free_list(t_double_list *list)
@@ -52,4 +53,5 @@ void	free_list(t_double_list *list)
 		free(del->cmd_args);
 		free(del);
 	}
+	list = NULL;
 }

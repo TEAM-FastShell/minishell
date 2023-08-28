@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:35:37 by seokklee          #+#    #+#             */
-/*   Updated: 2023/08/28 13:35:38 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/08/28 15:23:31 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../include/minishell.h"
 
 static int	is_num_str(char *n);
 
-void	builtin_exit(t_data *data, t_node *node)
+void	builtin_exit(t_node *node)
 {
 	int	i;
 

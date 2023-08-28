@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_unset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:35:45 by seokklee          #+#    #+#             */
-/*   Updated: 2023/08/28 13:35:46 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/08/28 15:33:12 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../include/minishell.h"
 
-static void	exex_unset(t_data *data, char *unset);
+static void	exec_unset(t_data *data, char *unset);
 
-void	buitin_unset(t_data *data, t_node *node)
+void	builtin_unset(t_data *data, t_node *node)
 {
 	if (node->pipe_type != NO_PIPE || !node->cmd_args[1])
 		return ;
@@ -27,7 +27,7 @@ void	buitin_unset(t_data *data, t_node *node)
 	g_exit_status = 0;
 }
 
-static void	exex_unset(t_data *data, char *unset)
+static void	exec_unset(t_data *data, char *unset)
 {
 	int		i;
 	int		flag;

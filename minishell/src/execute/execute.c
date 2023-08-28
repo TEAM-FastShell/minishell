@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:35:58 by seokklee          #+#    #+#             */
-/*   Updated: 2023/08/28 13:35:59 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/08/28 15:34:41 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../include/minishell.h"
 
 static void	exec_pipe(t_data *data, t_node *node);
 static void	wait_child(t_data *data);
@@ -39,7 +39,7 @@ void	execute(t_data *data)
 		}
 		cur = cur->next;
 	}
-	double_list_clear(&data->list);
+	double_list_clear(data->list);
 	free(data->pipe_fd);
 }
 

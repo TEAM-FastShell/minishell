@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:35:11 by seokklee          #+#    #+#             */
-/*   Updated: 2023/08/28 13:35:12 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/08/28 15:33:06 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,15 @@
 # include <limits.h>
 # include <unistd.h>
 # include <errno.h>
+# include <stdio.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <errno.h>
+# include <signal.h>
+# include <sys/wait.h>
+# include "../libft/libft.h"
 
 /* GNL BUFFER_SIZE */
 # ifndef BUFFER_SIZE
@@ -33,16 +42,6 @@
 # define CMD_NOT_FOUND "command not found"
 
 int	g_exit_status;
-
-# include <stdio.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <errno.h>
-# include <signal.h>
-# include <sys/wait.h>
-# include "../libft/libft.h"
 
 # define STDIN 			0
 # define STDOUT 		1
@@ -67,13 +66,13 @@ typedef enum e_redir_type
 
 typedef struct s_node
 {
-	t_node			*prev;
-	t_node			*next;
-	char			**cmd_args;
-	t_pipe_type		pipe_type;
-	t_redir_type	redir_type;
-	pid_t			pid;
-	int				idx;
+	struct s_node			*prev;
+	struct s_node			*next;
+	char					**cmd_args;
+	t_pipe_type				pipe_type;
+	t_redir_type			redir_type;
+	pid_t					pid;
+	int						idx;
 }	t_node;
 
 typedef struct s_double_list
@@ -122,12 +121,12 @@ int		is_builtin(char **cmd_args);
 void	exec_builtin(t_data *data, t_node *node);
 void	builtin_cd(t_data *data, t_node *node);
 void	builtin_echo(t_data *data, t_node *node);
-void	builtin_env(t_data *data, t_node *node);
-void	builtin_exit(t_data *data, t_node *node);
+void	builtin_env(t_data *data);
+void	builtin_exit(t_node *node);
 void	builtin_export(t_data *data, t_node *node);
 void	exec_export(t_data *data, char *export);
-void	builtin_pwd(t_data *data, t_node *node);
-void	buitin_unset(t_data *data, t_node *node);
+void	builtin_pwd(t_data *data);
+void	builtin_unset(t_data *data, t_node *node);
 
 /* error */
 void	error_code(int code);
@@ -137,7 +136,7 @@ void	error_str_str_code(t_node *node, char *str, int code);
 /* utils */
 void	ft_pipe(t_data *data, t_node *node);
 void	ft_fork(t_node *node);
-void	ft_dup2(int	new_fd, int origin_fd);
+void	ft_dup2(int new_fd, int origin_fd);
 void	ft_close(int fd);
 void	ft_wait(void);
 void	double_list_clear(t_double_list *list);

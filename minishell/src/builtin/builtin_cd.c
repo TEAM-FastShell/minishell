@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:35:31 by seokklee          #+#    #+#             */
-/*   Updated: 2023/08/28 13:35:32 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/08/28 14:43:27 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../include/minishell.h"
 
 static void	builtin_cd_home(t_data *data, t_node *node);
 static void	set_pwds(t_data *data);
@@ -21,7 +21,7 @@ void	builtin_cd(t_data *data, t_node *node)
 	char	*path;
 
 	path = NULL;
-	if (node->cmd_args[1] == NULL
+	if (node->cmd_args[1] == NULL \
 	|| !ft_strncmp(node->cmd_args[1], "~", ft_strlen(node->cmd_args[1])))
 		builtin_cd_home(data, node);
 	else
@@ -44,7 +44,7 @@ static void	builtin_cd_home(t_data *data, t_node *node)
 		error_str_code(node, HOME_NOT_SET, 1);
 		exit(g_exit_status);
 	}
-	set_pwds(data->envp);
+	set_pwds(data);
 }
 
 void	set_pwds(t_data *data)

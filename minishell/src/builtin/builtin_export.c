@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:35:39 by seokklee          #+#    #+#             */
-/*   Updated: 2023/08/28 13:35:40 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/08/28 15:29:37 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../include/minishell.h"
 
 void		exec_export(t_data *data, char *export);
+static void	free_envp(char **envp);
 static int	is_exist(t_data *data, char	*export);
 
 void	builtin_export(t_data *data, t_node *node)
@@ -20,7 +21,7 @@ void	builtin_export(t_data *data, t_node *node)
 	if (node->pipe_type != NO_PIPE)
 		return ;
 	if (!node->cmd_args[1])
-		builtin_env(data, node);
+		builtin_env(data);
 	else
 	{
 		if (ft_isdigit(node->cmd_args[1][0]) || node->cmd_args[1][0] == '=')
@@ -38,6 +39,9 @@ void	exec_export(t_data *data, char *export)
 
 	if (is_exist(data, export))
 		return ;
+	i = 0;
+	while (data->envp[i])
+		i++;
 	new_envp = (char **)malloc(sizeof(char *) * (i + 2));
 	if (!new_envp)
 		g_exit_status = 1;
@@ -52,6 +56,11 @@ void	exec_export(t_data *data, char *export)
 	tmp = data->envp;
 	data->envp = new_envp;
 	free_envp(tmp);
+}
+
+static void	free_envp(char **envp)
+{
+	(void)(envp);
 }
 
 static int	is_exist(t_data *data, char	*export)

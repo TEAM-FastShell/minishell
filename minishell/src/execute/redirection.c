@@ -3,27 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:36:03 by seokklee          #+#    #+#             */
-/*   Updated: 2023/08/28 13:36:04 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/08/28 15:34:52 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../include/minishell.h"
 
 static void	ft_open_redir(t_data *data, t_node *node);
 static void	get_heredoc(t_data *data, t_node *node);
 
 void	exec_redir(t_data *data, t_node *node)
 {
-	int	i;
-
 	if ((node->redir_type == R_REDIR || node->redir_type == H_REDIR)
-	&& data->input_fd != STDIN_FILENO)
+		&& data->input_fd != STDIN_FILENO)
 		ft_close(data->input_fd);
 	if ((node->redir_type == W_REDIR || node->redir_type == A_REDIR)
-	&& data->output_fd != STDOUT_FILENO)
+		&& data->output_fd != STDOUT_FILENO)
 		ft_close(data->output_fd);
 	ft_open_redir(data, node);
 	if (node->redir_type == H_REDIR)

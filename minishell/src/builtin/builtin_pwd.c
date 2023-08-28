@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_pwd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:35:41 by seokklee          #+#    #+#             */
-/*   Updated: 2023/08/28 13:35:42 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/08/28 15:30:01 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../include/minishell.h"
 
-void	builtin_pwd(t_data *data, t_node *node)
+void	builtin_pwd(t_data *data)
 {
 	char	*pwd;
 

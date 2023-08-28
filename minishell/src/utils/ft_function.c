@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_function.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:36:10 by seokklee          #+#    #+#             */
-/*   Updated: 2023/08/28 13:36:11 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/08/28 14:44:21 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../include/minishell.h"
 
 void	ft_pipe(t_data *data, t_node *node)
 {
@@ -25,7 +25,7 @@ void	ft_fork(t_node *node)
 		ft_putendl_fd(strerror(errno), STDERR_FILENO);
 }
 
-void	ft_dup2(int	new_fd, int origin_fd)
+void	ft_dup2(int new_fd, int origin_fd)
 {
 	if (dup2(new_fd, origin_fd) < 0)
 		ft_putendl_fd(strerror(errno), STDERR_FILENO);

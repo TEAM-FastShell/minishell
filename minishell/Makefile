@@ -6,7 +6,7 @@
 #    By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/16 16:13:42 by youyoon           #+#    #+#              #
-#    Updated: 2023/08/28 12:58:36 by youyoon          ###   ########.fr        #
+#    Updated: 2023/08/28 14:09:53 by youyoon          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,23 @@ SRCS = src/parse/parse_error.c\
 	src/utils/parse/utils_parse_list2.c\
 	src/utils/utils.c\
 	src/utils/utils_signal.c\
-	src/main.c
+	src/utils/ft_function.c\
+	src/utils/get_next_line_utils.c\
+	src/utils/get_next_line.c\
+	src/utils/utils_clear.c\
+	src/main.c\
+	src/builtin/builtin_cd.c\
+	src/builtin/builtin_echo.c\
+	src/builtin/builtin_env.c\
+	src/builtin/builtin_exit.c\
+	src/builtin/builtin_export.c\
+	src/builtin/builtin_pwd.c\
+	src/builtin/builtin_unset.c\
+	src/builtin/builtin.c\
+	src/error/error.c\
+	src/execute/execute.c\
+	src/execute/pipe.c\
+	src/execute/redirection.c\
 
 OBJS_DIR = objs
 OBJS = $(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))

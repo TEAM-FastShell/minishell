@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 13:48:47 by youyoon           #+#    #+#             */
-/*   Updated: 2023/08/28 13:27:23 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/08/28 15:36:03 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/parse.h"
 #include "../include/minishell.h"
-
 
 int	main(int argc, char *argv[], char *envp[])
 {
@@ -37,9 +36,12 @@ int	main(int argc, char *argv[], char *envp[])
 			{
 				parser(input, envp, &list, &parse);
 				if (list.cnt > 0 && parse.env)
+				{	
 					init_data(&data, &list, &parse);
-				if (data)
-					parse_error(&list, &parse, data, NULL);
+					execute(data);
+				}
+				// if (data)
+				// 	parse_error(&list, &parse, data, NULL);
 			}
 		}
 		free(input);

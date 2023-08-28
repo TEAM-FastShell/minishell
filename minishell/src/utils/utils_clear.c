@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils_clear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:36:15 by seokklee          #+#    #+#             */
-/*   Updated: 2023/08/28 13:36:16 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/08/28 15:34:06 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../include/minishell.h"
 
 void	double_list_clear(t_double_list *list)
 {
@@ -24,8 +24,8 @@ void	double_list_clear(t_double_list *list)
 		cur->prev = NULL;
 		cur->next = NULL;
 		free_tab(cur->cmd_args);
-		cur->pipe_type = NULL;
-		cur->redir_type = NULL;
+		cur->pipe_type = 0;
+		cur->redir_type = 0;
 		cur->pid = 0;
 		cur->idx = 0;
 		free(cur);

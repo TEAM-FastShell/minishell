@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:35:33 by seokklee          #+#    #+#             */
-/*   Updated: 2023/08/28 13:35:34 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/08/28 14:16:49 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../include/minishell.h"
 
 void	builtin_echo(t_data *data, t_node *node)
 {
@@ -18,6 +18,7 @@ void	builtin_echo(t_data *data, t_node *node)
 	int	i;
 
 	new_line = 1;
+	i = 1;
 	if (!strncmp(node->cmd_args[i], "-n", ft_strlen(node->cmd_args[i])))
 	{
 		new_line = 0;

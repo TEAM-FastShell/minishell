@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:36:14 by seokklee          #+#    #+#             */
-/*   Updated: 2023/08/28 13:36:15 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/08/28 14:14:48 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../include/minishell.h"
 
 char	*ft_get_line(int fd, char **backup, char *buffer);
 size_t	ft_find_nl_idx(char *backup_fd);

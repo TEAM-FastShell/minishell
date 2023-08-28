@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:36:00 by seokklee          #+#    #+#             */
-/*   Updated: 2023/08/28 13:36:01 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/08/28 14:13:00 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../include/minishell.h"
 
 static void	cntl_pipe(t_data *data, t_node *node);
 static void	close_pipe(t_data *data, t_node *node);
