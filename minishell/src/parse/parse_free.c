@@ -6,7 +6,7 @@
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 17:13:46 by youyoon           #+#    #+#             */
-/*   Updated: 2023/08/28 14:04:58 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/08/28 16:38:14 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	free_list(t_double_list *list)
 		del = cur;
 		cur = cur->next;
 		i = 0;
-		while (del->cmd_args[i])
+		while (del->cmd_args[i] != NULL)
 		{
 			free(del->cmd_args[i]);
 			i++;
