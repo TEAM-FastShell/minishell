@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_parse.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 15:52:10 by youyoon           #+#    #+#             */
-/*   Updated: 2023/08/29 15:11:35 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/08/29 16:43:31 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,8 @@ void	init_in_while_data(t_data *data, t_double_list *list)
 			if (!data->pipe_fd[i])
 				return (parse_error(list, NULL, data, MALLOC_ERROR));
 		}
-	}
+		data->pipe_fd[i - 1] = NULL;
+	}/*fix*/
 	data->input_fd = 0;
 	data->output_fd = 1;
 	data->list = list;

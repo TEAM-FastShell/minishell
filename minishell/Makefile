@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+         #
+#    By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/16 16:13:42 by youyoon           #+#    #+#              #
-#    Updated: 2023/08/29 14:37:03 by youyoon          ###   ########.fr        #
+#    Updated: 2023/08/29 15:29:25 by seokklee         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = minishell
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g2
-LDFLAGS = -I/opt/homebrew/opt/readline/include -lreadline 
+LDFLAGS = -I/opt/homebrew/opt/readline/include -lreadline -L /opt/homebrew/opt/readline/lib
 
 SRCS = src/parse/parse_error.c\
 	src/parse/parse.c\

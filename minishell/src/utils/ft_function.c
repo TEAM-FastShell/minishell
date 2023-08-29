@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_function.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:36:10 by seokklee          #+#    #+#             */
-/*   Updated: 2023/08/28 14:44:21 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/08/29 16:42:07 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	ft_pipe(t_data *data, t_node *node)
 {
+	if (node->pipe_type == R_PIPE)
+		return ;
 	if (pipe(data->pipe_fd[node->idx]) < 0)
 		ft_putendl_fd(strerror(errno), STDERR_FILENO);
 }
