@@ -6,7 +6,7 @@
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:35:11 by seokklee          #+#    #+#             */
-/*   Updated: 2023/08/28 15:33:06 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/08/29 13:05:07 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ typedef struct s_data
 	t_double_list	*list;
 	char			**envp;
 	char			**path_tab;
-	int				*pipe_fd[2];
+	int				**pipe_fd;
 	int				input_fd;
 	int				output_fd;
 }	t_data;

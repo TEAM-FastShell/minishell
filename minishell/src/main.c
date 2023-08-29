@@ -6,7 +6,7 @@
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 13:48:47 by youyoon           #+#    #+#             */
-/*   Updated: 2023/08/28 15:40:25 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/08/29 13:56:22 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,9 @@ int	main(int argc, char *argv[], char *envp[])
 	char			*input;
 	t_double_list	list;
 	t_parse			parse;
-	t_data			*data;
+	t_data			data;
 
+	init_data_before_start(&data, envp);
 	while (argc && argv)
 	{
 		set_signal();
@@ -27,7 +28,7 @@ int	main(int argc, char *argv[], char *envp[])
 		if (input == NULL)
 		{
 			printf("exit\n");
-			break ;
+			break ; /* exit g_status 처리 */
 		}
 		if (*input != '\0')
 		{
@@ -35,19 +36,15 @@ int	main(int argc, char *argv[], char *envp[])
 			if (!is_whitespace(input))
 			{
 				parser(input, envp, &list, &parse);
-				printf("parse\n");
-				if (list.cnt > 0 && parse.env)
+				if (list.head && parse.env)
 				{	
-					init_data(&data, &list, &parse);
-					printf("init_data\n");
-					execute(data);
-					printf("execute\n");
+					init_in_while_data(&data, &list);
+					execute(&data);
 				}
-				// if (data)
-				// 	parse_error(&list, &parse, data, NULL);
 			}
 		}
 		free(input);
+		/* 마지막 모두 free */
 	}
 	return (0);
 }
