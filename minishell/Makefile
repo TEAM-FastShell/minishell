@@ -6,15 +6,15 @@
 #    By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/16 16:13:42 by youyoon           #+#    #+#              #
-#    Updated: 2023/08/29 14:18:47 by youyoon          ###   ########.fr        #
+#    Updated: 2023/08/29 14:37:03 by youyoon          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
-LDFLAGS = -lreadline
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g2
+LDFLAGS = -I/opt/homebrew/opt/readline/include -lreadline 
 
 SRCS = src/parse/parse_error.c\
 	src/parse/parse.c\
@@ -50,7 +50,7 @@ all : $(NAME)
 
 $(OBJS_DIR)/%.o: %.c
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -I/opt/homebrew/opt/readline/include/ -c $< -o $@
 
 $(NAME) : $(OBJS)
 	make -C ./libft
