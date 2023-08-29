@@ -6,7 +6,7 @@
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 17:13:46 by youyoon           #+#    #+#             */
-/*   Updated: 2023/08/28 23:29:39 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/08/29 19:07:13 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ void	free_parse(t_parse *parse)
 	i = 0;
 	while (parse->cmd[i])
 		free(parse->cmd[i++]);
-	i = -1;
-	while (parse->env[++i])
-		free(parse->env[i]);
+	i = 0;
+	while (parse->env[i])
+		free(parse->env[i++]);
+	free(parse->env);
 	free(parse->cmd);
 	free(parse->buff);
-	free(parse->env);
 	parse->quote = 0;
 	parse->c_idx = 0;
 	parse->b_idx = 0;
