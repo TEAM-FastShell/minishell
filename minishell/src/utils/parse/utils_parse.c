@@ -6,7 +6,7 @@
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 15:52:10 by youyoon           #+#    #+#             */
-/*   Updated: 2023/08/28 23:35:20 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/08/29 14:03:26 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,30 +75,24 @@ int	check_redir(char input, char input_next)
 	}
 	return (NO_REDIR);
 }
-/*
-while 시작 전 초기화 부분:
-while문 안에서 필요시 초기화:
-*/
-void	init_data(t_data **data_ptr, t_double_list *list, t_parse *parse)
-{
-	int		i;
-	t_data	*data;
 
-	if (!list->head || !parse->env)
+void	init_in_while_data(t_data *data, t_double_list *list)
+{
+	int	i;
+
+	if (!list->head)
 		return ;
-	*data_ptr = (t_data *) malloc(sizeof(t_data));
-	if (!(*data_ptr))
-		return (parse_error(list, parse, *data_ptr, MALLOC_ERROR));
-	data = *data_ptr;
-	data->envp = parse->env;
-	i = -1;
-	if (list->cnt > 1)
+	if (list->cmd_cnt > 1)
 	{
-		while (++i < 2)
+		data->pipe_fd = (int **)malloc(sizeof(int *) * (list->cmd_cnt));
+		if (!data->pipe_fd)
+			return (parse_error(list, NULL, data, MALLOC_ERROR));
+		i = -1;
+		while (++i < list->cmd_cnt)
 		{
-			data->pipe_fd[i] = (int *)malloc(sizeof(int) * (list->cmd_cnt - 1));
+			data->pipe_fd[i] = (int *)malloc(sizeof(int) * (2));
 			if (!data->pipe_fd[i])
-				return (parse_error(list, parse, data, MALLOC_ERROR));
+				return (parse_error(list, NULL, data, MALLOC_ERROR));
 		}
 	}
 	data->input_fd = 0;

@@ -6,7 +6,7 @@
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 19:57:43 by youyoon           #+#    #+#             */
-/*   Updated: 2023/08/28 13:01:15 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/08/29 13:43:57 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,4 +112,5 @@ void	parser(char *input, char **envp, t_double_list *list, t_parse *parse)
 		return (parse_error(list, parse, NULL, SYNTAX_ERROR));
 	set_pipe_type(list);
 	set_list_idx(list);
+	parse_error(NULL, parse, NULL, NULL);
 }
