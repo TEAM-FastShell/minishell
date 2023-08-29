@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_parse.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 15:52:10 by youyoon           #+#    #+#             */
-/*   Updated: 2023/08/29 16:43:31 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/08/29 19:15:27 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,12 @@ char	**copy_env(char **env)
 	ret = (char **) malloc(sizeof(char *) * (i + 1));
 	if (!ret)
 		return (NULL);
-	i = -1;
-	while (env[++i])
+	i = 0;
+	while (env[i])
+	{	
 		ret[i] = ft_strdup(env[i]);
+		i++;
+	}
 	ret[i] = NULL;
 	return (ret);
 }

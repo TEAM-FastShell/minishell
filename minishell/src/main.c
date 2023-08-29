@@ -6,7 +6,7 @@
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 13:48:47 by youyoon           #+#    #+#             */
-/*   Updated: 2023/08/29 15:11:55 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/08/29 19:15:47 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	main(int argc, char *argv[], char *envp[])
 	char			*input;
 	t_double_list	list;
 	t_parse			parse;
-	t_data			data;
+	t_data			*data;
 
 	init_data_before_start(&data, envp);
 	while (argc && argv)
@@ -36,10 +36,10 @@ int	main(int argc, char *argv[], char *envp[])
 			if (!is_whitespace(input))
 			{
 				parser(input, envp, &list, &parse);
-				if (list.head && parse.env)
+				if (list.head)
 				{	
-					init_in_while_data(&data, &list);
-					execute(&data);
+					init_in_while_data(data, &list);
+					execute(data);
 				}
 			}
 		}
