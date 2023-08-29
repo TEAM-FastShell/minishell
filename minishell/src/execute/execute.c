@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:35:58 by seokklee          #+#    #+#             */
-/*   Updated: 2023/08/29 13:42:48 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/08/29 14:13:55 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ static void	exec_child(t_data *data, t_node *node)
 	connect_pipe(data, node);
 	if (is_builtin(node->cmd_args))
 		exec_builtin(data, node);
-	cmd = get_cmd(data->path_tab, node->cmd_args[0]);
+	cmd = get_cmd(ft_split(getenv("PATH"), ':'), node->cmd_args[0]);
 	if (!cmd)
 		error_str_code(node, CMD_NOT_FOUND, 127);
 	if (execve(cmd, node->cmd_args, data->envp) < 0)
