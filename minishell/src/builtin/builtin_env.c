@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:35:35 by seokklee          #+#    #+#             */
-/*   Updated: 2023/08/28 15:22:13 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/08/29 18:02:28 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	builtin_env(t_data *data)
 	int	i;
 
 	i = 0;
-	while (data->envp)
+	while (data->envp[i])
 	{
 		ft_putendl_fd(data->envp[i], data->output_fd);
 		i++;

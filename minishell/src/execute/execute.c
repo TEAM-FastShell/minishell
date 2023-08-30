@@ -6,7 +6,7 @@
 /*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:35:58 by seokklee          #+#    #+#             */
-/*   Updated: 2023/08/29 16:43:45 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/08/29 17:10:25 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ static void	wait_child(t_data *data);
 static void	exec_child(t_data *data, t_node *node);
 static char	*get_cmd(char **path_tab, char *cmd_uncertain);
 
-/*실행될 때 마다 fd 초기화*/
 void	execute(t_data *data)
 {
 	t_node	*cur;
@@ -58,7 +57,7 @@ static void	exec_pipe(t_data *data, t_node *node)
 		exec_redir(data, node);
 		return ;
 	}
-	if (node->pipe_type != NO_PIPE)
+	if (node->pipe_type != NO_PIPE && node->pipe_type != R_PIPE)
 		ft_pipe(data, node);
 	ft_fork(node);
 	if (node->pid == 0)
@@ -84,8 +83,11 @@ static void	wait_child(t_data *data)
 	int	i;
 
 	i = 0;
-	while (i++ < data->list->cmd_cnt)
+	while (i < data->list->cmd_cnt)
+	{
 		ft_wait();
+		i++;
+	}
 	waitpid(data->list->tail->pid, &g_exit_status, 0);
 }
 
