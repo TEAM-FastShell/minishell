@@ -6,7 +6,7 @@
 /*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:36:03 by seokklee          #+#    #+#             */
-/*   Updated: 2023/08/29 17:18:32 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/08/31 10:37:15 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ static void	ft_open_redir(t_data *data, t_node *node)
 		data->output_fd = open(file_name, O_CREAT | O_APPEND | O_RDWR, 0644);
 	else if (type == H_REDIR)
 	{
-		while (!access(file_name, F_OK))
-			file_name[5]++;
+		while (!access("here_doc!", F_OK))
+			file_name[8]++;
 		data->input_fd = open(file_name, O_CREAT | O_TRUNC | O_RDWR, 0644);
 		node->cmd_args[0] = file_name;
 	}

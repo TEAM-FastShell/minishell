@@ -6,7 +6,7 @@
 /*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:35:58 by seokklee          #+#    #+#             */
-/*   Updated: 2023/08/29 17:10:25 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/08/31 14:34:14 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ void	execute(t_data *data)
 			if (cur->redir_type != NO_REDIR && cur->pipe_type == NO_PIPE)
 			{
 				exec_redir(data, cur);
-				break ;
+				cur = cur->next;
+				continue ;
 			}
 			if (is_builtin(cur->cmd_args) && cur->pipe_type == NO_PIPE)
 				exec_builtin(data, cur);
@@ -44,8 +45,12 @@ void	execute(t_data *data)
 	{
 		i = -1;
 		while (data->pipe_fd[++i])
+		{
 			free(data->pipe_fd[i]);
+			data->pipe_fd[i] = NULL;
+		}
 		free(data->pipe_fd);
+		data->pipe_fd = NULL;
 	}
 	free_list(data->list);
 }
@@ -70,7 +75,7 @@ static void	exec_pipe(t_data *data, t_node *node)
 			ft_close(data->output_fd);
 		data->input_fd = 0;
 		data->output_fd = 1;
-		if (node->pipe_type == W_PIPE || NO_PIPE)
+		if (node->idx == data->list->cmd_cnt - 1)
 		{
 			close_all_pipes(data);
 			wait_child(data);
