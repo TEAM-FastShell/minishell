@@ -61,10 +61,10 @@ static void	prompt_while(t_data *data, t_double_list list, t_parse parse, char *
 			}
 		}
 		free(input);
-		//sleep(1);
 	}
 }
 
+/* 최종 사용한 struct 모두 free 구현 필요 */
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_double_list	list;

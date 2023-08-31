@@ -63,7 +63,9 @@ static void	get_heredoc(t_data *data, t_node *node)
 	line = get_next_line(0);
 	while (line)
 	{
-		if (!ft_strncmp(line, node->cmd_args[1], ft_strlen(line)))
+		if (ft_strchr(line, '\n'))
+			line = ft_strtrim(line, "\n");
+		if (!ft_strncmp(line, node->cmd_args[0], ft_strlen(line)))
 			break ;
 		write(data->input_fd, line, ft_strlen(line));
 		free(line);

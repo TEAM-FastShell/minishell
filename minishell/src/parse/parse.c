@@ -89,12 +89,13 @@ int	parse_char(t_double_list *list, t_parse *parse, char *input, int *i)
 	return (ret);
 }
 
-void	parser(char *input, char **envp, t_double_list *list, t_parse *parse)
+void	parser(char *input_tmp, char **envp, t_double_list *list, t_parse *parse)
 {
 	int				i;
 	int				token_cnt;
+	char			*input;
 
-	input = ft_strtrim(input, " ");
+	input = ft_strtrim(input_tmp, " ");
 	token_cnt = count_word(input);
 	init_list(list);
 	init_parse(parse, token_cnt, (int) ft_strlen(input), envp);
@@ -113,4 +114,5 @@ void	parser(char *input, char **envp, t_double_list *list, t_parse *parse)
 	set_pipe_type(list);
 	set_list_idx(list);
 	parse_error(NULL, parse, NULL, NULL);
+	free(input);
 }

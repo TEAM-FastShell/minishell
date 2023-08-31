@@ -34,6 +34,10 @@ void	parse_error(t_double_list *list, t_parse *parse, \
 		i = -1;
 		while (data->envp[++i])
 			free(data->envp[i]);
+		i = -1;
+		while (data->path_tab[++i])
+			free(data->path_tab[i]);
+		free(data->path_tab);
 		free(data->envp);
 		free(data);
 	}

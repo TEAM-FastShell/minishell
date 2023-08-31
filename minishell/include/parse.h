@@ -22,7 +22,7 @@
 # include "minishell.h"
 
 /* src/parse/parse.c */
-void	parser(char *input, char **envp, t_double_list *list, t_parse *parse);
+void	parser(char *input_tmp, char **envp, t_double_list *list, t_parse *parse);
 void	put_buff_to_cmd(t_parse *parse);
 int		parse_char(t_double_list *list, t_parse *parse, char *input, int *i);
 
