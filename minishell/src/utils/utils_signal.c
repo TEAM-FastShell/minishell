@@ -13,25 +13,22 @@
 #include "../../include/minishell.h"
 #include "../../include/parse.h"
 
+/* execute, heredoc 시그널 처리 필요 */
 void	signal_handler(int signo)
 {
 	if (signo == SIGINT)
 	{
-		ft_putchar_fd('\n', STDOUT);
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
+		printf("\n");
 		g_exit_status = 1;
 	}
-	else if (signo == SIGQUIT)
-	{
-		rl_on_new_line();
-		rl_redisplay();
-	}
+	rl_replace_line("", 1);
+	if (rl_on_new_line() == -1)
+		exit(1);
+	rl_redisplay();
 }
 
-void	set_signal(void)
+void	set_signal(void *int_handler, void *quit_handler)
 {
-	signal(SIGINT, signal_handler);
-	signal(SIGQUIT, signal_handler);
+	signal(SIGINT, int_handler);
+	signal(SIGQUIT, quit_handler);
 }

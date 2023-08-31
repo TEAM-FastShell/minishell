@@ -13,7 +13,7 @@
 NAME = minishell
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g2
+CFLAGS = -Wall -Wextra -Werror #-fsanitize=address -g2
 LDFLAGS = -I/opt/homebrew/opt/readline/include -lreadline #-L /opt/homebrew/opt/readline/lib
 
 SRCS = src/parse/parse_error.c\

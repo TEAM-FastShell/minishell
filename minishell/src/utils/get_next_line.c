@@ -19,7 +19,7 @@ char	*ft_eof(int fd, char **backup);
 
 char	*get_next_line(int fd)
 {
-	static char	*backup[OPEN_MAX];
+	static char	*backup[FOPEN_MAX];
 	char		*line;
 	char		*buffer;
 
