@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:36:00 by seokklee          #+#    #+#             */
-/*   Updated: 2023/08/28 14:13:00 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/08/31 14:34:19 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,14 @@ static void	close_pipe(t_data *data, t_node *node);
 void	connect_pipe(t_data *data, t_node *node)
 {
 	cntl_pipe(data, node);
-	ft_dup2(data->input_fd, STDIN_FILENO);
-	ft_dup2(data->output_fd, STDOUT_FILENO);
+	if (data->input_fd != STDIN_FILENO)
+		ft_dup2(data->input_fd, STDIN_FILENO);
+	if (data->input_fd != STDOUT_FILENO)
+		ft_dup2(data->input_fd, STDOUT_FILENO);
+	// if (data->input_fd != 0)
+	// 	ft_dup2(data->input_fd, 0);
+	// if (data->output_fd != 1)
+	// 	ft_dup2(data->output_fd, 1);
 	close_pipe(data, node);
 }
 
