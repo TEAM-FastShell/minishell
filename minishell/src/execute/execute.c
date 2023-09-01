@@ -6,7 +6,7 @@
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:35:58 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/01 13:02:11 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/09/01 13:02:57 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	execute(t_data *data)
 		}
 		cur = cur->next;
 	}
+	/* free 정리 필요 */
 	if (data->list->cmd_cnt > 1)
 	{
 		i = -1;

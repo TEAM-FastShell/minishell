@@ -6,7 +6,7 @@
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 15:52:10 by youyoon           #+#    #+#             */
-/*   Updated: 2023/08/29 19:15:27 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/09/01 13:23:34 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	init_in_while_data(t_data *data, t_double_list *list)
 				return (parse_error(list, NULL, data, MALLOC_ERROR));
 		}
 		data->pipe_fd[i - 1] = NULL;
-	}/*fix*/
+	}
 	data->input_fd = 0;
 	data->output_fd = 1;
 	data->list = list;

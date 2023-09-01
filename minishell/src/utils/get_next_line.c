@@ -6,7 +6,7 @@
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:36:14 by seokklee          #+#    #+#             */
-/*   Updated: 2023/08/28 14:14:48 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/09/01 13:13:32 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_eof(int fd, char **backup);
 
 char	*get_next_line(int fd)
 {
-	static char	*backup[FOPEN_MAX];
+	static char	*backup[OPEN_MAX];
 	char		*line;
 	char		*buffer;
 

@@ -6,7 +6,7 @@
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:35:11 by seokklee          #+#    #+#             */
-/*   Updated: 2023/08/29 13:05:07 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/09/01 13:13:17 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@
 # define NON_VALID_ID "not a valid identifier"
 # define CMD_NOT_FOUND "command not found"
 
-//int	g_exit_status;
+int	g_exit_status;
 
-extern int g_exit_status;
+//extern int g_exit_status;
 
 # define STDIN 			0
 # define STDOUT 		1
