@@ -94,7 +94,7 @@ void	init_in_while_data(t_data *data, t_double_list *list)
 		while (++i < list->cmd_cnt)
 		{
 			data->pipe_fd[i] = (int *)malloc(sizeof(int) * (2));
-			if (!data->pipe_fd[i])
+			if (!(data->pipe_fd[i]))
 				return (parse_error(list, NULL, data, MALLOC_ERROR));
 		}
 		data->pipe_fd[i - 1] = NULL;
