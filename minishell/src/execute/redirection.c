@@ -6,7 +6,7 @@
 /*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:36:03 by seokklee          #+#    #+#             */
-/*   Updated: 2023/08/31 10:37:15 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/08/31 21:31:47 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,11 @@ static void	ft_open_redir(t_data *data, t_node *node)
 		data->output_fd = open(file_name, O_CREAT | O_APPEND | O_RDWR, 0644);
 	else if (type == H_REDIR)
 	{
-		while (!access("here_doc!", F_OK))
+		printf("node->cmd_args[0] %s node->cmd_args[1] %s\n", node->cmd_args[0], node->cmd_args[1]);
+		file_name = ft_strdup("here_doc!");
+		while (!access(file_name, F_OK))
 			file_name[8]++;
 		data->input_fd = open(file_name, O_CREAT | O_TRUNC | O_RDWR, 0644);
-		node->cmd_args[0] = file_name;
 	}
 }
 
@@ -63,7 +64,9 @@ static void	get_heredoc(t_data *data, t_node *node)
 	line = get_next_line(0);
 	while (line)
 	{
-		if (!ft_strncmp(line, node->cmd_args[1], ft_strlen(line)))
+		printf("line %s\n", line);
+		printf("str_len %ld\n", ft_strlen(line));
+		if (!ft_strncmp(line, node->cmd_args[0], ft_strlen(line)))
 			break ;
 		write(data->input_fd, line, ft_strlen(line));
 		free(line);

@@ -2,6 +2,7 @@
 	"files.associations": {
 		"minishell.h": "c",
 		"libft.h": "c",
-		"sstream": "c"
+		"sstream": "c",
+		"__node_handle": "c"
 	}
 }
