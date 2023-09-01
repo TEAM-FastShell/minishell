@@ -6,7 +6,7 @@
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 13:48:47 by youyoon           #+#    #+#             */
-/*   Updated: 2023/09/01 14:48:58 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/09/01 14:59:16 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,24 +58,6 @@ static void	prompt_while(t_data *data, t_double_list *list, \
 				if (list->head)
 				{
 					init_in_while_data(data, list);
-
-					t_node *cur = data->list->head;
-					while (cur)
-					{
-						int cnt = 0;
-						while (cur->cmd_args[cnt])
-							cnt++;
-						printf("cnt: %d, ", cnt);
-						int i = 0;
-						while (cur->cmd_args[i])
-						{
-							printf("%s, ", cur->cmd_args[i]);
-							i++;
-						}
-						printf("pipe %d redir %d -> ", cur->pipe_type, cur->redir_type);
-						cur = cur->next;
-					}
-					printf("\n");
 					execute(data);
 				}
 			}
