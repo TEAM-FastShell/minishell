@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 13:48:47 by youyoon           #+#    #+#             */
-/*   Updated: 2023/08/29 19:15:47 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/09/03 11:47:26 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	main(int argc, char *argv[], char *envp[])
 			{
 				parser(input, envp, &list, &parse);
 				if (list.head)
-				{	
+				{
 					init_in_while_data(data, &list);
 					execute(data);
 				}

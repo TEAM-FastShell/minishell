@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:35:31 by seokklee          #+#    #+#             */
-/*   Updated: 2023/08/28 14:43:27 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/09/03 16:22:12 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static void	builtin_cd_home(t_data *data, t_node *node);
 static void	set_pwds(t_data *data);
-static char	*get_envv(char *envp[], char *envv);
 
 void	builtin_cd(t_data *data, t_node *node)
 {
@@ -38,7 +37,7 @@ static void	builtin_cd_home(t_data *data, t_node *node)
 {
 	char	*home;
 
-	home = get_envv(data->envp, "HOME");
+	home = get_envv_data(data->envp, "HOME");
 	if (chdir(home) < 0)
 	{
 		error_str_code(node, HOME_NOT_SET, 1);
@@ -55,21 +54,10 @@ void	set_pwds(t_data *data)
 
 	tmp = (char *)malloc(sizeof(char) * 2048);
 	pwd = ft_strjoin("PWD=", getcwd(tmp, 2048));
-	oldpwd = ft_strjoin("OLDPWD=", get_envv(data->envp, "PWD"));
+	oldpwd = ft_strjoin("OLDPWD=", get_envv_data(data->envp, "PWD"));
 	exec_export(data, pwd);
 	exec_export(data, oldpwd);
 	free(tmp);
 	free(pwd);
 	free(oldpwd);
-}
-
-char	*get_envv(char *envp[], char *envv)
-{
-	while (*envp)
-	{
-		if (!ft_strncmp(*envp, envv, ft_strlen(envv)))
-			return (*envp + ft_strlen(envv) + 1);
-		envp++;
-	}
-	return ("");
 }

@@ -6,14 +6,14 @@
 /*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:36:03 by seokklee          #+#    #+#             */
-/*   Updated: 2023/08/31 21:31:47 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/09/03 09:53:30 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
 static void	ft_open_redir(t_data *data, t_node *node);
-static void	get_heredoc(t_data *data, t_node *node);
+static void	get_heredoc(t_data *data, t_node *node, char *file_name);
 
 void	exec_redir(t_data *data, t_node *node)
 {
@@ -24,39 +24,32 @@ void	exec_redir(t_data *data, t_node *node)
 		&& data->output_fd != STDOUT_FILENO)
 		ft_close(data->output_fd);
 	ft_open_redir(data, node);
-	if (node->redir_type == H_REDIR)
-		get_heredoc(data, node);
 	if (data->input_fd < 0 || data->output_fd < 0)
 		ft_putendl_fd(strerror(errno), STDERR_FILENO);
 }
 
 static void	ft_open_redir(t_data *data, t_node *node)
 {
-	t_redir_type	type;
 	char			*file_name;
 
-	type = node->redir_type;
 	file_name = node->cmd_args[0];
-	if (type == R_REDIR)
+	if (node->redir_type == R_REDIR)
 		data->input_fd = open(file_name, O_RDONLY);
-	else if (type == W_REDIR)
-	{
+	else if (node->redir_type == W_REDIR)
 		data->output_fd = open(file_name, O_CREAT | O_TRUNC | O_RDWR, 0644);
-		printf("output_fd %d\n", data->output_fd);
-	}
-	else if (type == A_REDIR)
+	else if (node->redir_type == A_REDIR)
 		data->output_fd = open(file_name, O_CREAT | O_APPEND | O_RDWR, 0644);
-	else if (type == H_REDIR)
+	else if (node->redir_type == H_REDIR)
 	{
-		printf("node->cmd_args[0] %s node->cmd_args[1] %s\n", node->cmd_args[0], node->cmd_args[1]);
 		file_name = ft_strdup("here_doc!");
 		while (!access(file_name, F_OK))
 			file_name[8]++;
 		data->input_fd = open(file_name, O_CREAT | O_TRUNC | O_RDWR, 0644);
+		get_heredoc(data, node, file_name);
 	}
 }
 
-static void	get_heredoc(t_data *data, t_node *node)
+static void	get_heredoc(t_data *data, t_node *node, char *file_name)
 {
 	char	*line;
 
@@ -66,7 +59,7 @@ static void	get_heredoc(t_data *data, t_node *node)
 	{
 		printf("line %s\n", line);
 		printf("str_len %ld\n", ft_strlen(line));
-		if (!ft_strncmp(line, node->cmd_args[0], ft_strlen(line)))
+		if (!ft_strncmp(line, node->cmd_args[0], ft_strlen(line) - 1))
 			break ;
 		write(data->input_fd, line, ft_strlen(line));
 		free(line);
@@ -75,6 +68,6 @@ static void	get_heredoc(t_data *data, t_node *node)
 	}
 	free(line);
 	ft_close(data->input_fd);
-	data->input_fd = open(node->cmd_args[0], O_RDONLY);
-	unlink(node->cmd_args[0]);
+	data->input_fd = open(file_name, O_RDONLY);
+	unlink(file_name);
 }
