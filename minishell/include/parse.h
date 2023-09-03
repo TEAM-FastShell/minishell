@@ -6,7 +6,7 @@
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 15:39:09 by youyoon           #+#    #+#             */
-/*   Updated: 2023/09/01 14:38:19 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/09/03 15:12:19 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	init_in_while_data(t_data *data, t_double_list *list);
 /* src/utils/parse/utils_parse2.c */
 int		count_word(char *str);
 void	init_data_before_start(t_data **data, char **envp);
+char	*get_envv(char *envp[], char *envv);
 
 /* src/utils/parse/utils_parse_list.c */
 t_node	*make_node(t_parse *parse);

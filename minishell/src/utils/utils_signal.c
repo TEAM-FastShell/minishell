@@ -6,14 +6,13 @@
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 23:47:04 by youyoon           #+#    #+#             */
-/*   Updated: 2023/08/28 14:44:48 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/09/03 13:01:30 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 #include "../../include/parse.h"
 
-/* execute, heredoc 시그널 처리 필요 */
 void	signal_handler(int signo)
 {
 	if (signo == SIGINT)

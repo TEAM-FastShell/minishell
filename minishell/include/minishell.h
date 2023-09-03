@@ -6,7 +6,7 @@
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:35:11 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/01 13:13:17 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/09/03 16:04:36 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ typedef struct s_parse
 
 /* src/utils/utils.c */
 int		is_whitespace(char *str);
+char	*ft_strtok(char *str, const char delim);
 
 /* src/utils/utils_signal.c */
 void	signal_handler(int signo);

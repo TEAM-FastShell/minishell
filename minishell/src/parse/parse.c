@@ -6,7 +6,7 @@
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 19:57:43 by youyoon           #+#    #+#             */
-/*   Updated: 2023/09/01 14:47:32 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/09/03 22:12:51 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,8 @@
 
 static void	set_quote_space(char c, t_parse *parse)
 {
-	if (!parse->quote && c == ' ')
-	{
+	if ((!parse->quote || parse->quote == '\"') && c == ' ')
 		put_buff_to_cmd(parse);
-	}
 	else if (!parse->quote && (c == '\'' || c == '\"'))
 	{	
 		parse->quote = c;
@@ -50,8 +48,8 @@ int	parse_char(t_double_list *list, t_parse *parse, char *input, int *i)
 	int	ret;
 
 	ret = SUCCESS;
-	if (parse->quote == input[*i] || (!parse->quote && \
-		(input[*i] == '\'' || input[*i] == '\"' || input[*i] == ' ')))
+	if (parse->quote == input[*i] || (parse->quote == '\"' && input[*i] == ' ') \
+	|| (!parse->quote && (input[*i] == '\'' || input[*i] == '\"' || input[*i] == ' ')))
 		set_quote_space(input[*i], parse);
 	else if (!parse->quote && input[*i] == ';')
 		ret = ERROR;
