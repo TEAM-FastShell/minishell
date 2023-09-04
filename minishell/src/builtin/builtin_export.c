@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   builtin_export.c                                   :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/28 13:35:39 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/03 18:14:41 by seokklee         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../include/minishell.h"
 
 void		exec_export(t_data *data, char *export);
@@ -56,7 +44,7 @@ void	exec_export(t_data *data, char *export)
 	data->envp = new_envp;
 	free_tab(tmp);
 }
-
+/*tjrrbdi rhcu*/
 static int	is_exist(t_data *data, char	*export)
 {
 	int		i;
