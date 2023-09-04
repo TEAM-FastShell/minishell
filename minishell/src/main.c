@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 13:48:47 by youyoon           #+#    #+#             */
-/*   Updated: 2023/09/04 12:46:44 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/09/04 15:31:33 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/parse.h"
 #include "../include/minishell.h"
 
-//int g_exit_status = 0;
+//int data->exit_status = 0;
 
 static int	set_main(void)
 {
@@ -48,7 +48,7 @@ static void	prompt_while(t_data *data, t_double_list *list, \
 		if (!input)
 			print_prompt(&input);
 		else if (*input == '\0')
-			g_exit_status = 0;
+			data->exit_status = 0;
 		else
 		{
 			add_history(input);

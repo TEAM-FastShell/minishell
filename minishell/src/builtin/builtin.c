@@ -6,7 +6,7 @@
 /*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:35:47 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/03 18:15:53 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/09/04 15:35:26 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	exec_builtin(t_data *data, t_node *node)
 	else if (!ft_strncmp(cmd, "env", len_cmd))
 		builtin_env(data);
 	else if (!ft_strncmp(cmd, "exit", len_cmd))
-		builtin_exit(node);
+		builtin_exit(data, node);
 }
 
 int	is_builtin(char **cmd_args)

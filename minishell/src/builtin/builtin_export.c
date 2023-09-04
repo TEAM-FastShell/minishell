@@ -6,7 +6,7 @@
 /*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:35:39 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/03 18:14:41 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/09/04 15:38:08 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ void	builtin_export(t_data *data, t_node *node)
 	else
 	{
 		if (ft_isdigit(node->cmd_args[1][0]) || node->cmd_args[1][0] == '=')
-			error_str_str_code(node, NON_VALID_ID, 1);
+			error_str_str_code(data, node, NON_VALID_ID, 1);
 		exec_export(data, node->cmd_args[1]);
 	}
-	g_exit_status = 0;
+	data->exit_status = 0;
 }
 
 void	exec_export(t_data *data, char *export)
@@ -39,21 +39,21 @@ void	exec_export(t_data *data, char *export)
 	if (is_exist(data, export))
 		return ;
 	i = 0;
-	while (data->envp[i])
+	while (g_envp[i])
 		i++;
 	new_envp = (char **)malloc(sizeof(char *) * (i + 2));
 	if (!new_envp)
-		g_exit_status = 1;
+		data->exit_status = 1;
 	i = 0;
-	while (data->envp[i])
+	while (g_envp[i])
 	{
-		new_envp[i] = ft_strdup(data->envp[i]);
+		new_envp[i] = ft_strdup(g_envp[i]);
 		i++;
 	}
 	new_envp[i] = ft_strdup(export);
 	new_envp[++i] = NULL;
-	tmp = data->envp;
-	data->envp = new_envp;
+	tmp = g_envp;
+	g_envp = new_envp;
 	free_tab(tmp);
 }
 
@@ -62,11 +62,11 @@ static int	is_exist(t_data *data, char	*export)
 	int		i;
 
 	i = 0;
-	while (data->envp[i])
+	while (g_envp[i])
 	{
-		if (!ft_strncmp(data->envp[i], export, ft_strlen(export)))
+		if (!ft_strncmp(g_envp[i], export, ft_strlen(export)))
 		{
-			data->envp[i] = ft_strdup(export);
+			g_envp[i] = ft_strdup(export);
 			return (1);
 		}
 		i++;
