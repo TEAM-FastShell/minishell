@@ -17,6 +17,6 @@ void	signal_handler(int signo)
 
 void	set_signal(void *int_handler, void *quit_handler)
 {
-	signal(SIGINT, int_handler);
-	signal(SIGQUIT, quit_handler);
+	signal(SIGINT, signal_handler);
+	signal(SIGQUIT, SIG_IGN);
 }

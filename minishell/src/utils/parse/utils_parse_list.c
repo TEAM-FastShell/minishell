@@ -21,7 +21,9 @@ static void	copy_strings(char ***dest, char **src, int len)
 t_node	*make_node(t_parse *parse)
 {
 	t_node	*new_node;
+	int		i;
 
+	i = -1;
 	new_node = (t_node *) malloc(sizeof(t_node));
 	if (!(new_node))
 		return (NULL);

@@ -1,3 +1,18 @@
+<<<<<<< HEAD
+=======
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execute.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/28 13:35:58 by seokklee          #+#    #+#             */
+/*   Updated: 2023/09/04 12:47:21 by youyoon          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+>>>>>>> parent of 60693ff (seokklee -> execute)
 #include "../../include/minishell.h"
 #include "../../include/parse.h"
 
@@ -35,7 +50,10 @@ void	execute(t_data *data)
 static void	exec_pipe(t_data *data, t_node *node)
 {
 	if (node->redir_type != NO_REDIR)
-		return (exec_redir(data, node));
+	{
+		exec_redir(data, node);
+		return ;
+	}
 	if (node->pipe_type != NO_PIPE && node->pipe_type != R_PIPE)
 		ft_pipe(data, node);
 	ft_fork(node);
@@ -49,22 +67,30 @@ static void	exec_pipe(t_data *data, t_node *node)
 			ft_close(data->output_fd);
 		data->input_fd = 0;
 		data->output_fd = 1;
+<<<<<<< HEAD
 		if (node->pipe_type == NO_PIPE)
 			waitpid(node->pid, &data->exit_status, 0);
 		else if(node->pipe_type == R_PIPE)
+=======
+		if (node->idx == data->list->cmd_cnt - 1)
+>>>>>>> parent of 60693ff (seokklee -> execute)
 		{
 			close_all_pipes(data);
 			wait_child(data);
+			printf("wait_child\n");
 		}
+		else
+			waitpid(data->list->tail->pid, &g_exit_status, 0);
+		printf("parent\n");
 	}
 }
 
 static void	wait_child(t_data *data)
 {
-	t_node	*cur;
+	int	i;
 
-	cur = data->list->head;
-	while (cur->next != NULL)
+	i = 0;
+	while (i < data->list->cmd_cnt)
 	{
 		waitpid(cur->pid, &data->exit_status, 0);
 		cur = cur->next;
