@@ -6,7 +6,7 @@
 /*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:35:58 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/03 17:45:27 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/09/03 19:00:42 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,11 @@ static void	exec_pipe(t_data *data, t_node *node)
 		{
 			close_all_pipes(data);
 			wait_child(data);
+			printf("wait_child\n");
 		}
+		else
+			waitpid(data->list->tail->pid, &g_exit_status, 0);
+		printf("parent\n");
 	}
 }
 

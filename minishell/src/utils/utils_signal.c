@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_signal.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 23:47:04 by youyoon           #+#    #+#             */
-/*   Updated: 2023/08/28 14:44:48 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/09/03 18:40:43 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,5 @@ void	signal_handler(int signo)
 void	set_signal(void)
 {
 	signal(SIGINT, signal_handler);
-	signal(SIGQUIT, signal_handler);
+	signal(SIGQUIT, SIG_IGN);
 }

@@ -6,7 +6,7 @@
 /*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:36:03 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/03 09:53:30 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/09/03 18:27:46 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,6 @@ static void	get_heredoc(t_data *data, t_node *node, char *file_name)
 	line = get_next_line(0);
 	while (line)
 	{
-		printf("line %s\n", line);
-		printf("str_len %ld\n", ft_strlen(line));
 		if (!ft_strncmp(line, node->cmd_args[0], ft_strlen(line) - 1))
 			break ;
 		write(data->input_fd, line, ft_strlen(line));
