@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   utils_parse.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/16 15:52:10 by youyoon           #+#    #+#             */
-/*   Updated: 2023/09/03 21:44:46 by youyoon          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../../include/minishell.h"
 #include "../../../include/parse.h"
 
@@ -42,16 +30,15 @@ char	**copy_env(char **env)
 	return (ret);
 }
 
-void	init_parse(t_parse *parse, int token_cnt, int input_len, char **env)
+void	init_parse(t_parse *parse, int token_cnt, int input_len, t_data *data)
 {
-	(void) token_cnt;
-	parse->cmd = (char **) ft_calloc(BUFFER_SIZE, sizeof(char *));
+	parse->cmd = (char **) ft_calloc(token_cnt + 1, sizeof(char *));
 	if (!parse->cmd)
 		return (parse_error(NULL, NULL, NULL, MALLOC_ERROR));
 	parse->buff = (char *) ft_calloc(input_len + 1, sizeof(char));
 	if (!parse->buff)
 		return (parse_error(NULL, parse, NULL, MALLOC_ERROR));
-	parse->env = copy_env(env);
+	parse->env = copy_env(data->envp);
 	if (!parse->env)
 		return (parse_error(NULL, parse, NULL, MALLOC_ERROR));
 	parse->quote = 0;

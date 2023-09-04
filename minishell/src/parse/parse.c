@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parse.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/15 19:57:43 by youyoon           #+#    #+#             */
-/*   Updated: 2023/09/04 12:37:41 by youyoon          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../include/minishell.h"
 #include "../../include/parse.h"
 
@@ -72,7 +60,7 @@ int	parse_char(t_double_list *list, t_parse *parse, char *input, int *i)
 	return (ret);
 }
 
-void	parser(char *input_tmp, char **envp, \
+void	parser(char *input_tmp, t_data *data, \
 				t_double_list *list, t_parse *parse)
 {
 	int				i;
@@ -82,7 +70,7 @@ void	parser(char *input_tmp, char **envp, \
 	input = ft_strtrim(input_tmp, " ");
 	token_cnt = count_word(input);
 	init_list(list);
-	init_parse(parse, token_cnt, (int) ft_strlen(input), envp);
+	init_parse(parse, token_cnt, (int) ft_strlen(input), data);
 	i = -1;
 	while (input[++i])
 	{

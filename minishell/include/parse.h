@@ -6,7 +6,7 @@
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 15:39:09 by youyoon           #+#    #+#             */
-/*   Updated: 2023/09/03 15:12:19 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/09/04 18:59:40 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include "minishell.h"
 
 /* src/parse/parse.c */
-void	parser(char *input_tmp, char **envp, \
+void	parser(char *input_tmp, t_data *data, \
 		t_double_list *list, t_parse *parse);
 void	put_buff_to_cmd(t_parse *parse);
 int		parse_char(t_double_list *list, t_parse *parse, char *input, int *i);
@@ -30,7 +30,7 @@ int		parse_char(t_double_list *list, t_parse *parse, char *input, int *i);
 /* src/utils/parse/utils_parse.c */
 /* init and free struct */
 void	init_list(t_double_list *list);
-void	init_parse(t_parse *parse, int token_cnt, int input_len, char **env);
+void	init_parse(t_parse *parse, int token_cnt, int input_len, t_data *data);
 int		check_redir(char input, char input_next);
 char	**copy_env(char **env);
 void	init_in_while_data(t_data *data, t_double_list *list);
