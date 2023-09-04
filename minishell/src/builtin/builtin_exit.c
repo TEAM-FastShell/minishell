@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:35:37 by seokklee          #+#    #+#             */
-/*   Updated: 2023/08/28 15:23:31 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/09/03 18:14:35 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ void	builtin_exit(t_node *node)
 {
 	int	i;
 
-	if (node->pipe_type == R_PIPE || node->pipe_type == RW_PIPE)
-		return ;
+	if (node->pipe_type == W_PIPE || node->pipe_type == RW_PIPE)
+		exit(g_exit_status);
 	i = 0;
 	while (node->cmd_args[i])
 		i++;
@@ -34,8 +34,9 @@ void	builtin_exit(t_node *node)
 	}
 	else
 		error_str_str_code(node, NUM_ARG_REQ, 255);
-	exit(g_exit_status);
-}/*long long*/
+	if (node->pipe_type == NO_PIPE)
+		exit(g_exit_status);
+}
 
 static int	is_num_str(char *n)
 {
@@ -46,6 +47,7 @@ static int	is_num_str(char *n)
 	{
 		if (!ft_isdigit(n[i]))
 			return (0);
+		i++;
 	}
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 20:30:14 by youyoon           #+#    #+#             */
-/*   Updated: 2023/09/03 16:05:00 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/09/04 12:45:18 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,30 +36,28 @@ int	is_whitespace(char *str)
 	return (0);
 }
 
-char	*ft_strtok(char *str, const char delim)
+char	*get_envv_data(char *envp[], char *envv)
 {
-	static char		*stock = NULL;
-	char			*ptr;
-	int				flg;
-
-	flg = 0;
-	ptr = NULL;
-	if (str != NULL)
-		stock = ft_strdup(str);
-	while (*stock != '\0')
+	while (*envp)
 	{
-		if (flg == 0 && *stock != delim)
-		{
-			flg = 1;
-			ptr = stock;
-		}
-		else if (flg == 1 && *stock == delim)
-		{
-			*stock = '\0';
-			stock += 1;
-			break ;
-		}
-		stock += 1;
+		if (!ft_strncmp(*envp, envv, ft_strlen(envv)))
+			return (*envp + ft_strlen(envv) + 1);
+		envp++;
 	}
-	return (ptr);
+	return ("");
+}
+
+void	free_pipe_fd(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->list->cmd_cnt - 1)
+	{
+		free(data->pipe_fd[i]);
+		data->pipe_fd[i] = NULL;
+		i++;
+	}
+	free(data->pipe_fd);
+	data->pipe_fd = NULL;
 }

@@ -6,7 +6,7 @@
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:35:11 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/03 16:04:36 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/09/04 12:46:00 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,9 @@ void	ft_wait(void);
 void	double_list_clear(t_double_list *list);
 void	free_tab(char **tab);
 void	close_all_pipes(t_data *data);
+char	*get_envv_data(char *envp[], char *envv);
+void	free_pipe_fd(t_data *data);
+
 
 /* gnl */
 char	*get_next_line(int fd);

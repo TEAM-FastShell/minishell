@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_unset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:35:45 by seokklee          #+#    #+#             */
-/*   Updated: 2023/08/28 15:33:12 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/09/03 18:15:27 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
 static void	exec_unset(t_data *data, char *unset);
+static int	match_key(char *str, char *unset);
 
 void	builtin_unset(t_data *data, t_node *node)
 {
@@ -20,7 +21,8 @@ void	builtin_unset(t_data *data, t_node *node)
 		return ;
 	else
 	{
-		if (ft_isdigit(node->cmd_args[1][0]) || node->cmd_args[1][0] == '=')
+		if (ft_isdigit(node->cmd_args[1][0])
+		|| ft_strchr(node->cmd_args[1], '='))
 			error_str_str_code(node, NON_VALID_ID, 1);
 		exec_unset(data, node->cmd_args[1]);
 	}
@@ -37,7 +39,7 @@ static void	exec_unset(t_data *data, char *unset)
 	i = 0;
 	while (data->envp[i + 1])
 	{
-		if (ft_strncmp(data->envp[i], unset, ft_strlen(unset)))
+		if (match_key(data->envp[i], unset))
 		{
 			tmp = data->envp[i];
 			data->envp[i] = data->envp[i + 1];
@@ -46,9 +48,21 @@ static void	exec_unset(t_data *data, char *unset)
 		}
 		i++;
 	}
-	if (flag)
+	if (flag || match_key(data->envp[i], unset))
 	{
 		free(data->envp[i]);
 		data->envp[i] = NULL;
 	}
+}
+
+static int	match_key(char *envp, char *unset)
+{
+	int		i;
+
+	i = 0;
+	while (envp[i] && unset[i] && (envp[i] == unset[i]) && envp[i] != '=')
+		i++;
+	if (envp[i] == '=' && unset[i] == '\0')
+		return (1);
+	return (0);
 }

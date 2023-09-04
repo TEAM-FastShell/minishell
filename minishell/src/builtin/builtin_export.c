@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:35:39 by seokklee          #+#    #+#             */
-/*   Updated: 2023/08/28 15:29:37 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/09/03 18:14:41 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
 void		exec_export(t_data *data, char *export);
-static void	free_envp(char **envp);
 static int	is_exist(t_data *data, char	*export);
 
 void	builtin_export(t_data *data, t_node *node)
@@ -29,7 +28,7 @@ void	builtin_export(t_data *data, t_node *node)
 		exec_export(data, node->cmd_args[1]);
 	}
 	g_exit_status = 0;
-}/*unset export 인자 여러개*/
+}
 
 void	exec_export(t_data *data, char *export)
 {
@@ -55,12 +54,7 @@ void	exec_export(t_data *data, char *export)
 	new_envp[++i] = NULL;
 	tmp = data->envp;
 	data->envp = new_envp;
-	free_envp(tmp);
-}
-
-static void	free_envp(char **envp)
-{
-	(void)(envp);
+	free_tab(tmp);
 }
 
 static int	is_exist(t_data *data, char	*export)
