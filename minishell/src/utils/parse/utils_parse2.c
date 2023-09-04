@@ -6,12 +6,31 @@
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 12:30:41 by youyoon           #+#    #+#             */
-/*   Updated: 2023/08/29 18:57:00 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/09/01 13:23:06 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 #include "../../../include/parse.h"
+
+int	count_word(char *str)
+{
+	int	cnt;
+
+	cnt = 0;
+	while (*str)
+	{
+		while (*str == ' ' || (9 <= *str && *str <= 13))
+			str++;
+		if (*str && !(*str == ' ' || (9 <= *str && *str <= 13)))
+		{
+			cnt++;
+			while (*str && !(*str == ' ' || (9 <= *str && *str <= 13)))
+				str++;
+		}
+	}
+	return (cnt);
+}
 
 void	init_data_before_start(t_data **data, char **envp)
 {

@@ -6,7 +6,7 @@
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 15:39:09 by youyoon           #+#    #+#             */
-/*   Updated: 2023/08/29 18:57:24 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/09/03 15:12:19 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@
 # include "minishell.h"
 
 /* src/parse/parse.c */
-void	parser(char *input, char **envp, t_double_list *list, t_parse *parse);
+void	parser(char *input_tmp, char **envp, \
+		t_double_list *list, t_parse *parse);
 void	put_buff_to_cmd(t_parse *parse);
 int		parse_char(t_double_list *list, t_parse *parse, char *input, int *i);
 
@@ -35,7 +36,9 @@ char	**copy_env(char **env);
 void	init_in_while_data(t_data *data, t_double_list *list);
 
 /* src/utils/parse/utils_parse2.c */
+int		count_word(char *str);
 void	init_data_before_start(t_data **data, char **envp);
+char	*get_envv(char *envp[], char *envv);
 
 /* src/utils/parse/utils_parse_list.c */
 t_node	*make_node(t_parse *parse);

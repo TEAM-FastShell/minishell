@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:35:11 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/03 17:33:40 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/09/04 12:46:00 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "../libft/libft.h"
 # include <fcntl.h>
 # include <limits.h>
 # include <unistd.h>
@@ -26,6 +25,8 @@
 # include <errno.h>
 # include <signal.h>
 # include <sys/wait.h>
+# include <termios.h>
+
 # include "../libft/libft.h"
 
 /* GNL BUFFER_SIZE */
@@ -42,6 +43,8 @@
 # define CMD_NOT_FOUND "command not found"
 
 int	g_exit_status;
+
+//extern int g_exit_status;
 
 # define STDIN 			0
 # define STDOUT 		1
@@ -107,9 +110,11 @@ typedef struct s_parse
 
 /* src/utils/utils.c */
 int		is_whitespace(char *str);
+char	*ft_strtok(char *str, const char delim);
 
 /* src/utils/utils_signal.c */
-void	set_signal(void);
+void	signal_handler(int signo);
+void	set_signal(void *int_handler, void *quit_handler);
 
 /* execute */
 void	execute(t_data *data);

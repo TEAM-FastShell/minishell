@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:35:33 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/03 17:39:58 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/09/04 12:48:40 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,12 @@ void	builtin_echo(t_data *data, t_node *node)
 	}
 	while (node->cmd_args[i])
 	{
-		if (!strncmp(node->cmd_args[i], "$?", ft_strlen(node->cmd_args[1])))
+		if (!strncmp(node->cmd_args[i], "$?", ft_strlen(node->cmd_args[i])))
 			ft_putstr_fd(ft_itoa(g_exit_status), data->output_fd);
 		else
 			ft_putstr_fd(node->cmd_args[i], data->output_fd);
 		if (node->cmd_args[i + 1] != NULL)
 			ft_putchar_fd(' ', data->output_fd);
-		i++;
 	}
 	if (new_line)
 		ft_putchar_fd('\n', data->output_fd);

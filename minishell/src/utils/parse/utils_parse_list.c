@@ -6,7 +6,7 @@
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 17:01:30 by youyoon           #+#    #+#             */
-/*   Updated: 2023/08/26 17:30:34 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/09/03 21:22:01 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 static void	copy_strings(char ***dest, char **src, int len)
 {
-	int	i;
+	int		i;
 
 	*dest = (char **) ft_calloc(len + 1, sizeof(char *));
 	if (!(*dest))
@@ -32,7 +32,9 @@ static void	copy_strings(char ***dest, char **src, int len)
 t_node	*make_node(t_parse *parse)
 {
 	t_node	*new_node;
+	int		i;
 
+	i = -1;
 	new_node = (t_node *) malloc(sizeof(t_node));
 	if (!(new_node))
 		return (NULL);

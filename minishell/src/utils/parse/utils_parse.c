@@ -6,7 +6,7 @@
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 15:52:10 by youyoon           #+#    #+#             */
-/*   Updated: 2023/08/29 19:15:27 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/09/03 21:44:46 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ char	**copy_env(char **env)
 
 void	init_parse(t_parse *parse, int token_cnt, int input_len, char **env)
 {
-	parse->cmd = (char **) ft_calloc(token_cnt + 1, sizeof(char *));
+	(void) token_cnt;
+	parse->cmd = (char **) ft_calloc(BUFFER_SIZE, sizeof(char *));
 	if (!parse->cmd)
 		return (parse_error(NULL, NULL, NULL, MALLOC_ERROR));
 	parse->buff = (char *) ft_calloc(input_len + 1, sizeof(char));
@@ -94,11 +95,11 @@ void	init_in_while_data(t_data *data, t_double_list *list)
 		while (++i < list->cmd_cnt)
 		{
 			data->pipe_fd[i] = (int *)malloc(sizeof(int) * (2));
-			if (!data->pipe_fd[i])
+			if (!(data->pipe_fd[i]))
 				return (parse_error(list, NULL, data, MALLOC_ERROR));
 		}
 		data->pipe_fd[i - 1] = NULL;
-	}/*fix*/
+	}
 	data->input_fd = 0;
 	data->output_fd = 1;
 	data->list = list;

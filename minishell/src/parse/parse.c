@@ -6,37 +6,29 @@
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 19:57:43 by youyoon           #+#    #+#             */
-/*   Updated: 2023/08/29 13:43:57 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/09/04 12:37:41 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 #include "../../include/parse.h"
 
-static int	count_word(char *str)
+static void	set_quote_space(char c, t_parse *parse)
 {
-	int	cnt;
-
-	cnt = 0;
-	while (*str)
-	{
-		while (*str == ' ' || (9 <= *str && *str <= 13))
-			str++;
-		if (*str && !(*str == ' ' || (9 <= *str && *str <= 13)))
-		{
-			cnt++;
-			while (*str && !(*str == ' ' || (9 <= *str && *str <= 13)))
-				str++;
-		}
+	if (!parse->quote && c == ' ')
+		put_buff_to_cmd(parse);
+	else if (!parse->quote && (c == '\'' || c == '\"'))
+	{	
+		parse->quote = c;
+		if (c == '\'')
+			parse->buff[parse->b_idx++] = c;
 	}
-	return (cnt);
-}
-
-static void	set_quote(char c, t_parse *parse)
-{
-	parse->quote = 0;
-	if (c == '\'')
-		parse->buff[parse->b_idx++] = c;
+	else if (parse->quote == c)
+	{
+		parse->quote = 0;
+		if (c == '\'')
+			parse->buff[parse->b_idx++] = c;
+	}
 }
 
 void	put_buff_to_cmd(t_parse *parse)
@@ -51,27 +43,18 @@ void	put_buff_to_cmd(t_parse *parse)
 }
 
 /* 25줄 맞춰서 분할 필요*/
-
 int	parse_char(t_double_list *list, t_parse *parse, char *input, int *i)
 {
 	int	ret;
 
 	ret = SUCCESS;
-	if (parse->quote == input[*i])
-		set_quote(input[*i], parse);
-	else if (!parse->quote && input[*i] == '\'')
-	{
-		parse->quote = input[*i];
-		parse->buff[parse->b_idx++] = input[*i];
-	}
-	else if (!parse->quote && input[*i] == '\"')
-		parse->quote = input[*i];
-	else if (!parse->quote && input[*i] == ' ')
-		put_buff_to_cmd(parse);
+	if (parse->quote == input[*i] || (!parse->quote && \
+	(input[*i] == '\'' || input[*i] == '\"' || input[*i] == ' ')))
+		set_quote_space(input[*i], parse);
 	else if (!parse->quote && input[*i] == ';')
 		ret = ERROR;
 	else if (!parse->quote && input[*i] == '|')
-	{	
+	{
 		ret = add_node(list, parse);
 		if (ret > 0)
 			list->tail->pipe_type = RW_PIPE;
@@ -89,12 +72,14 @@ int	parse_char(t_double_list *list, t_parse *parse, char *input, int *i)
 	return (ret);
 }
 
-void	parser(char *input, char **envp, t_double_list *list, t_parse *parse)
+void	parser(char *input_tmp, char **envp, \
+				t_double_list *list, t_parse *parse)
 {
 	int				i;
 	int				token_cnt;
+	char			*input;
 
-	input = ft_strtrim(input, " ");
+	input = ft_strtrim(input_tmp, " ");
 	token_cnt = count_word(input);
 	init_list(list);
 	init_parse(parse, token_cnt, (int) ft_strlen(input), envp);
@@ -113,4 +98,5 @@ void	parser(char *input, char **envp, t_double_list *list, t_parse *parse)
 	set_pipe_type(list);
 	set_list_idx(list);
 	parse_error(NULL, parse, NULL, NULL);
+	free(input);
 }
