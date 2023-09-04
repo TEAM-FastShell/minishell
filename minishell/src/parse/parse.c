@@ -7,7 +7,7 @@ static void	set_quote_space(char c, t_parse *parse)
 	if (!parse->quote && c == ' ')
 		put_buff_to_cmd(parse);
 	else if (!parse->quote && (c == '\'' || c == '\"'))
-	{	
+	{
 		parse->quote = c;
 		if (c == '\'')
 			parse->buff[parse->b_idx++] = c;
@@ -61,8 +61,7 @@ int	parse_char(t_double_list *list, t_parse *parse, char *input, int *i)
 	return (ret);
 }
 
-void	parser(char *input_tmp, char **envp, \
-				t_double_list *list, t_parse *parse)
+void	parser(char *input_tmp, t_double_list *list, t_parse *parse)
 {
 	int				i;
 	int				token_cnt;
@@ -71,7 +70,7 @@ void	parser(char *input_tmp, char **envp, \
 	input = ft_strtrim(input_tmp, " ");
 	token_cnt = count_word(input);
 	init_list(list);
-	init_parse(parse, token_cnt, (int) ft_strlen(input), envp);
+	init_parse(parse, token_cnt, (int) ft_strlen(input));
 	i = -1;
 	while (input[++i])
 	{

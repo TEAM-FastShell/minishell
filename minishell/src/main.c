@@ -26,8 +26,7 @@ static void	print_prompt(char **input)
 }
 
 /* 최종 사용한 struct 모두 free 구현 필요 */
-static void	prompt_while(t_data *data, t_double_list *list, \
-				t_parse *parse, char **envp)
+static void	prompt_while(t_data *data, t_double_list *list, t_parse *parse)
 {
 	char	*input;
 
@@ -43,7 +42,7 @@ static void	prompt_while(t_data *data, t_double_list *list, \
 			add_history(input);
 			if (!is_whitespace(input))
 			{
-				parser(input, envp, list, parse);
+				parser(input, list, parse);
 				if (list->head)
 				{
 					init_in_while_data(data, list);
@@ -67,7 +66,7 @@ int	main(int argc, char *argv[], char *envp[])
 		init_data_before_start(&data, envp);
 		if (set_main())
 			return (-1);
-		prompt_while(data, &list, &parse, envp);
+		prompt_while(data, &list, &parse);
 	}
 	return (0);
 }

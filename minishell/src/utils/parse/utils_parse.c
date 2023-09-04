@@ -23,7 +23,7 @@ char	**copy_env(char **env)
 		return (NULL);
 	i = 0;
 	while (env[i])
-	{	
+	{
 		ret[i] = ft_strdup(env[i]);
 		i++;
 	}
@@ -31,7 +31,7 @@ char	**copy_env(char **env)
 	return (ret);
 }
 
-void	init_parse(t_parse *parse, int token_cnt, int input_len, char **env)
+void	init_parse(t_parse *parse, int token_cnt, int input_len)
 {
 	(void) token_cnt;
 	parse->cmd = (char **) ft_calloc(BUFFER_SIZE, sizeof(char *));
@@ -39,9 +39,6 @@ void	init_parse(t_parse *parse, int token_cnt, int input_len, char **env)
 		return (parse_error(NULL, NULL, NULL, MALLOC_ERROR));
 	parse->buff = (char *) ft_calloc(input_len + 1, sizeof(char));
 	if (!parse->buff)
-		return (parse_error(NULL, parse, NULL, MALLOC_ERROR));
-	parse->env = copy_env(env);
-	if (!parse->env)
 		return (parse_error(NULL, parse, NULL, MALLOC_ERROR));
 	parse->quote = 0;
 	parse->c_idx = 0;

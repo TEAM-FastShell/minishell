@@ -121,9 +121,9 @@ void	builtin_pwd(t_data *data);
 void	builtin_unset(t_data *data, t_node *node);
 
 /* error */
-void	error_code(int code);
-void	error_str_code(t_node *node, char *str, int code);
-void	error_str_str_code(t_node *node, char *str, int code);
+void	error_code(t_data *data, int code);
+void	error_str_code(t_data *data, t_node *node, char *str, int code);
+void	error_str_str_code(t_data *data, t_node *node, char *str, int code);
 
 /* utils */
 void	ft_pipe(t_data *data, t_node *node);

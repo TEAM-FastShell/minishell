@@ -14,6 +14,7 @@
 		"variant": "c",
 		"chrono": "c",
 		"compare": "c",
-		"cstddef": "c"
+		"cstddef": "c",
+		"parse.h": "c"
 	}
 }

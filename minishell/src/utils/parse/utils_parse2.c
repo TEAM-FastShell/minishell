@@ -29,7 +29,7 @@ void	init_data_before_start(t_data **data, char **envp)
 	(*data)->list = NULL;
 	(*data)->path_tab = NULL;
 	(*data)->pipe_fd = NULL;
-	(*data)->envp = copy_env(envp);
-	if (!(*data)->envp)
+	g_envp = copy_env(envp);
+	if (!g_envp)
 		return (parse_error(NULL, NULL, (*data), MALLOC_ERROR));
 }
