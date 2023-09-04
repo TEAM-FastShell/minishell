@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 16:01:57 by youyoon           #+#    #+#             */
-/*   Updated: 2023/08/29 14:47:51 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/09/04 15:38:58 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@ void	parse_error(t_double_list *list, t_parse *parse, \
 			free(data->pipe_fd[i]);
 		free(data->pipe_fd);
 		i = -1;
-		while (data->envp[++i])
-			free(data->envp[i]);
+		while (g_envp[++i])
+			free(g_envp[i]);
 		i = -1;
 		while (data->path_tab[++i])
 			free(data->path_tab[i]);
 		free(data->path_tab);
-		free(data->envp);
+		free(g_envp);
 		free(data);
 	}
 	if (error_msg)

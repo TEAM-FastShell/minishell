@@ -6,7 +6,7 @@
 /*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:35:58 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/04 15:12:25 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/09/04 15:38:25 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static void	exec_pipe(t_data *data, t_node *node)
 		data->input_fd = 0;
 		data->output_fd = 1;
 		if (node->pipe_type == NO_PIPE)
-			waitpid(node->pid, &g_exit_status, 0);
+			waitpid(node->pid, &data->exit_status, 0);
 		else if(node->pipe_type == R_PIPE)
 		{
 			close_all_pipes(data);
@@ -78,10 +78,10 @@ static void	wait_child(t_data *data)
 	cur = data->list->head;
 	while (cur->next != NULL)
 	{
-		waitpid(cur->pid, &g_exit_status, 0);
+		waitpid(cur->pid, &data->exit_status, 0);
 		cur = cur->next;
 	}
-	waitpid(data->list->tail->pid, &g_exit_status, 0);
+	waitpid(data->list->tail->pid, &data->exit_status, 0);
 }
 
 static void	exec_child(t_data *data, t_node *node)
@@ -94,15 +94,15 @@ static void	exec_child(t_data *data, t_node *node)
 		return ;
 	}
 	connect_pipe(data, node);
-	cmd = get_cmd(ft_split(get_envv_data(data->envp, "PATH"), ':'), node->cmd_args[0]);
+	cmd = get_cmd(ft_split(get_envv_data(g_envp, "PATH"), ':'), node->cmd_args[0]);
 	if (!cmd)
 	{
-		error_str_code(node, CMD_NOT_FOUND, 127);
-		exit(g_exit_status);
+		error_str_code(data, node, CMD_NOT_FOUND, 127);
+		exit(data->exit_status);
 	}
-	if (execve(cmd, node->cmd_args, data->envp) < 0)
+	if (execve(cmd, node->cmd_args, g_envp) < 0)
 		ft_putendl_fd(strerror(errno), STDERR_FILENO);
-	exit(g_exit_status);
+	exit(data->exit_status);
 }
 
 static char	*get_cmd(char **path_tab, char *cmd_uncertain)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:35:11 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/04 12:46:00 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/09/04 15:35:15 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,7 @@
 # define NON_VALID_ID "not a valid identifier"
 # define CMD_NOT_FOUND "command not found"
 
-int	g_exit_status;
-
-//extern int g_exit_status;
+char	**g_envp;
 
 # define STDIN 			0
 # define STDOUT 		1
@@ -89,7 +87,7 @@ typedef struct s_double_list
 typedef struct s_data
 {
 	t_double_list	*list;
-	char			**envp;
+	int				exit_status;
 	char			**path_tab;
 	int				**pipe_fd;
 	int				input_fd;
@@ -127,7 +125,7 @@ void	exec_builtin(t_data *data, t_node *node);
 void	builtin_cd(t_data *data, t_node *node);
 void	builtin_echo(t_data *data, t_node *node);
 void	builtin_env(t_data *data);
-void	builtin_exit(t_node *node);
+void	builtin_exit(t_data *data, t_node *node);
 void	builtin_export(t_data *data, t_node *node);
 void	exec_export(t_data *data, char *export);
 void	builtin_pwd(t_data *data);

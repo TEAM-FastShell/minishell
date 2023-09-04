@@ -6,7 +6,7 @@
 /*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:35:31 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/03 16:22:12 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/09/04 15:37:42 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,21 +27,21 @@ void	builtin_cd(t_data *data, t_node *node)
 	{
 		path = node->cmd_args[1];
 		if (chdir(path) < 0)
-			error_str_str_code(node, NO_FILE_DIR, 1);
+			error_str_str_code(data, node, NO_FILE_DIR, 1);
 		set_pwds(data);
 	}
-	g_exit_status = 0;
+	data->exit_status = 0;
 }
 
 static void	builtin_cd_home(t_data *data, t_node *node)
 {
 	char	*home;
 
-	home = get_envv_data(data->envp, "HOME");
+	home = get_envv_data(g_envp, "HOME");
 	if (chdir(home) < 0)
 	{
-		error_str_code(node, HOME_NOT_SET, 1);
-		exit(g_exit_status);
+		error_str_code(data, node, HOME_NOT_SET, 1);
+		exit(data->exit_status);
 	}
 	set_pwds(data);
 }
@@ -54,7 +54,7 @@ void	set_pwds(t_data *data)
 
 	tmp = (char *)malloc(sizeof(char) * 2048);
 	pwd = ft_strjoin("PWD=", getcwd(tmp, 2048));
-	oldpwd = ft_strjoin("OLDPWD=", get_envv_data(data->envp, "PWD"));
+	oldpwd = ft_strjoin("OLDPWD=", get_envv_data(g_envp, "PWD"));
 	exec_export(data, pwd);
 	exec_export(data, oldpwd);
 	free(tmp);

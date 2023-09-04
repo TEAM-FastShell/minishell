@@ -6,7 +6,7 @@
 /*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:35:45 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/03 18:15:27 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/09/04 15:38:17 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ void	builtin_unset(t_data *data, t_node *node)
 	{
 		if (ft_isdigit(node->cmd_args[1][0])
 		|| ft_strchr(node->cmd_args[1], '='))
-			error_str_str_code(node, NON_VALID_ID, 1);
+			error_str_str_code(data, node, NON_VALID_ID, 1);
 		exec_unset(data, node->cmd_args[1]);
 	}
-	g_exit_status = 0;
+	data->exit_status = 0;
 }
 
 static void	exec_unset(t_data *data, char *unset)
@@ -37,21 +37,21 @@ static void	exec_unset(t_data *data, char *unset)
 
 	flag = 0;
 	i = 0;
-	while (data->envp[i + 1])
+	while (g_envp[i + 1])
 	{
-		if (match_key(data->envp[i], unset))
+		if (match_key(g_envp[i], unset))
 		{
-			tmp = data->envp[i];
-			data->envp[i] = data->envp[i + 1];
-			data->envp[i + 1] = tmp;
+			tmp = g_envp[i];
+			g_envp[i] = g_envp[i + 1];
+			g_envp[i + 1] = tmp;
 			flag = 1;
 		}
 		i++;
 	}
-	if (flag || match_key(data->envp[i], unset))
+	if (flag || match_key(g_envp[i], unset))
 	{
-		free(data->envp[i]);
-		data->envp[i] = NULL;
+		free(g_envp[i]);
+		g_envp[i] = NULL;
 	}
 }
 
