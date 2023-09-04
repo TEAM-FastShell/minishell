@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:35:58 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/04 12:47:21 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/09/04 15:12:25 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,7 @@ void	execute(t_data *data)
 static void	exec_pipe(t_data *data, t_node *node)
 {
 	if (node->redir_type != NO_REDIR)
-	{
-		exec_redir(data, node);
-		return ;
-	}
+		return (exec_redir(data, node));
 	if (node->pipe_type != NO_PIPE && node->pipe_type != R_PIPE)
 		ft_pipe(data, node);
 	ft_fork(node);
@@ -64,27 +61,25 @@ static void	exec_pipe(t_data *data, t_node *node)
 			ft_close(data->output_fd);
 		data->input_fd = 0;
 		data->output_fd = 1;
-		if (node->idx == data->list->cmd_cnt - 1)
+		if (node->pipe_type == NO_PIPE)
+			waitpid(node->pid, &g_exit_status, 0);
+		else if(node->pipe_type == R_PIPE)
 		{
 			close_all_pipes(data);
 			wait_child(data);
-			printf("wait_child\n");
 		}
-		else
-			waitpid(data->list->tail->pid, &g_exit_status, 0);
-		printf("parent\n");
 	}
 }
 
 static void	wait_child(t_data *data)
 {
-	int	i;
+	t_node	*cur;
 
-	i = 0;
-	while (i < data->list->cmd_cnt)
+	cur = data->list->head;
+	while (cur->next != NULL)
 	{
-		ft_wait();
-		i++;
+		waitpid(cur->pid, &g_exit_status, 0);
+		cur = cur->next;
 	}
 	waitpid(data->list->tail->pid, &g_exit_status, 0);
 }
