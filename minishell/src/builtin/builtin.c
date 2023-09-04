@@ -6,7 +6,7 @@
 /*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:35:47 by seokklee          #+#    #+#             */
-/*   Updated: 2023/08/29 16:53:31 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/09/03 18:15:53 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	exec_builtin(t_data *data, t_node *node)
 	int		len_cmd;
 
 	cmd = node->cmd_args[0];
-	len_cmd = ft_strlen(cmd); /* len 구하지 않으면 이상한 cmd 실행 가능 */
+	len_cmd = ft_strlen(cmd);
 	if (!ft_strncmp(cmd, "echo", len_cmd))
 		builtin_echo(data, node);
 	else if (!ft_strncmp(cmd, "cd", len_cmd))

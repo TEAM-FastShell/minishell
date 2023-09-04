@@ -6,7 +6,7 @@
 /*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:35:58 by seokklee          #+#    #+#             */
-/*   Updated: 2023/08/31 14:34:14 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/09/03 19:00:42 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ static char	*get_cmd(char **path_tab, char *cmd_uncertain);
 void	execute(t_data *data)
 {
 	t_node	*cur;
-	int		i;
 
 	cur = data->list->head;
 	while (cur != NULL)
@@ -41,17 +40,7 @@ void	execute(t_data *data)
 		}
 		cur = cur->next;
 	}
-	if (data->list->cmd_cnt > 1)
-	{
-		i = -1;
-		while (data->pipe_fd[++i])
-		{
-			free(data->pipe_fd[i]);
-			data->pipe_fd[i] = NULL;
-		}
-		free(data->pipe_fd);
-		data->pipe_fd = NULL;
-	}
+	free_pipe_fd(data);
 	free_list(data->list);
 }
 
@@ -79,7 +68,11 @@ static void	exec_pipe(t_data *data, t_node *node)
 		{
 			close_all_pipes(data);
 			wait_child(data);
+			printf("wait_child\n");
 		}
+		else
+			waitpid(data->list->tail->pid, &g_exit_status, 0);
+		printf("parent\n");
 	}
 }
 
@@ -100,14 +93,21 @@ static void	exec_child(t_data *data, t_node *node)
 {
 	char	*cmd;
 
-	connect_pipe(data, node);
 	if (is_builtin(node->cmd_args))
+	{
 		exec_builtin(data, node);
-	cmd = get_cmd(ft_split(getenv("PATH"), ':'), node->cmd_args[0]);
+		return ;
+	}
+	connect_pipe(data, node);
+	cmd = get_cmd(ft_split(get_envv_data(data->envp, "PATH"), ':'), node->cmd_args[0]);
 	if (!cmd)
+	{
 		error_str_code(node, CMD_NOT_FOUND, 127);
+		exit(g_exit_status);
+	}
 	if (execve(cmd, node->cmd_args, data->envp) < 0)
 		ft_putendl_fd(strerror(errno), STDERR_FILENO);
+	exit(g_exit_status);
 }
 
 static char	*get_cmd(char **path_tab, char *cmd_uncertain)
