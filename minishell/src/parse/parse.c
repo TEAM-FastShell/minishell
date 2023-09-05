@@ -1,21 +1,40 @@
 #include "../../include/minishell.h"
 #include "../../include/parse.h"
 
-static void	set_quote_space(char c, t_parse *parse)
+/**
+ * quote가 double로 열려있을 때 $가 들어오면 : num, alpha, '_'가 아닌 문자가 나올 때까지 인풋을 탐색
+ * 탐색이 끝나면 달러가 붙은 문자열을 환경 변수에서 찾음
+ * 있으면 문자열을 리턴해서 버퍼에 붙임
+ * 
+ * 쿼트가 열려있지 않을 때 쿼트가 들어왔으면 : 싱글은 버퍼에 담고, 더블은 버퍼에 담지 않음
+ * 쿼트가 열려있을 때 쿼트와 같은 문자가 들어오면 쿼트 닫음
+*/
+static void	set_quote(t_parse *parse, char *input, int **i)
 {
-	if (!parse->quote && c == ' ')
-		put_buff_to_cmd(parse);
-	else if (!parse->quote && (c == '\'' || c == '\"'))
-	{	
-		parse->quote = c;
-		if (c == '\'')
-			parse->buff[parse->b_idx++] = c;
-	}
-	else if (parse->quote == c)
+	int		dollar_start;
+	char	*dollar_to_env;
+
+	dollar_to_env = NULL;
+	if (parse->quote == input[**i])
 	{
 		parse->quote = 0;
-		if (c == '\'')
-			parse->buff[parse->b_idx++] = c;
+		if (input[**i] == '\'')
+			parse->buff[parse->b_idx++] = input[**i];
+	}
+	else if ((!parse->quote || parse->quote == '\"') && input[**i] == '$')
+	{
+		dollar_start = ++(**i);
+		while (input[**i] && check_env_char(input[**i]))
+			(**i)++;
+		dollar_to_env = change_to_env(parse, input, dollar_start, --(**i));
+		put_env_to_buff(parse, dollar_to_env);
+		free(dollar_to_env);
+	}
+	else if (!parse->quote && (input[**i] == '\'' || input[**i] == '\"'))
+	{
+		parse->quote = input[**i];
+		if (input[**i] == '\'')
+			parse->buff[parse->b_idx++] = input[**i];
 	}
 }
 
@@ -30,15 +49,32 @@ void	put_buff_to_cmd(t_parse *parse)
 	parse->b_idx = 0;
 }
 
+/* double quote가 열려있을 때 인풋값이 달러이면 트루와 동시에 함수에 들어감
+ * 아직 열리지 않은 상태에서 input이 quote이면 함수로 들어가서 버퍼에 저장해야하니까 true
+ * 쿼트가 열려있을 때 같은 문자가 들어오면 닫아야 하므로, true 리턴 후 함수로 들어감
+*/
+static int	check_quote(t_parse *parse, char c, char next)
+{
+	if (parse->quote == c)
+		return (1);
+	else if ((!parse->quote || parse->quote == '\"') \
+	&& c == '$' && check_env_char(next))
+		return (1);
+	else if (!parse->quote && (c == '\'' || c == '\"'))
+		return (1);
+	return (0);
+}
+
 /* 25줄 맞춰서 분할 필요*/
 int	parse_char(t_double_list *list, t_parse *parse, char *input, int *i)
 {
 	int	ret;
 
 	ret = SUCCESS;
-	if (parse->quote == input[*i] || (!parse->quote && \
-	(input[*i] == '\'' || input[*i] == '\"' || input[*i] == ' ')))
-		set_quote_space(input[*i], parse);
+	if (check_quote(parse, input[*i], input[*i + 1]))
+		set_quote(parse, input, &i);
+	else if (!parse->quote && input[*i] == ' ')
+		put_buff_to_cmd(parse);
 	else if (!parse->quote && input[*i] == ';')
 		ret = ERROR;
 	else if (!parse->quote && input[*i] == '|')
