@@ -15,6 +15,9 @@ void	execute(t_data *data)
 	{
 		if (cur->cmd_args[0])
 		{
+			printf("### redir_type: %u\n", cur->redir_type);
+			printf("### pipe_type: %u\n", cur->pipe_type);
+			printf("### idx: %d\n", cur->idx);
 			if (cur->redir_type != NO_REDIR && cur->pipe_type == NO_PIPE)
 			{
 				exec_redir(data, cur);
@@ -78,6 +81,11 @@ static void	exec_child(t_data *data, t_node *node)
 {
 	char	*cmd;
 
+	if (node->redir_type != NO_REDIR)
+	{
+		exec_redir(data, node);
+		return ;
+	}
 	if (is_builtin(node->cmd_args))
 	{
 		exec_builtin(data, node);

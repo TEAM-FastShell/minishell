@@ -45,6 +45,12 @@ void	set_list_idx(t_double_list *list)
 	{
 		if (cur->pipe_type != NO_PIPE)
 		{
+			if (cur->redir_type != NO_REDIR)
+			{
+				cur->idx = -1;
+				cur = cur->next;
+				continue ;
+			}
 			cur->idx = i;
 			i++;
 		}
