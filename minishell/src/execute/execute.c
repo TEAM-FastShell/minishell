@@ -34,9 +34,7 @@ void	execute(t_data *data)
 
 static void	exec_pipe(t_data *data, t_node *node)
 {
-	if (node->redir_type != NO_REDIR)
-		return (exec_redir(data, node));
-	if (node->pipe_type != NO_PIPE && node->pipe_type != R_PIPE)
+	if (!(node->pipe_type == NO_PIPE || node->pipe_type == R_PIPE))
 		ft_pipe(data, node);
 	ft_fork(node);
 	if (node->pid == 0)
@@ -50,7 +48,10 @@ static void	exec_pipe(t_data *data, t_node *node)
 		data->input_fd = 0;
 		data->output_fd = 1;
 		if (node->pipe_type == NO_PIPE)
-			waitpid(node->pid, &g_exit_status, 0);
+		{
+			wait(&g_exit_status);
+			g_exit_status = WEXITSTATUS(g_exit_status);
+		}
 		else if(node->pipe_type == R_PIPE)
 		{
 			close_all_pipes(data);
@@ -70,6 +71,7 @@ static void	wait_child(t_data *data)
 		cur = cur->next;
 	}
 	waitpid(data->list->tail->pid, &g_exit_status, 0);
+	g_exit_status = WEXITSTATUS(g_exit_status);
 }
 
 static void	exec_child(t_data *data, t_node *node)
@@ -100,6 +102,8 @@ static char	*get_cmd(char **path_tab, char *cmd_uncertain)
 
 	if (!cmd_uncertain)
 		return (NULL);
+	else if (cmd_uncertain[0] == '/')
+		return (cmd_uncertain);
 	while (*path_tab)
 	{
 		tmp = ft_strjoin(*path_tab, "/");

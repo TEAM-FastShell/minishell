@@ -2,6 +2,8 @@
 
 void	ft_pipe(t_data *data, t_node *node)
 {
+	if (node->idx == -1)
+		return ;
 	if (pipe(data->pipe_fd[node->idx]) < 0)
 		ft_putendl_fd(strerror(errno), STDERR_FILENO);
 }
