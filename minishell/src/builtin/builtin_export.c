@@ -2,6 +2,7 @@
 
 void		exec_export(t_data *data, char *export);
 static int	is_exist(t_data *data, char	*export);
+static char	*get_env_key(char *env);
 
 void	builtin_export(t_data *data, t_node *node)
 {
@@ -44,20 +45,34 @@ void	exec_export(t_data *data, char *export)
 	data->envp = new_envp;
 	free_tab(tmp);
 }
-/*tjrrbdi rhcu*/
+
 static int	is_exist(t_data *data, char	*export)
 {
 	int		i;
+	char	*tmp;
 
 	i = 0;
 	while (data->envp[i])
 	{
-		if (!ft_strncmp(data->envp[i], export, ft_strlen(export)))
+		tmp = get_env_key(export);
+		if (!ft_strncmp(data->envp[i], tmp, ft_strlen(tmp)))
 		{
+			free(tmp);
 			data->envp[i] = ft_strdup(export);
 			return (1);
 		}
+		free(tmp);
 		i++;
 	}
 	return (0);
+}
+
+static char	*get_env_key(char *env)
+{
+	char	*key;
+	char	*tmp;
+
+	tmp = ft_strchr(env, '=');
+	key = ft_substr(env, 0, tmp - env);
+	return (key);
 }
