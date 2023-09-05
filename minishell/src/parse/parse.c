@@ -5,10 +5,11 @@
  * quote가 double로 열려있을 때 $가 들어오면 : num, alpha, '_'가 아닌 문자가 나올 때까지 인풋을 탐색
  * 탐색이 끝나면 달러가 붙은 문자열을 환경 변수에서 찾음
  * 있으면 문자열을 리턴해서 버퍼에 붙임
- * 
+ *
  * 쿼트가 열려있지 않을 때 쿼트가 들어왔으면 : 싱글은 버퍼에 담고, 더블은 버퍼에 담지 않음
  * 쿼트가 열려있을 때 쿼트와 같은 문자가 들어오면 쿼트 닫음
 */
+/* 줄 25*/
 static void	set_quote(t_parse *parse, char *input, int **i)
 {
 	int		dollar_start;
@@ -24,6 +25,13 @@ static void	set_quote(t_parse *parse, char *input, int **i)
 	else if ((!parse->quote || parse->quote == '\"') && input[**i] == '$')
 	{
 		dollar_start = ++(**i);
+		if (input[dollar_start] == '?')
+		{
+			dollar_to_env = ft_itoa(g_exit_status);
+			put_env_to_buff(parse, dollar_to_env);
+			free(dollar_to_env);
+			return ;
+		}
 		while (input[**i] && check_env_char(input[**i]))
 			(**i)++;
 		dollar_to_env = change_to_env(parse, input, dollar_start, --(**i));

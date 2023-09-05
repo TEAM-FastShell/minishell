@@ -16,10 +16,7 @@ void	builtin_echo(t_data *data, t_node *node)
 	}
 	while (node->cmd_args[i])
 	{
-		if (!strncmp(node->cmd_args[i], "$?", ft_strlen(node->cmd_args[i])))
-			ft_putstr_fd(ft_itoa(g_exit_status), data->output_fd);
-		else
-			ft_putstr_fd(node->cmd_args[i], data->output_fd);
+		ft_putstr_fd(node->cmd_args[i], data->output_fd);
 		if (node->cmd_args[i + 1] != NULL)
 			ft_putchar_fd(' ', data->output_fd);
 		i++;

@@ -91,7 +91,7 @@ static void	exec_child(t_data *data, t_node *node)
 		exit(g_exit_status);
 	}
 	if (execve(cmd, node->cmd_args, data->envp) < 0)
-		ft_putendl_fd(strerror(errno), STDERR_FILENO);
+		error_str_code(node, CMD_NOT_FOUND, 127);
 	exit(g_exit_status);
 }
 

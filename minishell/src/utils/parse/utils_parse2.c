@@ -41,6 +41,10 @@ int	check_env_char(char c)
 		return (1);
 	else if (c == '_')
 		return (1);
+	else if (c == '?')
+		return (1);
+	else if ('0' <= c && c <= '9')
+		return (1);
 	return (0);
 }
 
