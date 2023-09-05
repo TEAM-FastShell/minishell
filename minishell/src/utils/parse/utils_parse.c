@@ -32,10 +32,11 @@ char	**copy_env(char **env)
 
 void	init_parse(t_parse *parse, int token_cnt, int input_len, t_data *data)
 {
+	(void) input_len; /* need to remove */
 	parse->cmd = (char **) ft_calloc(token_cnt + 1, sizeof(char *));
 	if (!parse->cmd)
 		return (parse_error(NULL, NULL, NULL, MALLOC_ERROR));
-	parse->buff = (char *) ft_calloc(input_len + 1, sizeof(char));
+	parse->buff = (char *) ft_calloc(BUFFER_SIZE, sizeof(char));
 	if (!parse->buff)
 		return (parse_error(NULL, parse, NULL, MALLOC_ERROR));
 	parse->env = copy_env(data->envp);
