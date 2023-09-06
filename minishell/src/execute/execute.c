@@ -86,8 +86,8 @@ static void	exec_parent(t_data *data, t_node *node)
 	data->output_fd = 1;
 	if (node->pipe_type == NO_PIPE || node->pipe_type == R_PIPE)
 	{
-		wait_child(data);
 		close_all_pipes(data);
+		wait_child(data);
 	}
 }
 
@@ -110,12 +110,14 @@ static char	*get_cmd(t_data *data, char *cmd_uncertain)
 	char	*tmp;
 	char	*cmd;
 	char	**path_tab;
+	char	**address;
 
 	if (!cmd_uncertain)
 		return (NULL);
 	else if (cmd_uncertain[0] == '/')
 		return (cmd_uncertain);
 	path_tab = ft_split(get_envv_data(data->envp, "PATH"), ':');
+	address = path_tab;
 	while (*path_tab)
 	{
 		tmp = ft_strjoin(*path_tab, "/");
@@ -126,7 +128,6 @@ static char	*get_cmd(t_data *data, char *cmd_uncertain)
 		free(cmd);
 		path_tab++;
 	}
-	if (path_tab)
-		free_tab(path_tab);
+	free_tab(address);
 	return (NULL);
 }

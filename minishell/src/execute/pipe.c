@@ -5,6 +5,8 @@ static void	close_pipe(t_data *data, t_node *node);
 
 void	connect_pipe(t_data *data, t_node *node)
 {
+	if (node->idx == -1 || data->list->cmd_cnt < 1)
+		return ;
 	cntl_pipe(data, node);
 	if (data->input_fd != STDIN_FILENO)
 		ft_dup2(data->input_fd, STDIN_FILENO);

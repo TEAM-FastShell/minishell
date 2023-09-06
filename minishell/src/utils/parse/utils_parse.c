@@ -74,7 +74,7 @@ void	init_in_while_data(t_data *data, t_double_list *list)
 
 	if (!list->head)
 		return ;
-	if (list->cmd_cnt > 1)
+	if (list->cmd_cnt >= 1)
 	{
 		data->pipe_fd = (int **)malloc(sizeof(int *) * (list->cmd_cnt + 1));
 		if (!data->pipe_fd)
