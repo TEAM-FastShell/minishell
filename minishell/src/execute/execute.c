@@ -11,6 +11,7 @@ void	execute(t_data *data)
 	t_node	*cur;
 
 	cur = data->list->head;
+	set_signal(execute_sigint_handler, execute_sigquit_handler);
 	while (cur != NULL)
 	{
 		if (cur->cmd_args[0])
@@ -52,7 +53,7 @@ static void	exec_pipe(t_data *data, t_node *node)
 			wait(&g_exit_status);
 			g_exit_status = WEXITSTATUS(g_exit_status);
 		}
-		else if(node->pipe_type == R_PIPE)
+		else if (node->pipe_type == R_PIPE)
 		{
 			close_all_pipes(data);
 			wait_child(data);
@@ -91,7 +92,9 @@ static void	exec_child(t_data *data, t_node *node)
 		exit(g_exit_status);
 	}
 	if (execve(cmd, node->cmd_args, data->envp) < 0)
+	{
 		error_str_code(node, CMD_NOT_FOUND, 127);
+	}
 	exit(g_exit_status);
 }
 

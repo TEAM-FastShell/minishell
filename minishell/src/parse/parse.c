@@ -17,11 +17,7 @@ static void	set_quote(t_parse *parse, char *input, int **i)
 
 	dollar_to_env = NULL;
 	if (parse->quote == input[**i])
-	{
 		parse->quote = 0;
-		if (input[**i] == '\'')
-			parse->buff[parse->b_idx++] = input[**i];
-	}
 	else if ((!parse->quote || parse->quote == '\"') && input[**i] == '$')
 	{
 		dollar_start = ++(**i);
@@ -39,11 +35,7 @@ static void	set_quote(t_parse *parse, char *input, int **i)
 		free(dollar_to_env);
 	}
 	else if (!parse->quote && (input[**i] == '\'' || input[**i] == '\"'))
-	{
 		parse->quote = input[**i];
-		if (input[**i] == '\'')
-			parse->buff[parse->b_idx++] = input[**i];
-	}
 }
 
 void	put_buff_to_cmd(t_parse *parse)

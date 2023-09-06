@@ -27,7 +27,6 @@ t_node	*make_node(t_parse *parse)
 	new_node->prev = NULL;
 	new_node->next = NULL;
 	copy_strings(&(new_node->cmd_args), parse->cmd, parse->c_idx);
-	//change_env(new_node, parse);
 	new_node->pipe_type = parse->pipe_type;
 	new_node->redir_type = parse->redir_type;
 	new_node->pid = 0;

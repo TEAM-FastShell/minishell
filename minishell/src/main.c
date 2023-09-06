@@ -1,8 +1,6 @@
 #include "../include/parse.h"
 #include "../include/minishell.h"
 
-//int g_exit_status = 0;
-
 static int	set_main(void)
 {
 	struct termios	term;
@@ -12,7 +10,6 @@ static int	set_main(void)
 	res += tcgetattr(STDIN_FILENO, &term);
 	term.c_lflag &= ~(ECHOCTL);
 	res += tcsetattr(STDIN_FILENO, TCSANOW, &term);
-	set_signal(signal_handler, SIG_IGN);
 	return (res);
 }
 
@@ -32,6 +29,7 @@ static void	prompt_while(t_data *data, t_double_list *list, \
 
 	while (1)
 	{
+		set_signal(signal_handler, SIG_IGN);
 		input = readline("bash$ ");
 		if (!input)
 			print_prompt(&input);

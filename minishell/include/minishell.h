@@ -6,7 +6,7 @@
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:35:11 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/04 12:46:00 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/09/06 14:50:45 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@
 # define CMD_NOT_FOUND "command not found"
 
 int	g_exit_status;
-
-//extern int g_exit_status;
 
 # define STDIN 			0
 # define STDOUT 		1
@@ -115,6 +113,8 @@ char	*ft_strtok(char *str, const char delim);
 /* src/utils/utils_signal.c */
 void	signal_handler(int signo);
 void	set_signal(void *int_handler, void *quit_handler);
+void	execute_sigquit_handler(int signo);
+void	execute_sigint_handler(int signo);
 
 /* execute */
 void	execute(t_data *data);
