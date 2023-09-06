@@ -4,7 +4,12 @@
 static void	exec_pipe(t_data *data, t_node *node);
 static void	wait_child(t_data *data);
 static void	exec_child(t_data *data, t_node *node);
-static char	*get_cmd(char **path_tab, char *cmd_uncertain);
+static char	*get_cmd(t_data *data, char *cmd_uncertain);
+
+
+static void	exec_cmd(t_data *data, t_node *node);
+static void	exec_child(t_data *data, t_node *node);
+static void	exec_parent(t_data *data, t_node *node);
 
 void	execute(t_data *data)
 {
@@ -15,19 +20,18 @@ void	execute(t_data *data)
 	{
 		if (cur->cmd_args[0])
 		{
-			printf("### redir_type: %u\n", cur->redir_type);
-			printf("### pipe_type: %u\n", cur->pipe_type);
-			printf("### idx: %d\n", cur->idx);
-			if (cur->redir_type != NO_REDIR && cur->pipe_type == NO_PIPE)
+			if (cur->redir_type != NO_REDIR)
 			{
 				exec_redir(data, cur);
 				cur = cur->next;
 				continue ;
 			}
+			else if (cur->pipe_type != NO_PIPE)
+				exec_pipe(data, cur);
 			if (is_builtin(cur->cmd_args) && cur->pipe_type == NO_PIPE)
 				exec_builtin(data, cur);
 			else
-				exec_pipe(data, cur);
+				exec_cmd(data, cur);
 		}
 		cur = cur->next;
 	}
@@ -37,29 +41,53 @@ void	execute(t_data *data)
 
 static void	exec_pipe(t_data *data, t_node *node)
 {
-	if (!(node->pipe_type == NO_PIPE || node->pipe_type == R_PIPE))
-		ft_pipe(data, node);
+	ft_pipe(data, node);
+}
+
+static void	exec_cmd(t_data *data, t_node *node)
+{
 	ft_fork(node);
 	if (node->pid == 0)
 		exec_child(data, node);
 	else if (node->pid > 0)
+		exec_parent(data, node);
+}
+
+static void	exec_child(t_data *data, t_node *node)
+{
+	char	*cmd;
+
+	if (is_builtin(node->cmd_args))
 	{
-		if (data->input_fd != STDIN_FILENO)
-			ft_close(data->input_fd);
-		if (data->output_fd != STDOUT_FILENO)
-			ft_close(data->output_fd);
-		data->input_fd = 0;
-		data->output_fd = 1;
-		if (node->pipe_type == NO_PIPE)
-		{
-			wait(&g_exit_status);
-			g_exit_status = WEXITSTATUS(g_exit_status);
-		}
-		else if(node->pipe_type == R_PIPE)
-		{
-			close_all_pipes(data);
-			wait_child(data);
-		}
+		exec_builtin(data, node);
+		exit(g_exit_status);
+	}
+	connect_pipe(data, node);
+	cmd = get_cmd(data, node->cmd_args[0]);
+	if (!cmd)
+	{
+		error_str_code(node, CMD_NOT_FOUND, 127);
+		exit(127);
+	}
+	if (execve(cmd, node->cmd_args, data->envp) < 0)
+	{
+		error_str_code(node, strerror(errno), 127);
+		exit(127);
+	}
+}
+
+static void	exec_parent(t_data *data, t_node *node)
+{
+	if (data->input_fd != STDIN_FILENO)
+		ft_close(data->input_fd);
+	if (data->output_fd != STDOUT_FILENO)
+		ft_close(data->output_fd);
+	data->input_fd = 0;
+	data->output_fd = 1;
+	if (node->pipe_type == NO_PIPE || node->pipe_type == R_PIPE)
+	{
+		wait_child(data);
+		close_all_pipes(data);
 	}
 }
 
@@ -77,41 +105,17 @@ static void	wait_child(t_data *data)
 	g_exit_status = WEXITSTATUS(g_exit_status);
 }
 
-static void	exec_child(t_data *data, t_node *node)
-{
-	char	*cmd;
-
-	if (node->redir_type != NO_REDIR)
-	{
-		exec_redir(data, node);
-		return ;
-	}
-	if (is_builtin(node->cmd_args))
-	{
-		exec_builtin(data, node);
-		return ;
-	}
-	connect_pipe(data, node);
-	cmd = get_cmd(ft_split(get_envv_data(data->envp, "PATH"), ':'), node->cmd_args[0]);
-	if (!cmd)
-	{
-		error_str_code(node, CMD_NOT_FOUND, 127);
-		exit(g_exit_status);
-	}
-	if (execve(cmd, node->cmd_args, data->envp) < 0)
-		error_str_code(node, CMD_NOT_FOUND, 127);
-	exit(g_exit_status);
-}
-
-static char	*get_cmd(char **path_tab, char *cmd_uncertain)
+static char	*get_cmd(t_data *data, char *cmd_uncertain)
 {
 	char	*tmp;
 	char	*cmd;
+	char	**path_tab;
 
 	if (!cmd_uncertain)
 		return (NULL);
 	else if (cmd_uncertain[0] == '/')
 		return (cmd_uncertain);
+	path_tab = ft_split(get_envv_data(data->envp, "PATH"), ':');
 	while (*path_tab)
 	{
 		tmp = ft_strjoin(*path_tab, "/");
@@ -122,5 +126,7 @@ static char	*get_cmd(char **path_tab, char *cmd_uncertain)
 		free(cmd);
 		path_tab++;
 	}
+	if (path_tab)
+		free_tab(path_tab);
 	return (NULL);
 }

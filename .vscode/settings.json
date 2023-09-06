@@ -14,6 +14,9 @@
 		"variant": "c",
 		"chrono": "c",
 		"compare": "c",
-		"cstddef": "c"
+		"cstddef": "c",
+		"string": "c",
+		"string_view": "c",
+		"vector": "c"
 	}
 }

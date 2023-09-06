@@ -43,7 +43,7 @@ void	close_all_pipes(t_data *data)
 	int	i;
 
 	i = 0;
-	while (i < data->list->cmd_cnt - 1)
+	while (i < data->list->cmd_cnt)
 	{
 		ft_close(data->pipe_fd[i][0]);
 		ft_close(data->pipe_fd[i][1]);
