@@ -7,7 +7,7 @@ void	builtin_env(t_data *data)
 	i = 0;
 	while (data->envp[i])
 	{
-		ft_putendl_fd(data->envp[i], data->output_fd);
+		printf("%s\n", data->envp[i]);
 		i++;
 	}
 	g_exit_status = 0;

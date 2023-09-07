@@ -6,7 +6,7 @@
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:35:11 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/07 13:30:37 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/09/07 17:08:15 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,6 @@ typedef struct s_parse
 
 /* src/utils/utils.c */
 int		is_whitespace(char *str);
-char	*ft_strtok(char *str, const char delim);
 
 /* src/utils/utils_signal.c */
 void	signal_handler(int signo);
@@ -127,12 +126,12 @@ void	exec_redir(t_data *data, t_node *node);
 int		is_builtin(char **cmd_args);
 void	exec_builtin(t_data *data, t_node *node);
 void	builtin_cd(t_data *data, t_node *node);
-void	builtin_echo(t_data *data, t_node *node);
+void	builtin_echo(t_node *node);
 void	builtin_env(t_data *data);
 void	builtin_exit(t_node *node);
 void	builtin_export(t_data *data, t_node *node);
 void	exec_export(t_data *data, char *export);
-void	builtin_pwd(t_data *data);
+void	builtin_pwd(void);
 void	builtin_unset(t_data *data, t_node *node);
 
 /* error */

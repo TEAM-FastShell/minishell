@@ -10,11 +10,11 @@ void	exec_builtin(t_data *data, t_node *node)
 	cmd = node->cmd_args[0];
 	len_cmd = ft_strlen(cmd);
 	if (!ft_strncmp(cmd, "echo", len_cmd))
-		builtin_echo(data, node);
+		builtin_echo(node);
 	else if (!ft_strncmp(cmd, "cd", len_cmd))
 		builtin_cd(data, node);
 	else if (!ft_strncmp(cmd, "pwd", len_cmd))
-		builtin_pwd(data);
+		builtin_pwd();
 	else if (!ft_strncmp(cmd, "export", len_cmd))
 		builtin_export(data, node);
 	else if (!ft_strncmp(cmd, "unset", len_cmd))

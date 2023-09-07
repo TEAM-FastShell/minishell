@@ -31,6 +31,7 @@ void	execute(t_data *data)
 			}
 			else if (cur->pipe_type != NO_PIPE)
 				exec_pipe(data, cur);
+
 			if (is_builtin(cur->cmd_args) && cur->pipe_type == NO_PIPE)
 				exec_builtin(data, cur);
 			else
@@ -60,12 +61,12 @@ static void	exec_child(t_data *data, t_node *node)
 {
 	char	*cmd;
 
+	connect_pipe(data, node);
 	if (is_builtin(node->cmd_args))
 	{
 		exec_builtin(data, node);
 		exit(g_exit_status);
 	}
-	connect_pipe(data, node);
 	cmd = get_cmd(data, node->cmd_args[0]);
 	if (!cmd)
 	{

@@ -12,7 +12,7 @@ void	builtin_exit(t_node *node)
 	while (node->cmd_args[i])
 		i++;
 	if (i == 1)
-		ft_putendl_fd("exit", STDOUT_FILENO);
+		printf("exit\n");
 	else if (i == 2 && is_num_str(node->cmd_args[1]))
 		g_exit_status = ft_atoi(node->cmd_args[1]);
 	else if (i > 2 && is_num_str(node->cmd_args[1]))

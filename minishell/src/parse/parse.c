@@ -74,12 +74,17 @@ int	parse_char(t_double_list *list, t_parse *parse, char *input, int *i)
 	if (check_quote(parse, input[*i], input[*i + 1]))
 		set_quote(parse, input, &i);
 	else if (!parse->quote && input[*i] == ' ')
+	{	
 		put_buff_to_cmd(parse);
+		if (parse->cmd[0] && parse->cmd[0][0] != 0 && parse->redir_type != NO_REDIR)
+			ret = add_node(list, parse);
+	}
 	else if (!parse->quote && input[*i] == ';')
 		ret = ERROR;
 	else if (!parse->quote && input[*i] == '|')
 	{
-		ret = add_node(list, parse);
+		if (parse->cmd[0] && parse->cmd[0][0] != 0)
+			ret = add_node(list, parse);
 		if (ret > 0)
 			list->tail->pipe_type = RW_PIPE;
 	}

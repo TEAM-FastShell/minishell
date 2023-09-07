@@ -1,11 +1,11 @@
 #include "../../include/minishell.h"
 
-void	builtin_pwd(t_data *data)
+void	builtin_pwd(void)
 {
 	char	*pwd;
 
 	pwd = getcwd(NULL, 2048);
-	ft_putendl_fd(pwd, data->output_fd);
+	printf("%s\n", pwd);
 	free(pwd);
 	pwd = NULL;
 	g_exit_status = 0;
