@@ -13,12 +13,21 @@ void	exec_redir(t_data *data, t_node *node)
 		ft_close(data->output_fd);
 	ft_open_redir(data, node);
 	if (data->input_fd < 0 || data->output_fd < 0)
-		ft_putendl_fd(strerror(errno), STDERR_FILENO);
+		return (error_str_code(node, NO_FILE_DIR, errno));
+	if (!node->next)
+	{
+		if (data->input_fd != STDIN_FILENO)
+			ft_close(data->input_fd);
+		if (data->output_fd != STDOUT_FILENO)
+			ft_close(data->output_fd);
+		data->input_fd = STDIN_FILENO;
+		data->output_fd = STDOUT_FILENO;
+	}
 }
 
 static void	ft_open_redir(t_data *data, t_node *node)
 {
-	char			*file_name;
+	char	*file_name;
 
 	file_name = node->cmd_args[0];
 	if (node->redir_type == R_REDIR)
@@ -40,12 +49,14 @@ static void	ft_open_redir(t_data *data, t_node *node)
 static void	get_heredoc(t_data *data, t_node *node, char *file_name)
 {
 	char	*line;
+	char	*escape;
 
+	escape = ft_strjoin(node->cmd_args[0], "\n");
 	write(1, "> ", 2);
 	line = get_next_line(0);
 	while (line)
 	{
-		if (!ft_strncmp(line, node->cmd_args[0], ft_strlen(line) - 1))
+		if (!ft_strncmp(line, escape, ft_strlen(line)))
 			break ;
 		write(data->input_fd, line, ft_strlen(line));
 		free(line);
@@ -53,6 +64,7 @@ static void	get_heredoc(t_data *data, t_node *node, char *file_name)
 		line = get_next_line(0);
 	}
 	free(line);
+	free(escape);
 	ft_close(data->input_fd);
 	data->input_fd = open(file_name, O_RDONLY);
 	unlink(file_name);
