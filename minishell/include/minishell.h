@@ -6,7 +6,7 @@
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:35:11 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/06 14:50:45 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/09/07 13:30:37 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <errno.h>
 # include <signal.h>
 # include <sys/wait.h>
+# include <sys/types.h>
 # include <termios.h>
 
 # include "../libft/libft.h"
@@ -115,6 +116,7 @@ void	signal_handler(int signo);
 void	set_signal(void *int_handler, void *quit_handler);
 void	execute_sigquit_handler(int signo);
 void	execute_sigint_handler(int signo);
+void	heredoc_sigint_handler(int signo);
 
 /* execute */
 void	execute(t_data *data);

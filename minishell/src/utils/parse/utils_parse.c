@@ -76,11 +76,11 @@ void	init_in_while_data(t_data *data, t_double_list *list)
 		return ;
 	if (list->cmd_cnt > 1)
 	{
-		data->pipe_fd = (int **)malloc(sizeof(int *) * (list->cmd_cnt));
+		data->pipe_fd = (int **)malloc(sizeof(int *) * (list->cmd_cnt + 1));
 		if (!data->pipe_fd)
 			return (parse_error(list, NULL, data, MALLOC_ERROR));
 		i = -1;
-		while (++i < list->cmd_cnt)
+		while (++i < list->cmd_cnt + 1)
 		{
 			data->pipe_fd[i] = (int *)malloc(sizeof(int) * (2));
 			if (!(data->pipe_fd[i]))

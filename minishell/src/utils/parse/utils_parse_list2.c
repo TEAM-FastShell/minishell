@@ -43,13 +43,11 @@ void	set_list_idx(t_double_list *list)
 	cur = list->head;
 	while (cur)
 	{
-		if (cur->pipe_type != NO_PIPE)
+		if (cur->redir_type == NO_REDIR)
 		{
 			cur->idx = i;
 			i++;
 		}
-		else
-			cur->idx = -1;
 		cur = cur->next;
 	}
 }

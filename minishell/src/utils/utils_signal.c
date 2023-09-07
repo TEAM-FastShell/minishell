@@ -17,18 +17,21 @@ void	signal_handler(int signo)
 void	execute_sigint_handler(int signo)
 {
 	if (signo == SIGINT)
-	{
 		printf("^C\n");
-		g_exit_status = 130;
-	}
 }
 
 void	execute_sigquit_handler(int signo)
 {
 	if (signo == SIGQUIT)
-	{
 		printf("^\\Quit: 3\n");
-		g_exit_status = 131;
+}
+
+void	heredoc_sigint_handler(int signo)
+{
+	if (signo == SIGINT)
+	{
+		printf("\n");
+		g_exit_status = 1;
 	}
 }
 

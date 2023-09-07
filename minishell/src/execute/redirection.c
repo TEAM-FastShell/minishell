@@ -41,16 +41,23 @@ static void	get_heredoc(t_data *data, t_node *node, char *file_name)
 {
 	char	*line;
 
-	write(1, "> ", 2);
-	line = get_next_line(0);
-	while (line)
+	set_signal(heredoc_sigint_handler, SIG_IGN);
+	// write(1, "> ", 2);
+	// line = get_next_line(0);
+	line = readline("> ");
+	while (1)
 	{
+		if (g_exit_status)
+			break ;
 		if (!ft_strncmp(line, node->cmd_args[0], ft_strlen(line) - 1))
 			break ;
 		write(data->input_fd, line, ft_strlen(line));
 		free(line);
 		write(1, "> ", 2);
-		line = get_next_line(0);
+		if (g_exit_status)
+			break ;
+		//line = get_next_line(0);
+		
 	}
 	free(line);
 	ft_close(data->input_fd);
