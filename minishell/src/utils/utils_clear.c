@@ -42,6 +42,8 @@ void	close_all_pipes(t_data *data)
 {
 	int	i;
 
+	if (data->list->cmd_cnt <= 1)
+		return ;
 	i = 0;
 	if (data->list->cmd_cnt < 2)
 		return ;

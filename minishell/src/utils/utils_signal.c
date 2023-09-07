@@ -30,6 +30,7 @@ void	heredoc_sigint_handler(int signo)
 {
 	if (signo == SIGINT)
 	{
+		close(0);
 		printf("\n");
 		g_exit_status = 1;
 	}

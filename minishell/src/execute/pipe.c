@@ -5,6 +5,21 @@ static void	close_pipe(t_data *data, t_node *node);
 
 void	connect_pipe(t_data *data, t_node *node)
 {
+	int	fd;
+
+	if (node->idx == -1 || data->list->cmd_cnt < 1)
+		return ;
+	if (node->pipe_type == R_PIPE || node->pipe_type == RW_PIPE)
+	{
+		if (node->idx == 0 || node->prev->redir_type != NO_REDIR)
+		{
+			fd = open("/dev/null", O_RDONLY);
+			data->input_fd = fd;
+			ft_dup2(data->input_fd, STDIN_FILENO);
+			ft_close(data->input_fd);
+			return ;
+		}
+	}
 	cntl_pipe(data, node);
 	if (data->input_fd != STDIN_FILENO)
 		ft_dup2(data->input_fd, STDIN_FILENO);
@@ -60,8 +75,10 @@ static void	close_pipe(t_data *data, t_node *node)
 	}
 	else if (node->pipe_type == R_PIPE)
 	{
-		if (data->input_fd == data->pipe_fd[node->idx - 1][0])
-			ft_close(data->input_fd);
+		ft_close(data->pipe_fd[node->idx][0]);
+		ft_close(data->pipe_fd[node->idx][1]);
+		// if (data->input_fd == data->pipe_fd[node->idx - 1][0])
+		// 	ft_close(data->input_fd);
 	}
 }
 

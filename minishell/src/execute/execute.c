@@ -24,6 +24,8 @@ void	execute(t_data *data)
 			if (cur->redir_type != NO_REDIR)
 			{
 				exec_redir(data, cur);
+				if (g_exit_status)
+					return ;
 				cur = cur->next;
 				continue ;
 			}
@@ -79,9 +81,9 @@ static void	exec_child(t_data *data, t_node *node)
 
 static void	exec_parent(t_data *data, t_node *node)
 {
-	if (data->input_fd != STDIN_FILENO)
+	if (data->input_fd != STDIN_FILENO && data->input_fd > 0)
 		ft_close(data->input_fd);
-	if (data->output_fd != STDOUT_FILENO)
+	if (data->output_fd != STDOUT_FILENO && data->output_fd > 0)
 		ft_close(data->output_fd);
 	data->input_fd = 0;
 	data->output_fd = 1;
