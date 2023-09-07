@@ -6,65 +6,107 @@
 #    By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/16 16:13:42 by youyoon           #+#    #+#              #
-#    Updated: 2023/09/04 14:54:35 by seokklee         ###   ########.fr        #
+#    Updated: 2023/09/07 19:38:04 by seokklee         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-CC = gcc
-
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g2
+CC = cc
+CFLAGS = -Wall -Wextra -Werror #-fsanitize=address -g2
 LDFLAGS = -I/opt/homebrew/opt/readline/include -lreadline -L /opt/homebrew/opt/readline/lib
+AR = ar
+RM = rm
+RMFLAGS = -rf
+INCS = -I $(MINI_HDR) -I $(LIBFT_HDR)
+NAME = minishell
 
-SRCS = src/parse/parse_error.c\
-	src/parse/parse.c\
-	src/parse/parse_free.c\
-	src/utils/parse/utils_parse.c\
-	src/utils/parse/utils_parse2.c\
-	src/utils/parse/utils_parse_list.c\
-	src/utils/parse/utils_parse_list2.c\
-	src/utils/utils.c\
-	src/utils/utils_signal.c\
-	src/utils/ft_function.c\
-	src/utils/get_next_line_utils.c\
-	src/utils/get_next_line.c\
-	src/utils/utils_clear.c\
-	src/main.c\
-	src/builtin/builtin_cd.c\
-	src/builtin/builtin_echo.c\
-	src/builtin/builtin_env.c\
-	src/builtin/builtin_exit.c\
-	src/builtin/builtin_export.c\
-	src/builtin/builtin_pwd.c\
-	src/builtin/builtin_unset.c\
-	src/builtin/builtin.c\
-	src/error/error.c\
-	src/execute/execute.c\
-	src/execute/pipe.c\
-	src/execute/redirection.c\
+MINI_HDR = ./include/
 
-OBJS_DIR = objs
-OBJS = $(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))
+LIBFT = $(LIBFT_DIR)libft.a
+LIBFT_DIR = ./libft/
+LIBFT_HDR = $(LIBFT_DIR)include/
+
+SRCS_BUILTIN = builtin_cd.c\
+	builtin_echo.c\
+	builtin_env.c\
+	builtin_exit.c\
+	builtin_export.c\
+	builtin_pwd.c\
+	builtin_unset.c\
+	builtin.c\
+
+SRCS_ERROR = error.c\
+
+SRCS_EXECUTE = execute.c\
+	pipe.c\
+	redirection.c\
+
+SRCS_PARSE = parse.c\
+	parse_error.c\
+	parse_free.c\
+
+SRCS_UTILS = ft_function.c\
+	get_next_line.c\
+	get_next_line_utils.c\
+	utils_clear.c\
+	utils_parse_list.c\
+	utils_parse_list2.c\
+	utils_parse.c\
+	utils_parse2.c\
+	utils_signal.c\
+	utils.c\
+
+SRC = main.c\
+
+SRC_BUILTIN_DIR = src/builtin/
+SRC_ERROR_DIR = src/error/
+SRC_EXECUTE_DIR = src/execute/
+SRC_PARSE_DIR = src/parse/
+SRC_UTILS_DIR = src/utils/
+SRC_DIR = src/
+
+SRCS = $(addprefix $(SRC_DIR), $(SRC))\
+	$(addprefix $(SRC_BUILTIN_DIR), $(SRCS_BUILTIN))\
+	$(addprefix $(SRC_ERROR_DIR), $(SRCS_ERROR))\
+	$(addprefix $(SRC_EXECUTE_DIR), $(SRCS_EXECUTE))\
+	$(addprefix $(SRC_PARSE_DIR), $(SRCS_PARSE))\
+	$(addprefix $(SRC_UTILS_DIR), $(SRCS_UTILS))\
+
+OBJ = $(SRCS:.c=.o)
+OBJS_DIR = obj/
+OBJS = $(addprefix $(OBJS_DIR), $(OBJ))
 
 all : $(NAME)
 
-$(OBJS_DIR)/%.o: %.c
-	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -I/opt/homebrew/opt/readline/include/ -c $< -o $@
+$(NAME) : $(LIBFT) $(OBJS_DIR) $(OBJS)
+	$(CC) $(CFLAGS) $(LIBFT) $(INCS) $(OBJS) -o $@ $(LDFLAGS)
 
-$(NAME) : $(OBJS)
-	make -C ./libft
-	$(CC) $(CFLAGS) $(OBJS) -o $@ libft/libft.a $(LDFLAGS)
+$(OBJS_DIR):
+	mkdir $(OBJS_DIR)
+	mkdir $(OBJS_DIR)$(SRC_DIR)
+	mkdir $(OBJS_DIR)$(SRC_BUILTIN_DIR)
+	mkdir $(OBJS_DIR)$(SRC_ERROR_DIR)
+	mkdir $(OBJS_DIR)$(SRC_EXECUTE_DIR)
+	mkdir $(OBJS_DIR)$(SRC_PARSE_DIR)
+	mkdir $(OBJS_DIR)$(SRC_UTILS_DIR)
+
+$(OBJS_DIR)%.o: %.c
+	$(CC) $(CFLAGS) $(INCS) -I/opt/homebrew/opt/readline/include/ -c $< -o $@
+
+$(LIBFT):
+	make -C $(LIBFT_DIR)
 
 clean:
-	make clean -C ./libft
-	rm -rf $(OBJS_DIR)
+	make -C $(LIBFT_DIR) clean
+	$(RM) $(RMFLAGS) $(OBJS_DIR)
 
 fclean: clean
-	make fclean -C ./libft
-	rm -rf $(NAME)
+	make -C $(LIBFT_DIR) fclean
+	$(RM) $(RMFLAGS) $(NAME)
 
-re : fclean all
+re :
+	make fclean
+	make all
 
 .PHONY : all clean fclean re

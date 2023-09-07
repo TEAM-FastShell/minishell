@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:35:11 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/07 17:08:15 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/09/07 19:48:20 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,6 @@ void	free_tab(char **tab);
 void	close_all_pipes(t_data *data);
 char	*get_envv_data(char *envp[], char *envv);
 void	free_pipe_fd(t_data *data);
-
 
 /* gnl */
 char	*get_next_line(int fd);

@@ -1,5 +1,17 @@
-#include "../../../include/minishell.h"
-#include "../../../include/parse.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_parse.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/07 19:47:18 by seokklee          #+#    #+#             */
+/*   Updated: 2023/09/07 19:51:34 by seokklee         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
+#include "parse.h"
 
 void	init_list(t_double_list *list)
 {
@@ -30,9 +42,8 @@ char	**copy_env(char **env)
 	return (ret);
 }
 
-void	init_parse(t_parse *parse, int token_cnt, int input_len, t_data *data)
+void	init_parse(t_parse *parse, int token_cnt, t_data *data)
 {
-	(void) input_len; /* need to remove */
 	parse->cmd = (char **) ft_calloc(token_cnt + 1, sizeof(char *));
 	if (!parse->cmd)
 		return (parse_error(NULL, NULL, NULL, MALLOC_ERROR));
