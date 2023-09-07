@@ -1,5 +1,17 @@
-#include "../../../include/minishell.h"
-#include "../../../include/parse.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_parse_list2.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/07 19:47:15 by seokklee          #+#    #+#             */
+/*   Updated: 2023/09/07 19:47:16 by seokklee         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
+#include "parse.h"
 
 static int	count_pipe_type(t_double_list *list)
 {

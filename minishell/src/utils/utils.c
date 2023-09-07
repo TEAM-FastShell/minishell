@@ -1,5 +1,17 @@
-#include "../../include/minishell.h"
-#include "../../include/parse.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/07 19:47:28 by seokklee          #+#    #+#             */
+/*   Updated: 2023/09/07 19:50:34 by seokklee         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
+#include "parse.h"
 
 int	is_whitespace(char *str)
 {
@@ -48,4 +60,15 @@ void	free_pipe_fd(t_data *data)
 	}
 	free(data->pipe_fd);
 	data->pipe_fd = NULL;
+}
+
+void	put_buff_to_cmd(t_parse *parse)
+{
+	if (!(parse->buff[0]))
+		return ;
+	parse->cmd[parse->c_idx] = ft_strdup(parse->buff);
+	parse->cmd[parse->c_idx + 1] = NULL;
+	parse->c_idx++;
+	ft_bzero(parse->buff, ft_strlen(parse->buff) + 1);
+	parse->b_idx = 0;
 }

@@ -1,15 +1,22 @@
-#include "../../include/minishell.h"
-#include "../../include/parse.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execute.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/07 19:46:21 by seokklee          #+#    #+#             */
+/*   Updated: 2023/09/07 19:46:22 by seokklee         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-static void	exec_pipe(t_data *data, t_node *node);
+#include "minishell.h"
+#include "parse.h"
+
 static void	wait_child(t_data *data);
-static void	exec_child(t_data *data, t_node *node);
 static char	*get_cmd(t_data *data, char *cmd_uncertain);
-
-
 static void	exec_cmd(t_data *data, t_node *node);
 static void	exec_child(t_data *data, t_node *node);
-static void	exec_parent(t_data *data, t_node *node);
 
 void	execute(t_data *data)
 {
@@ -30,12 +37,8 @@ void	execute(t_data *data)
 				continue ;
 			}
 			else if (cur->pipe_type != NO_PIPE)
-				exec_pipe(data, cur);
-
-			if (is_builtin(cur->cmd_args) && cur->pipe_type == NO_PIPE)
-				exec_builtin(data, cur);
-			else
-				exec_cmd(data, cur);
+				ft_pipe(data, cur);
+			exec_cmd(data, cur);
 		}
 		cur = cur->next;
 	}
@@ -43,18 +46,30 @@ void	execute(t_data *data)
 	free_list(data->list);
 }
 
-static void	exec_pipe(t_data *data, t_node *node)
-{
-	ft_pipe(data, node);
-}
-
 static void	exec_cmd(t_data *data, t_node *node)
 {
+	if (is_builtin(node->cmd_args) && node->pipe_type == NO_PIPE)
+	{
+		exec_builtin(data, node);
+		return ;
+	}
 	ft_fork(node);
 	if (node->pid == 0)
 		exec_child(data, node);
 	else if (node->pid > 0)
-		exec_parent(data, node);
+	{
+		if (data->input_fd != STDIN_FILENO && data->input_fd > 0)
+			ft_close(data->input_fd);
+		if (data->output_fd != STDOUT_FILENO && data->output_fd > 0)
+			ft_close(data->output_fd);
+		data->input_fd = 0;
+		data->output_fd = 1;
+		if (node->pipe_type == NO_PIPE || node->pipe_type == R_PIPE)
+		{
+			close_all_pipes(data);
+			wait_child(data);
+		}
+	}
 }
 
 static void	exec_child(t_data *data, t_node *node)
@@ -77,21 +92,6 @@ static void	exec_child(t_data *data, t_node *node)
 	{
 		error_str_code(node, strerror(errno), 127);
 		exit(127);
-	}
-}
-
-static void	exec_parent(t_data *data, t_node *node)
-{
-	if (data->input_fd != STDIN_FILENO && data->input_fd > 0)
-		ft_close(data->input_fd);
-	if (data->output_fd != STDOUT_FILENO && data->output_fd > 0)
-		ft_close(data->output_fd);
-	data->input_fd = 0;
-	data->output_fd = 1;
-	if (node->pipe_type == NO_PIPE || node->pipe_type == R_PIPE)
-	{
-		close_all_pipes(data);
-		wait_child(data);
 	}
 }
 

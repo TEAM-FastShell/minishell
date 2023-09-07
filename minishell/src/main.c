@@ -1,5 +1,17 @@
-#include "../include/parse.h"
-#include "../include/minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/07 19:47:31 by seokklee          #+#    #+#             */
+/*   Updated: 2023/09/07 19:47:32 by seokklee         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "parse.h"
+#include "minishell.h"
 
 static int	set_main(void)
 {

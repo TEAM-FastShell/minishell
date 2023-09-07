@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+         #
+#    By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 16:23:11 by youyoon           #+#    #+#              #
-#    Updated: 2023/08/17 15:38:36 by youyoon          ###   ########.fr        #
+#    Updated: 2023/09/07 18:34:32 by seokklee         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
 
-CC = gcc
+CC = cc
 CFLAG = -Wall -Wextra -Werror
 
 RM = rm -f
@@ -68,7 +68,7 @@ SRCS_BONUS = ft_lstnew.c		\
 			ft_lstiter.c		\
 			ft_lstmap.c
 
-SRCS = $(SRCS_1)		
+SRCS = $(SRCS_1)
 SRCS_BNS = $(SRCS_BONUS)
 
 OBJS	= $(SRCS:.c=.o)

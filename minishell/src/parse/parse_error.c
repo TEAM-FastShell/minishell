@@ -1,9 +1,18 @@
-#include "../../include/minishell.h"
-#include "../../include/parse.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_error.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/07 19:46:30 by seokklee          #+#    #+#             */
+/*   Updated: 2023/09/07 19:46:34 by seokklee         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-/*
-	malloc이 안됐을 때 에러 처리 생각
-*/
+#include "minishell.h"
+#include "parse.h"
+
 void	parse_error(t_double_list *list, t_parse *parse, \
 		t_data *data, char *error_msg)
 {
