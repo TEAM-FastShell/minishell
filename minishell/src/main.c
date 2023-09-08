@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:47:31 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/07 19:47:32 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/09/08 13:36:11 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	prompt_while(t_data *data, t_double_list *list, \
 	while (1)
 	{
 		set_signal(signal_handler, SIG_IGN);
-		input = readline("bash$ ");
+		input = readline("minishell$ ");
 		if (!input)
 			print_prompt(&input);
 		else if (*input == '\0')

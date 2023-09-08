@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:47:28 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/07 19:50:34 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/09/08 13:43:42 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	free_pipe_fd(t_data *data)
 
 void	put_buff_to_cmd(t_parse *parse)
 {
-	if (!(parse->buff[0]))
+	if (parse->buff[0] == 0)
 		return ;
 	parse->cmd[parse->c_idx] = ft_strdup(parse->buff);
 	parse->cmd[parse->c_idx + 1] = NULL;

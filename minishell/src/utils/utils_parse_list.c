@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_parse_list.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:47:12 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/07 19:47:13 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/09/08 13:44:14 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	add_node(t_double_list *list, t_parse *parse)
 	t_node	*new_node;
 	int		i;
 
-	if (parse->buff[0])
+	if (parse->buff[0] != 0)
 		put_buff_to_cmd(parse);
 	if (parse->cmd[0] && parse->cmd[0][0] != 0)
 	{
@@ -66,6 +66,7 @@ int	add_node(t_double_list *list, t_parse *parse)
 		parse->b_idx = 0;
 		parse->pipe_type = NO_PIPE;
 		parse->redir_type = NO_REDIR;
+		list->tail->pipe_type = RW_PIPE;
 		return (SUCCESS);
 	}
 	return (ERROR);
