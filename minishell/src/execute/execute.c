@@ -6,7 +6,7 @@
 /*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:46:21 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/08 13:07:15 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/09/08 13:59:42 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,11 +102,9 @@ static void	wait_child(t_data *data)
 	cur = data->list->head;
 	while (cur->next != NULL)
 	{
-		printf("waitpid: %s\n", cur->cmd_args[0]);
 		waitpid(cur->pid, &g_exit_status, 0);
 		cur = cur->next;
 	}
-	printf("waitpid: %s\n", cur->cmd_args[0]);
 	waitpid(data->list->tail->pid, &g_exit_status, 0);
 	if (WIFSIGNALED(g_exit_status))
 		g_exit_status = 128 + WTERMSIG(g_exit_status);
