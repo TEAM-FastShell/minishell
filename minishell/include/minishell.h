@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:35:11 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/08 14:26:54 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/09/08 17:48:54 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ typedef struct s_parse
 
 /* src/utils/utils.c */
 int		is_whitespace(char *str);
-
+int		check_pipe_error(t_parse *parse, t_double_list *list);
 /* src/utils/utils_signal.c */
 void	signal_handler(int signo);
 void	set_signal(void *int_handler, void *quit_handler);

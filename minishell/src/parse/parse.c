@@ -6,7 +6,7 @@
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:46:39 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/08 17:04:58 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/09/08 17:57:28 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,9 @@ int	parse_char(t_double_list *list, t_parse *parse, char *input, int *i)
 	ret = SUCCESS;
 	if (check_quote(parse, input[*i], input[*i + 1]))
 		set_quote(parse, input, &i);
-	else if (!parse->quote && ft_strchr(" ;|><", input[*i]))
+	else if (!parse->quote && input[*i] == ';')
+		return (ERROR);
+	else if (!parse->quote && ft_strchr(" |><", input[*i]))
 		ret = no_quote(list, parse, input, i);
 	else
 		parse->buff[parse->b_idx++] = input[*i];
@@ -90,20 +92,14 @@ static int	no_quote(t_double_list *list, t_parse *parse, char *input, int *i)
 		if (parse->cmd[0] && parse->cmd[0][0] != 0 && parse->redir_type != 0)
 			return (add_node(list, parse));
 	}
-	else if (input[*i] == ';')
-		return (ERROR);
 	else if (input[*i] == '|')
 	{
-		if (parse->buff[0] == 0)
-			return (ERROR);
 		put_buff_to_cmd(parse);
 		if (parse->cmd[0] && parse->cmd[0][0] != 0)
-		{
-		{
 			if (add_node(list, parse) < 0)
 				return (ERROR);
-		}
-		list->tail->pipe_type = RW_PIPE;
+		if (check_pipe_error(parse, list) < 0)
+			return (ERROR);
 	}
 	else
 	{

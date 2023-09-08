@@ -6,7 +6,7 @@
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:47:28 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/08 16:22:36 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/09/08 17:52:03 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,15 @@ void	put_buff_to_cmd(t_parse *parse)
 	parse->c_idx++;
 	ft_bzero(parse->buff, ft_strlen(parse->buff) + 1);
 	parse->b_idx = 0;
+}
+
+int	check_pipe_error(t_parse *parse, t_double_list *list)
+{
+	if (list->cnt > 0 && list->tail->pipe_type != NO_PIPE \
+		&& parse->buff[0] == 0)
+		return (ERROR);
+	if (list->cnt == 0)
+		return (ERROR);
+	list->tail->pipe_type = RW_PIPE;
+	return (SUCCESS);
 }

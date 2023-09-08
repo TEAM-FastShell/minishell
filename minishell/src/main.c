@@ -6,7 +6,7 @@
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:47:31 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/08 17:02:28 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/09/08 17:23:56 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ static void	print_prompt(char **input)
 	printf("exit\n");
 	exit(0);
 }
+
 /* 최종 사용한 struct 모두 free 구현 필요 */
 static void	prompt_while(t_data *data, t_double_list *list, \
 				t_parse *parse)

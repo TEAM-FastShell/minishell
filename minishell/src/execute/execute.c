@@ -6,7 +6,7 @@
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:46:21 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/08 16:05:39 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/09/08 17:07:16 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,6 @@ void	execute(t_data *data)
 {
 	t_node	*cur;
 
-	// cur = data->list->head;
-	// while (cur)
-	// {
-	// 	int i = 0;
-	// 	while (cur->cmd_args[i])
-	// 	{
-	// 		printf("%s ", cur->cmd_args[i++]);
-	// 	}
-	// 	printf("redir %d pipe %d ||| -> ", cur->redir_type, cur->pipe_type);
-	// 	cur = cur->next;
-	// }
-	// printf("\ncmd %d\n", data->list->cmd_cnt);
-	
 	cur = data->list->head;
 	set_signal(execute_sigint_handler, execute_sigquit_handler);
 	while (cur != NULL)

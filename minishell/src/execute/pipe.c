@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:46:23 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/08 13:59:19 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/09/08 18:03:11 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ static void	close_pipe(t_data *data, t_node *node)
 		if (data->output_fd != data->pipe_fd[node->idx][1])
 			ft_close(data->pipe_fd[node->idx][1]);
 		ft_close(data->output_fd);
-		if  (data->input_fd != data->pipe_fd[node->idx - 1][0])
+		if (data->input_fd != data->pipe_fd[node->idx - 1][0])
 			ft_close(data->pipe_fd[node->idx - 1][0]);
 		ft_close(data->input_fd);
 		ft_close_pipe_fd(data, node->idx - 1);
