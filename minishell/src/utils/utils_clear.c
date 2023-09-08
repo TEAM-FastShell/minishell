@@ -6,7 +6,7 @@
 /*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:47:09 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/07 19:47:11 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/09/08 13:10:34 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,6 @@ void	close_all_pipes(t_data *data)
 	if (data->list->cmd_cnt <= 1)
 		return ;
 	i = 0;
-	if (data->list->cmd_cnt < 2)
-		return ;
 	while (i < data->list->cmd_cnt)
 	{
 		ft_close(data->pipe_fd[i][0]);

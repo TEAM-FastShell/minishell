@@ -6,7 +6,7 @@
 /*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:46:23 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/07 19:52:08 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/09/08 12:18:43 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,12 @@ void	connect_pipe(t_data *data, t_node *node)
 			data->input_fd = fd;
 			ft_dup2(data->input_fd, STDIN_FILENO);
 			ft_close(data->input_fd);
+			if (node->pipe_type == RW_PIPE)
+			{
+				data->output_fd = data->pipe_fd[node->idx][1];
+				ft_dup2(data->output_fd, STDOUT_FILENO);
+				ft_close(data->output_fd);
+			}
 			return ;
 		}
 	}
@@ -50,6 +56,8 @@ static void	cntl_pipe(t_data *data, t_node *node)
 	}
 	else if (node->pipe_type == RW_PIPE)
 	{
+		ft_close(data->pipe_fd[node->idx][0]);
+		ft_close(data->pipe_fd[node->idx - 1][1]);
 		change_fd(data, node, 0);
 		change_fd(data, node, 1);
 	}
@@ -82,19 +90,28 @@ static void	close_pipe(t_data *data, t_node *node)
 {
 	if (node->pipe_type == W_PIPE)
 	{
-		if (data->output_fd == data->pipe_fd[node->idx][1])
+		if (data->output_fd != STDIN_FILENO)
 			ft_close(data->output_fd);
 	}
 	else if (node->pipe_type == RW_PIPE)
 	{
 		if (data->input_fd == data->pipe_fd[node->idx - 1][0])
 			ft_close(data->input_fd);
+		else
+			ft_close(data->pipe_fd[node->idx - 1][0]);
 		if (data->output_fd == data->pipe_fd[node->idx][1])
 			ft_close(data->output_fd);
+		else
+			ft_close(data->pipe_fd[node->idx][1]);
 	}
 	else if (node->pipe_type == R_PIPE)
 	{
 		ft_close(data->pipe_fd[node->idx][0]);
 		ft_close(data->pipe_fd[node->idx][1]);
+		// if (data->input_fd == data->pipe_fd[node->idx - 1][0])
+		// 	ft_close(data->input_fd);
+		ft_close(data->input_fd);
+		if (data->output_fd != STDOUT_FILENO)
+			ft_close(data->output_fd);
 	}
 }

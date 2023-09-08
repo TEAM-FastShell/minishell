@@ -6,7 +6,7 @@
 /*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:46:39 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/07 19:50:00 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/09/07 20:08:21 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ void	parser(char *input_tmp, t_data *data, \
 	input = ft_strtrim(input_tmp, " ");
 	token_cnt = count_word(input);
 	init_list(list);
-	init_parse(parse, token_cnt, (int) ft_strlen(input), data);
+	init_parse(parse, token_cnt, data);
 	i = -1;
 	while (input[++i])
 	{
