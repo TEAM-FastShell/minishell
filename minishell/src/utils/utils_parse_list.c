@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_parse_list.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:47:12 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/08 14:52:20 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/09/08 15:54:04 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
