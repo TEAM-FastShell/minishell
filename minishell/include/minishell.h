@@ -6,7 +6,7 @@
 /*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:35:11 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/08 14:26:54 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/09/08 17:15:51 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,7 @@ void	free_tab(char **tab);
 void	close_all_pipes(t_data *data);
 char	*get_envv_data(char *envp[], char *envv);
 void	free_pipe_fd(t_data *data);
+void	pipe_with_redir(t_data *data, t_node *node);
 
 /* gnl */
 char	*get_next_line(int fd);

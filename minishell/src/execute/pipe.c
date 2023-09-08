@@ -6,7 +6,7 @@
 /*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:46:23 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/08 13:59:19 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/09/08 17:16:52 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,13 @@ static void	ft_close_pipe_fd(t_data *data, int idx);
 
 void	connect_pipe(t_data *data, t_node *node)
 {
-	int	fd;
-
 	if (node->idx == -1 || data->list->cmd_cnt < 1)
 		return ;
 	if (node->pipe_type == R_PIPE || node->pipe_type == RW_PIPE)
 	{
 		if (node->idx == 0 || node->prev->redir_type != NO_REDIR)
 		{
-			fd = open("/dev/null", O_RDONLY);
-			data->input_fd = fd;
-			ft_dup2(data->input_fd, STDIN_FILENO);
-			ft_close(data->input_fd);
-			if (node->pipe_type == RW_PIPE)
-			{
-				data->output_fd = data->pipe_fd[node->idx][1];
-				ft_dup2(data->output_fd, STDOUT_FILENO);
-				ft_close(data->output_fd);
-			}
+			pipe_with_redir(data, node);
 			return ;
 		}
 	}
@@ -111,7 +100,7 @@ static void	close_pipe(t_data *data, t_node *node)
 		if (data->output_fd != data->pipe_fd[node->idx][1])
 			ft_close(data->pipe_fd[node->idx][1]);
 		ft_close(data->output_fd);
-		if  (data->input_fd != data->pipe_fd[node->idx - 1][0])
+		if (data->input_fd != data->pipe_fd[node->idx - 1][0])
 			ft_close(data->pipe_fd[node->idx - 1][0]);
 		ft_close(data->input_fd);
 		ft_close_pipe_fd(data, node->idx - 1);
