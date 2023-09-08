@@ -6,14 +6,14 @@
 #    By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/16 16:13:42 by youyoon           #+#    #+#              #
-#    Updated: 2023/09/07 19:38:04 by seokklee         ###   ########.fr        #
+#    Updated: 2023/09/08 14:23:10 by seokklee         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror #-fsanitize=address -g2
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g2
 LDFLAGS = -I/opt/homebrew/opt/readline/include -lreadline -L /opt/homebrew/opt/readline/lib
 AR = ar
 RM = rm
@@ -32,6 +32,7 @@ SRCS_BUILTIN = builtin_cd.c\
 	builtin_env.c\
 	builtin_exit.c\
 	builtin_export.c\
+	builtin_history.c\
 	builtin_pwd.c\
 	builtin_unset.c\
 	builtin.c\
