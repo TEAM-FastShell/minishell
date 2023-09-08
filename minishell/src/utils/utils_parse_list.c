@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_parse_list.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:47:12 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/08 13:44:14 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/09/08 14:52:20 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ int	add_node(t_double_list *list, t_parse *parse)
 		parse->b_idx = 0;
 		parse->pipe_type = NO_PIPE;
 		parse->redir_type = NO_REDIR;
-		list->tail->pipe_type = RW_PIPE;
 		return (SUCCESS);
 	}
 	return (ERROR);
