@@ -6,7 +6,7 @@
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:46:23 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/08 18:03:11 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/09/08 18:05:33 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,13 @@ static void	ft_close_pipe_fd(t_data *data, int idx);
 
 void	connect_pipe(t_data *data, t_node *node)
 {
-	int	fd;
-
 	if (node->idx == -1 || data->list->cmd_cnt < 1)
 		return ;
 	if (node->pipe_type == R_PIPE || node->pipe_type == RW_PIPE)
 	{
 		if (node->idx == 0 || node->prev->redir_type != NO_REDIR)
 		{
-			fd = open("/dev/null", O_RDONLY);
-			data->input_fd = fd;
-			ft_dup2(data->input_fd, STDIN_FILENO);
-			ft_close(data->input_fd);
-			if (node->pipe_type == RW_PIPE)
-			{
-				data->output_fd = data->pipe_fd[node->idx][1];
-				ft_dup2(data->output_fd, STDOUT_FILENO);
-				ft_close(data->output_fd);
-			}
+			pipe_with_redir(data, node);
 			return ;
 		}
 	}
