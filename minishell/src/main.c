@@ -6,7 +6,7 @@
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:47:31 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/08 13:36:11 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/09/08 14:45:32 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ int	main(int argc, char *argv[], char *envp[])
 		if (set_main())
 			return (-1);
 		prompt_while(data, &list, &parse);
+		rl_clear_history();
+		parse_error(&list, &parse, data, NULL);
 	}
 	return (0);
 }
