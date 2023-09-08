@@ -6,7 +6,7 @@
 /*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:35:11 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/07 19:48:20 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/09/08 14:26:54 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,7 @@ void	builtin_export(t_data *data, t_node *node);
 void	exec_export(t_data *data, char *export);
 void	builtin_pwd(void);
 void	builtin_unset(t_data *data, t_node *node);
+void	builtin_history(void);
 
 /* error */
 void	error_code(int code);

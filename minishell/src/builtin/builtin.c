@@ -6,7 +6,7 @@
 /*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:46:13 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/07 19:52:22 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/09/08 14:21:46 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	exec_builtin(t_data *data, t_node *node)
 		builtin_env(data);
 	else if (!ft_strncmp(cmd, "exit", len_cmd))
 		builtin_exit(node);
+	else if (!ft_strncmp(cmd, "history", len_cmd))
+		builtin_history();
 }
 
 int	is_builtin(char **cmd_args)
@@ -47,7 +49,8 @@ int	is_builtin(char **cmd_args)
 	if (!ft_strncmp(cmd, "echo", len_cmd) || !ft_strncmp(cmd, "cd", len_cmd) \
 	|| !ft_strncmp(cmd, "pwd", len_cmd) || !ft_strncmp(cmd, "export", len_cmd) \
 	|| !ft_strncmp(cmd, "unset", len_cmd) || !ft_strncmp(cmd, "env", len_cmd) \
-	|| !ft_strncmp(cmd, "exit", len_cmd))
+	|| !ft_strncmp(cmd, "exit", len_cmd) \
+	|| !ft_strncmp(cmd, "history", len_cmd))
 		return (1);
 	return (0);
 }

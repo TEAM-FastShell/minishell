@@ -6,7 +6,7 @@
 #    By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/16 16:13:42 by youyoon           #+#    #+#              #
-#    Updated: 2023/09/08 14:45:36 by youyoon          ###   ########.fr        #
+#    Updated: 2023/09/08 14:46:44 by youyoon          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ SRCS_BUILTIN = builtin_cd.c\
 	builtin_env.c\
 	builtin_exit.c\
 	builtin_export.c\
+	builtin_history.c\
 	builtin_pwd.c\
 	builtin_unset.c\
 	builtin.c\
