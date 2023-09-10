@@ -6,7 +6,7 @@
 /*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:45:57 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/08 18:02:06 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/09/10 14:43:22 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,9 @@ void	builtin_cd(t_data *data, t_node *node)
 		if (chdir(path) < 0)
 			error_str_str_code(node, NO_FILE_DIR, 1);
 		set_pwds(data);
+		if (path[0] == '~')
+			free(path);
 	}
-	free(path);
 	g_exit_status = 0;
 }
 

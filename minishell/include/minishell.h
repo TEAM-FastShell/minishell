@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:35:11 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/08 18:08:36 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/09/10 14:59:26 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,9 @@ void	heredoc_sigint_handler(int signo);
 
 /* execute */
 void	execute(t_data *data);
-void	connect_pipe(t_data *data, t_node *node);
+void	control_pipe(t_data *data, t_node *node);
+void	connect_fd(t_data *data);
+void	close_fd(t_data *data, t_node *node);
 void	exec_redir(t_data *data, t_node *node);
 
 /* builtin */
