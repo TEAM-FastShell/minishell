@@ -6,7 +6,7 @@
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 15:39:09 by youyoon           #+#    #+#             */
-/*   Updated: 2023/09/08 16:22:56 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/09/10 16:49:57 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int		parse_char(t_double_list *list, t_parse *parse, char *input, int *i);
 /* src/utils/parse/utils_parse.c */
 /* init and free struct */
 void	init_list(t_double_list *list);
-void	init_parse(t_parse *parse, int token_cnt, t_data *data);
+void	init_parse(t_parse *parse, int token_cnt, t_data *data, int input_len);
 int		check_redir(char input, char input_next);
 char	**copy_env(char **env);
 void	init_in_while_data(t_data *data, t_double_list *list);
@@ -40,7 +40,7 @@ void	init_data_before_start(t_data **data, char **envp);
 char	*get_envv(char *envp[], char *envv);
 int		check_env_char(char c);
 char	*change_to_env(t_parse *parse, char *input, int start, int end);
-void	put_env_to_buff(t_parse *parse, char *env);
+void	put_env_to_buff(t_parse *parse, char *env, size_t input_len);
 
 /* src/utils/parse/utils_parse_list.c */
 t_node	*make_node(t_parse *parse);

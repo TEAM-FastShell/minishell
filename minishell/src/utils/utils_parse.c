@@ -6,7 +6,7 @@
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:47:18 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/08 17:55:45 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/09/10 13:42:33 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,12 @@ char	**copy_env(char **env)
 	return (ret);
 }
 
-void	init_parse(t_parse *parse, int token_cnt, t_data *data)
+void	init_parse(t_parse *parse, int token_cnt, t_data *data, int input_len)
 {
 	parse->cmd = (char **) ft_calloc(token_cnt + 1, sizeof(char *));
 	if (!parse->cmd)
 		return (parse_error(NULL, NULL, NULL, MALLOC_ERROR));
-	parse->buff = (char *) ft_calloc(BUFFER_SIZE, sizeof(char));
+	parse->buff = (char *) ft_calloc(input_len + 1, sizeof(char));
 	if (!parse->buff)
 		return (parse_error(NULL, parse, NULL, MALLOC_ERROR));
 	parse->env = copy_env(data->envp);

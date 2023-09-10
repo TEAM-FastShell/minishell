@@ -6,7 +6,7 @@
 #    By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/16 16:13:42 by youyoon           #+#    #+#              #
-#    Updated: 2023/09/08 18:08:16 by youyoon          ###   ########.fr        #
+#    Updated: 2023/09/10 13:19:20 by youyoon          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = minishell
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g2
-LDFLAGS = -I/opt/homebrew/opt/readline/include -lreadline -L /opt/homebrew/opt/readline/lib
+LDFLAGS = -I/opt/homebrew/opt/readline/include -lreadline
 AR = ar
 RM = rm
 RMFLAGS = -rf
