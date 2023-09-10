@@ -6,7 +6,7 @@
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:47:21 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/10 17:03:25 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/09/10 17:28:08 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	put_env_to_buff(t_parse *parse, char *env, size_t input_len)
 	free(parse->buff);
 	parse->b_idx = 0;
 	parse->buff = (char *) ft_calloc(input_len + \
-				ft_strlen(tmp_buff) + 1, sizeof(char));
+				ft_strlen(env) + 1, sizeof(char));
 	ft_strlcpy(parse->buff, tmp_buff, ft_strlen(tmp_buff) + 1);
 	parse->b_idx = (int) ft_strlen(tmp_buff);
 	free(tmp_buff);

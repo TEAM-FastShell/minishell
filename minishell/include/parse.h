@@ -6,7 +6,7 @@
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 15:39:09 by youyoon           #+#    #+#             */
-/*   Updated: 2023/09/10 16:49:57 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/09/10 17:53:21 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 # define SUCCESS 	1
 # define ERROR 		-1
 # define STDERR		2
-# define SYNTAX_ERROR	"minishell: Syntax error: unexpected token!"
-# define MALLOC_ERROR	"minishell: Malloc error: Memory malloc fail!"
+# define SYNTAX_ERROR	"FastShell: Syntax error: unexpected token!"
+# define MALLOC_ERROR	"FastShell: Malloc error: Memory malloc fail!"
 
 # include "minishell.h"
 
