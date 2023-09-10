@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:46:21 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/08 17:07:16 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/09/10 16:06:42 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,11 @@ static void	exec_child(t_data *data, t_node *node)
 {
 	char	*cmd;
 
-	connect_pipe(data, node);
+	control_pipe(data, node);
+	connect_fd(data);
+	close_fd(data, node);
+	if (node->redir_type != NO_REDIR)
+		exit(g_exit_status);
 	if (is_builtin(node->cmd_args))
 	{
 		exec_builtin(data, node);

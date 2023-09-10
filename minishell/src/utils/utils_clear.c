@@ -6,7 +6,7 @@
 /*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:47:09 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/08 17:15:38 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/09/10 14:40:17 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,21 +63,4 @@ void	close_all_pipes(t_data *data)
 		ft_close(data->pipe_fd[i][1]);
 		i++;
 	}
-}
-
-void	pipe_with_redir(t_data *data, t_node *node)
-{
-	int	fd;
-
-	fd = open("/dev/null", O_RDONLY);
-	data->input_fd = fd;
-	ft_dup2(data->input_fd, STDIN_FILENO);
-	ft_close(data->input_fd);
-	if (node->pipe_type == RW_PIPE)
-	{
-		data->output_fd = data->pipe_fd[node->idx][1];
-		ft_dup2(data->output_fd, STDOUT_FILENO);
-		ft_close(data->output_fd);
-	}
-	return ;
 }
