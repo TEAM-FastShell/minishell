@@ -6,7 +6,7 @@
 /*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:46:13 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/08 16:21:52 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/09/10 18:42:41 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,18 @@ void	exec_builtin(t_data *data, t_node *node)
 int	is_builtin(char **cmd_args)
 {
 	char	*cmd;
+	size_t	cmd_len;
 
 	cmd = cmd_args[0];
-	if (!ft_strncmp(cmd, "echo", ft_strlen("echo")) || \
-	!ft_strncmp(cmd, "cd", ft_strlen("cd")) || \
-	!ft_strncmp(cmd, "pwd", ft_strlen("pwd")) || \
-	!ft_strncmp(cmd, "export", ft_strlen("export")) || \
-	!ft_strncmp(cmd, "unset", ft_strlen("unset")) || \
-	!ft_strncmp(cmd, "env", ft_strlen("env")) || \
-	!ft_strncmp(cmd, "exit", ft_strlen("exit")) || \
-	!ft_strncmp(cmd, "history", ft_strlen("history")))
+	cmd_len = ft_strlen(cmd);
+	if ((!ft_strncmp(cmd, "echo", 4) && (cmd_len == ft_strlen("echo"))) || \
+	(!ft_strncmp(cmd, "cd", 2) && (cmd_len == ft_strlen("cd"))) || \
+	(!ft_strncmp(cmd, "pwd", 3) && (cmd_len == ft_strlen("pwd"))) || \
+	(!ft_strncmp(cmd, "export", 6) && (cmd_len == ft_strlen("export"))) || \
+	(!ft_strncmp(cmd, "unset", 5) && (cmd_len == ft_strlen("usnet"))) || \
+	(!ft_strncmp(cmd, "env", 3) && (cmd_len == ft_strlen("env"))) || \
+	(!ft_strncmp(cmd, "exit", 4) && (cmd_len == ft_strlen("exit"))) || \
+	(!ft_strncmp(cmd, "history", 7) && (cmd_len == ft_strlen("history"))))
 		return (1);
 	return (0);
 }

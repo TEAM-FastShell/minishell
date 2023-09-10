@@ -6,7 +6,7 @@
 /*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/10 14:58:29 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/10 16:26:03 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/09/10 19:02:20 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	ft_close_pipe_fd(t_data *data, int idx);
 
 void	close_fd(t_data *data, t_node *node)
 {
-	if (node->pipe_type != NO_PIPE)
+	if (node->pipe_type != NO_PIPE && data->list->cmd_cnt > 1)
 		close_pipe(data, node);
 	if (data->input_fd != STDIN_FILENO && data->input_fd > 0)
 		ft_close(data->input_fd);
@@ -43,7 +43,7 @@ static void	ft_close_pipe_fd(t_data *data, int idx)
 {
 	int	i;
 
-	if (idx < 0)
+	if (idx < 1)
 		return ;
 	i = 0;
 	while (i < idx)
