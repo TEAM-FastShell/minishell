@@ -6,7 +6,7 @@
 /*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:46:36 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/07 19:46:37 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/09/10 19:55:13 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,6 @@ void	free_list(t_double_list *list)
 		free(del->cmd_args);
 		free(del);
 	}
-	list->cnt = 0;
-	list->cmd_cnt = 0;
 	list->head = NULL;
 	list->tail = NULL;
 	list = NULL;

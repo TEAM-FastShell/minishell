@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:47:28 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/10 14:16:25 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/09/10 19:59:37 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	free_pipe_fd(t_data *data)
 	int	i;
 
 	i = 0;
-	while (i < data->list->cmd_cnt - 1)
+	while (i < data->list->cmd_cnt + 1)
 	{
 		free(data->pipe_fd[i]);
 		data->pipe_fd[i] = NULL;

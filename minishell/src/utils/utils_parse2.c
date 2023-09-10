@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_parse2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:47:21 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/10 17:28:08 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/09/10 19:52:47 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	init_data_before_start(t_data **data, char **envp)
 	if (!(*data))
 		return (parse_error(NULL, NULL, NULL, MALLOC_ERROR));
 	(*data)->list = NULL;
-	(*data)->path_tab = NULL;
 	(*data)->pipe_fd = NULL;
 	(*data)->envp = copy_env(envp);
 	if (!(*data)->envp)
