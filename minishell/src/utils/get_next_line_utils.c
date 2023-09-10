@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:47:04 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/07 19:47:05 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/09/10 14:11:08 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -6,7 +6,7 @@
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:46:39 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/08 17:57:28 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/09/10 17:00:39 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,14 @@ static void	set_quote(t_parse *parse, char *input, int **i)
 		if (input[dollar_start] == '?')
 		{
 			dollar_to_env = ft_itoa(g_exit_status);
-			put_env_to_buff(parse, dollar_to_env);
+			put_env_to_buff(parse, dollar_to_env, ft_strlen(input));
 			free(dollar_to_env);
 			return ;
 		}
 		while (input[**i] && check_env_char(input[**i]))
 			(**i)++;
 		dollar_to_env = change_to_env(parse, input, dollar_start, --(**i));
-		put_env_to_buff(parse, dollar_to_env);
+		put_env_to_buff(parse, dollar_to_env, ft_strlen(input));
 		free(dollar_to_env);
 	}
 	else if (!parse->quote && (input[**i] == '\'' || input[**i] == '\"'))
@@ -123,7 +123,7 @@ void	parser(char *input_tmp, t_data *data, \
 	input = ft_strtrim(input_tmp, " ");
 	token_cnt = count_word(input);
 	init_list(list);
-	init_parse(parse, token_cnt, data);
+	init_parse(parse, token_cnt, data, (int) ft_strlen(input));
 	i = -1;
 	while (input[++i])
 	{
