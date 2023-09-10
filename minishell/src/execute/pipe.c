@@ -6,7 +6,7 @@
 /*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:46:23 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/10 16:27:02 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/09/10 19:08:43 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	control_pipe(t_data *data, t_node *node)
 			return ;
 		}
 	}
-	else if (node->pipe_type == W_PIPE)
+	if (node->pipe_type == W_PIPE)
 		change_fd(data, node, 1);
 	else if (node->pipe_type == RW_PIPE)
 	{
@@ -44,6 +44,8 @@ static void	pipe_without_input(t_data *data, t_node *node)
 
 	if (data->input_fd != STDIN_FILENO && data->input_fd > 0)
 		ft_close(data->input_fd);
+	data->input_fd = STDIN_FILENO;
+	data->output_fd = STDOUT_FILENO;
 	fd = open("/dev/null", O_RDONLY);
 	data->input_fd = fd;
 	if (node->pipe_type == RW_PIPE)
