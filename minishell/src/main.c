@@ -6,18 +6,36 @@
 /*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:47:31 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/08 17:23:56 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/09/10 18:01:48 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parse.h"
 #include "minishell.h"
 
+static void	print_awesome_prompt(void)
+{
+	printf("\n");
+	printf("\033[0;36m███████╗ █████╗ ███████╗████████╗    \
+	███████╗██╗  ██╗███████╗██╗     ██╗\n");
+	printf("██╔════╝██╔══██╗██╔════╝╚══██╔══╝    \
+	██╔════╝██║  ██║██╔════╝██║     ██║\n");
+	printf("█████╗  ███████║███████╗   ██║       \
+	███████╗███████║█████╗  ██║     ██║\n");
+	printf("██╔══╝  ██╔══██║╚════██║   ██║       \
+	╚════██║██╔══██║██╔══╝  ██║     ██║\n");
+	printf("██║     ██║  ██║███████║   ██║       \
+	███████║██║  ██║███████╗███████╗███████╗\n");
+	printf("╚═╝     ╚═╝  ╚═╝╚══════╝   ╚═╝       \
+	╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝....by seokklee, youyoon\n\n");
+}
+
 static int	set_main(void)
 {
 	struct termios	term;
 	int				res;
 
+	print_awesome_prompt();
 	res = 0;
 	res += tcgetattr(STDIN_FILENO, &term);
 	term.c_lflag &= ~(ECHOCTL);
@@ -42,7 +60,7 @@ static void	prompt_while(t_data *data, t_double_list *list, \
 	while (1)
 	{
 		set_signal(signal_handler, SIG_IGN);
-		input = readline("minishell$ ");
+		input = readline("\033[0;36mFastShell \033[0;33m⚡ \033[0;37m");
 		if (!input)
 			print_prompt(&input);
 		else if (*input == '\0')
