@@ -6,7 +6,7 @@
 /*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:47:31 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/10 19:42:04 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/09/11 10:52:05 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static void	prompt_while(t_data *data, t_double_list *list, \
 
 	while (1)
 	{
-		system("leaks minishell");
+		// system("leaks minishell");
 		set_signal(signal_handler, SIG_IGN);
 		input = readline("\033[0;36mFastShell \033[0;33m⚡ \033[0;37m");
 		if (!input)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_parse_list.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:47:12 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/08 16:04:09 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/09/10 20:35:05 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	copy_strings(char ***dest, char **src, int len)
 {
 	int		i;
 
-	*dest = (char **) ft_calloc(len + 1, sizeof(char *));
+	*dest = (char **)ft_calloc(len + 1, sizeof(char *));
 	if (!(*dest))
 		return ;
 	i = 0;
@@ -33,7 +33,7 @@ t_node	*make_node(t_parse *parse)
 {
 	t_node	*new_node;
 
-	new_node = (t_node *) malloc(sizeof(t_node));
+	new_node = (t_node *)malloc(sizeof(t_node));
 	if (!(new_node))
 		return (NULL);
 	new_node->prev = NULL;
