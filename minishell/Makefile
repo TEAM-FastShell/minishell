@@ -6,7 +6,7 @@
 #    By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/16 16:13:42 by youyoon           #+#    #+#              #
-#    Updated: 2023/09/12 18:14:44 by seokklee         ###   ########.fr        #
+#    Updated: 2023/09/12 18:23:13 by seokklee         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = minishell
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-LDFLAGS = -I/opt/homebrew/opt/readline/include -lreadline #-L /opt/homebrew/opt/readline/lib
+LDFLAGS = -I/opt/homebrew/opt/readline/include -lreadline -L /opt/homebrew/opt/readline/lib
 AR = ar
 RM = rm
 RMFLAGS = -rf

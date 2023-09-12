@@ -6,7 +6,7 @@
 /*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:47:31 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/12 18:19:21 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/09/12 19:15:34 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	g_exit_status;
 static void	print_awesome_prompt(void)
 {
 	printf("\n");
-	printf("\033[0;36m███████╗ █████╗ ███████╗████████╗    \
+	printf("███████╗ █████╗ ███████╗████████╗    \
 	███████╗██╗  ██╗███████╗██╗     ██╗\n");
 	printf("██╔════╝██╔══██╗██╔════╝╚══██╔══╝    \
 	██╔════╝██║  ██║██╔════╝██║     ██║\n");
@@ -29,7 +29,8 @@ static void	print_awesome_prompt(void)
 	printf("██║     ██║  ██║███████║   ██║       \
 	███████║██║  ██║███████╗███████╗███████╗\n");
 	printf("╚═╝     ╚═╝  ╚═╝╚══════╝   ╚═╝       \
-	╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝....by seokklee, youyoon\n\n");
+	╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝\n");
+	printf("by seokklee, youyoon\n\n");
 }
 
 static int	set_main(void)
@@ -53,15 +54,14 @@ static void	print_prompt(char **input)
 	exit(0);
 }
 
-static void	prompt_while(t_data *data, t_double_list *list, \
-				t_parse *parse)
+static void	prompt_while(t_data *data, t_double_list *list, t_parse *parse)
 {
 	char	*input;
 
 	while (1)
 	{
 		set_signal(signal_handler, SIG_IGN);
-		input = readline("\033[0;36mFastShell \033[0;33m⚡ \033[0;37m");
+		input = readline("fastshell$ ");
 		if (!input)
 			print_prompt(&input);
 		else if (*input == '\0')

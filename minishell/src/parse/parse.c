@@ -6,7 +6,7 @@
 /*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:46:39 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/12 18:20:12 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/09/12 18:22:19 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,10 +131,10 @@ void	parser(char *input_tmp, t_data *data, \
 	}
 	if (parse->buff[0])
 		put_buff_to_cmd(parse);
-	if (parse->quote != 0)
+	if (parse->quote != 0 || add_node(list, parse) < 0)
 		return (parse_error(list, parse, NULL, SYNTAX_ERROR));
-	if (add_node(list, parse) < 0)
-		return (parse_error(list, parse, NULL, SYNTAX_ERROR));
+	if (list->cmd_cnt >= 126)
+		return (parse_error(list, parse, NULL, PARSE_TOO_MANY_ARG));
 	set_pipe_type(list);
 	set_list_idx(list);
 	parse_error(NULL, parse, NULL, NULL);

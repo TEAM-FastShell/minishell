@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 15:39:09 by youyoon           #+#    #+#             */
-/*   Updated: 2023/09/10 17:53:21 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/09/12 19:16:11 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@
 # define SUCCESS 	1
 # define ERROR 		-1
 # define STDERR		2
-# define SYNTAX_ERROR	"FastShell: Syntax error: unexpected token!"
-# define MALLOC_ERROR	"FastShell: Malloc error: Memory malloc fail!"
+# define SYNTAX_ERROR	"fastshell: Syntax error: unexpected token!"
+# define MALLOC_ERROR	"fastshell: Malloc error: Memory malloc fail!"
+# define PARSE_TOO_MANY_ARG "fastshell: Too many arguments"
 
 # include "minishell.h"
 
