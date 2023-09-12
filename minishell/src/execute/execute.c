@@ -6,7 +6,7 @@
 /*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:46:21 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/10 19:09:11 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/09/12 12:52:36 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 static void	wait_child(t_data *data);
 static char	*get_cmd(t_data *data, char *cmd_uncertain);
-static void	exec_cmd(t_data *data, t_node *node);
 static void	exec_child(t_data *data, t_node *node);
 
 void	execute(t_data *data)
@@ -31,8 +30,8 @@ void	execute(t_data *data)
 			if (cur->redir_type != NO_REDIR)
 			{
 				exec_redir(data, cur);
-				if (g_exit_status)
-					return ;
+				if (g_exit_status)	// 이 상황에서 pipe free 안함
+					break ;
 				cur = cur->next;
 				continue ;
 			}
@@ -46,7 +45,7 @@ void	execute(t_data *data)
 	free_list(data->list);
 }
 
-static void	exec_cmd(t_data *data, t_node *node)
+void	exec_cmd(t_data *data, t_node *node)
 {
 	if (is_builtin(node->cmd_args) && node->pipe_type == NO_PIPE)
 	{

@@ -6,7 +6,7 @@
 /*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:47:06 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/07 19:47:07 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/09/12 12:54:44 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ char	*ft_get_line(int fd, char **backup, char *buffer)
 	return (line);
 }
 
+/*backup[fd] free ??*/
 char	*ft_seperate(int fd, char **backup)
 {
 	size_t	idx;

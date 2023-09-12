@@ -6,7 +6,7 @@
 /*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:47:28 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/10 19:59:37 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/09/12 12:05:14 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ void	free_pipe_fd(t_data *data)
 {
 	int	i;
 
+	if (!data->pipe_fd)
+		return ;
 	i = 0;
 	while (i < data->list->cmd_cnt + 1)
 	{

@@ -6,7 +6,7 @@
 /*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:46:26 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/10 16:00:34 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/09/12 12:52:33 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,16 @@ void	exec_redir(t_data *data, t_node *node)
 	ft_open_redir(data, node);
 	if (data->input_fd < 0 || data->output_fd < 0)
 		return (error_str_code(node, NO_FILE_DIR, errno));
+	if (node->pipe_type != NO_PIPE)
+	{
+		if (data->input_fd != STDIN_FILENO)
+			ft_close(data->input_fd);
+		if (data->output_fd != STDOUT_FILENO)
+			ft_close(data->output_fd);
+		data->input_fd = 0;
+		data->output_fd = 1;
+		exec_cmd(data, node);
+	}
 }
 
 static void	ft_open_redir(t_data *data, t_node *node)

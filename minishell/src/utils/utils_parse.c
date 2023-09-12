@@ -6,7 +6,7 @@
 /*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:47:18 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/10 20:05:57 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/09/12 12:07:50 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,14 +90,15 @@ void	init_in_while_data(t_data *data, t_double_list *list)
 		data->pipe_fd = (int **)malloc(sizeof(int *) * (list->cmd_cnt + 1));
 		if (!data->pipe_fd)
 			return (parse_error(list, NULL, data, MALLOC_ERROR));
-		i = -1;
-		while (++i < list->cmd_cnt + 1)
+		i = 0;
+		while (i < list->cmd_cnt)
 		{
 			data->pipe_fd[i] = (int *)malloc(sizeof(int) * (2));
 			if (!(data->pipe_fd[i]))
 				return (parse_error(list, NULL, data, MALLOC_ERROR));
+			i++;
 		}
-		data->pipe_fd[i - 1] = NULL;
+		data->pipe_fd[i] = NULL;
 	}
 	data->input_fd = 0;
 	data->output_fd = 1;

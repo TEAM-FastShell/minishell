@@ -6,7 +6,7 @@
 /*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:35:11 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/10 19:53:07 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/09/12 13:06:54 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@
 # define NON_VALID_ID "not a valid identifier"
 # define CMD_NOT_FOUND "command not found"
 
-int	g_exit_status;
+extern int	g_exit_status;
 
 # define STDIN 			0
 # define STDOUT 		1
@@ -118,6 +118,7 @@ void	heredoc_sigint_handler(int signo);
 
 /* execute */
 void	execute(t_data *data);
+void	exec_cmd(t_data *data, t_node *node);
 void	control_pipe(t_data *data, t_node *node);
 void	connect_fd(t_data *data);
 void	close_fd(t_data *data, t_node *node);
