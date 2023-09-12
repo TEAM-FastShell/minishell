@@ -6,16 +6,15 @@
 #    By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/16 16:13:42 by youyoon           #+#    #+#              #
-#    Updated: 2023/09/12 15:18:28 by seokklee         ###   ########.fr        #
+#    Updated: 2023/09/12 18:14:44 by seokklee         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
 CC = cc
-CC=/opt/homebrew/opt/llvm@16/bin/clang
-CFLAGS = -Wall -Wextra -Werror -g2 -fsanitize=address
-LDFLAGS = -I/opt/homebrew/opt/readline/include -lreadline -L /opt/homebrew/opt/readline/lib
+CFLAGS = -Wall -Wextra -Werror
+LDFLAGS = -I/opt/homebrew/opt/readline/include -lreadline #-L /opt/homebrew/opt/readline/lib
 AR = ar
 RM = rm
 RMFLAGS = -rf

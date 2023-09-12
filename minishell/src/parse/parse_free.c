@@ -6,7 +6,7 @@
 /*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:46:36 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/10 19:55:13 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/09/12 17:36:03 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,11 @@ void	free_parse(t_parse *parse)
 
 	if (!parse)
 		return ;
-	i = 0;
-	while (parse->cmd[i])
-		free(parse->cmd[i++]);
+	i = -1;
+	while (++i < parse->token_cnt)
+	{
+		free(parse->cmd[i]);
+	}
 	i = 0;
 	while (parse->env[i])
 		free(parse->env[i++]);

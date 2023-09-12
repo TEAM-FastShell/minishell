@@ -6,7 +6,7 @@
 /*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:47:18 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/12 12:07:50 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/09/12 16:54:30 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ char	**copy_env(char **env)
 void	init_parse(t_parse *parse, int token_cnt, t_data *data, int input_len)
 {
 	parse->cmd = (char **) ft_calloc(token_cnt + 1, sizeof(char *));
+	parse->token_cnt = token_cnt;
 	if (!parse->cmd)
 		return (parse_error(NULL, NULL, NULL, MALLOC_ERROR));
 	parse->buff = (char *) ft_calloc(input_len + 1, sizeof(char));

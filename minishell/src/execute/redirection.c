@@ -6,7 +6,7 @@
 /*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:46:26 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/12 12:52:33 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/09/12 18:11:04 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ static void	ft_open_redir(t_data *data, t_node *node)
 			file_name[8]++;
 		data->input_fd = open(file_name, O_CREAT | O_TRUNC | O_RDWR, 0644);
 		get_heredoc(data, node, file_name);
+		free(file_name);
 	}
 }
 

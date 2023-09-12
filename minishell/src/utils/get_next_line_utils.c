@@ -3,35 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:47:04 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/10 14:11:08 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/09/12 18:08:45 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ft_strjoin_gnl(char const *s1, char const *s2);
+char	*ft_strjoin_gnl(char *s1, char *s2);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strdup(const char *s1);
 char	*ft_strchr(const char *s, int c);
 
-char	*ft_strjoin_gnl(char const *s1, char const *s2)
+char	*ft_strjoin_gnl(char *s1, char *s2)
 {
 	char	*str;
 	size_t	s1_len;
 	size_t	s2_len;
-	size_t	len;
+	size_t	i;
 
+	if (!s1 || !s2)
+		return (NULL);
 	s1_len = ft_strlen(s1);
 	s2_len = ft_strlen(s2);
-	len = s1_len + s2_len;
-	str = (char *)malloc(sizeof(char) * len + 1);
-	if (str == NULL)
+	str = (char *)malloc(sizeof(char) * s1_len + s2_len + 1);
+	if (!str)
+	{
+		free(s1);
 		return (NULL);
-	ft_strlcpy(str, s1, s1_len + 1);
-	ft_strlcat(str, s2, s1_len + s2_len + 1);
+	}
+	i = -1;
+	while (++i < s1_len)
+		str[i] = s1[i];
+	i--;
+	while (++i < s1_len + s2_len)
+		str[i] = s2[i - s1_len];
+	str[i] = '\0';
+	free(s1);
 	return (str);
 }
 

@@ -6,7 +6,7 @@
 /*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:46:39 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/12 11:37:38 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/09/12 18:20:12 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ static int	check_quote(t_parse *parse, char c, char next)
 	return (0);
 }
 
-/* 25줄 맞춰서 분할 필요*/
 int	parse_char(t_double_list *list, t_parse *parse, char *input, int *i)
 {
 	int	ret;
@@ -84,7 +83,6 @@ int	parse_char(t_double_list *list, t_parse *parse, char *input, int *i)
 	return (ret);
 }
 
-/* seokklee !!!!!!!!!! parse ft_strdup free*/
 static int	no_quote(t_double_list *list, t_parse *parse, char *input, int *i)
 {
 	if (input[*i] == ' ')
@@ -117,9 +115,9 @@ static int	no_quote(t_double_list *list, t_parse *parse, char *input, int *i)
 void	parser(char *input_tmp, t_data *data, \
 				t_double_list *list, t_parse *parse)
 {
-	int				i;
-	int				token_cnt;
-	char			*input;
+	int		i;
+	int		token_cnt;
+	char	*input;
 
 	input = ft_strtrim(input_tmp, " ");
 	token_cnt = count_word(input);

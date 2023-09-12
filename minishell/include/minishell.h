@@ -6,7 +6,7 @@
 /*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:35:11 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/12 13:06:54 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/09/12 18:09:05 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ typedef struct s_parse
 	char			quote;
 	int				c_idx;
 	int				b_idx;
+	int				token_cnt;
 	t_pipe_type		pipe_type;
 	t_redir_type	redir_type;
 }	t_parse;
@@ -157,7 +158,7 @@ void	pipe_with_redir(t_data *data, t_node *node);
 
 /* gnl */
 char	*get_next_line(int fd);
-char	*ft_strjoin_gnl(char const *s1, char const *s2);
+char	*ft_strjoin_gnl(char *s1, char *s2);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strdup(const char *s1);
 char	*ft_strchr(const char *s, int c);

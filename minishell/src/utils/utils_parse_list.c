@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_parse_list.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:47:12 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/08 16:04:09 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/09/12 17:42:40 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,11 @@ int	add_node(t_double_list *list, t_parse *parse)
 			return (ERROR);
 		ms_listadd_back(list, new_node);
 		i = -1;
-		while (parse->cmd[++i])
-			ft_bzero(parse->cmd[i], ft_strlen(parse->cmd[i]) + 1);
+		while (++i < parse->token_cnt)
+		{
+			free(parse->cmd[i]);
+			parse->cmd[i] = NULL;
+		}
 		parse->quote = 0;
 		parse->c_idx = 0;
 		parse->b_idx = 0;
