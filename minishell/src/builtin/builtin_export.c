@@ -6,7 +6,7 @@
 /*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:46:06 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/08 17:48:18 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/09/12 22:48:48 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ static int	is_exist(t_data *data, char	*export)
 {
 	int		i;
 	char	*tmp;
+	char	*del;
 
 	i = 0;
 	while (data->envp[i])
@@ -74,7 +75,9 @@ static int	is_exist(t_data *data, char	*export)
 		if (!ft_strncmp(data->envp[i], tmp, ft_strlen(tmp)))
 		{
 			free(tmp);
+			del = data->envp[i];
 			data->envp[i] = ft_strdup(export);
+			free(del);
 			return (1);
 		}
 		free(tmp);
