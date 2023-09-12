@@ -6,7 +6,7 @@
 /*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:46:21 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/12 12:52:36 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/09/12 16:22:19 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	execute(t_data *data)
 			if (cur->redir_type != NO_REDIR)
 			{
 				exec_redir(data, cur);
-				if (g_exit_status)	// 이 상황에서 pipe free 안함
+				if (g_exit_status)
 					break ;
 				cur = cur->next;
 				continue ;
@@ -49,8 +49,8 @@ void	exec_cmd(t_data *data, t_node *node)
 {
 	if (is_builtin(node->cmd_args) && node->pipe_type == NO_PIPE)
 	{
-		exec_builtin(data, node);
-		return ;
+		if (data->input_fd == STDIN_FILENO && data->output_fd == STDOUT_FILENO)
+			return (exec_builtin(data, node));
 	}
 	ft_fork(node);
 	if (node->pid == 0)

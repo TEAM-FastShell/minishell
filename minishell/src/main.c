@@ -6,7 +6,7 @@
 /*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:47:31 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/12 12:11:32 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/09/12 15:18:31 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,11 @@ static void	prompt_while(t_data *data, t_double_list *list, \
 	}
 }
 
+void foo()
+{
+	system("leaks minishell");
+}
+
 /* 최종 사용한 struct 모두 free 구현 필요 */
 int	main(int argc, char *argv[], char *envp[])
 {
@@ -91,6 +96,7 @@ int	main(int argc, char *argv[], char *envp[])
 	t_parse			parse;
 	t_data			*data;
 
+	// atexit(foo);
 	if (argc && argv)
 	{
 		init_data_before_start(&data, envp);
