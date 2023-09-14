@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_free.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:46:36 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/12 17:36:03 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/09/14 18:27:11 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,11 @@ void	free_parse(t_parse *parse)
 	if (!parse)
 		return ;
 	i = -1;
-	while (++i < parse->token_cnt)
-	{
+	while (++i < (parse->token_cnt + 1))
 		free(parse->cmd[i]);
-	}
-	i = 0;
-	while (parse->env[i])
-		free(parse->env[i++]);
+	i = -1;
+	while (parse->env[++i])
+		free(parse->env[i]);
 	free(parse->env);
 	free(parse->cmd);
 	free(parse->buff);
@@ -35,6 +33,7 @@ void	free_parse(t_parse *parse)
 	parse->b_idx = 0;
 	parse->pipe_type = 0;
 	parse->redir_type = 0;
+	parse->token_cnt = 0;
 	parse = NULL;
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:47:31 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/12 19:15:34 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/09/14 18:12:21 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ static void	prompt_while(t_data *data, t_double_list *list, t_parse *parse)
 			add_history(input);
 			if (!is_whitespace(input))
 			{
-				parser(input, data, list, parse);
-				if (list->head)
+				parser(ft_strtrim(input, " "), data, list, parse);
+				if (list->head != NULL)
 				{
 					init_in_while_data(data, list);
 					execute(data);

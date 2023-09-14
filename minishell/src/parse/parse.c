@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:46:39 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/12 18:22:19 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/09/14 18:23:55 by youyoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,6 @@
 
 static int	no_quote(t_double_list *list, t_parse *parse, char *input, int *i);
 
-/**
- * quote가 double로 열려있을 때 $가 들어오면 : num, alpha, '_'가 아닌 문자가 나올 때까지 인풋을 탐색
- * 탐색이 끝나면 달러가 붙은 문자열을 환경 변수에서 찾음
- * 있으면 문자열을 리턴해서 버퍼에 붙임
- *
- * 쿼트가 열려있지 않을 때 쿼트가 들어왔으면 : 싱글은 버퍼에 담고, 더블은 버퍼에 담지 않음
- * 쿼트가 열려있을 때 쿼트와 같은 문자가 들어오면 쿼트 닫음
-*/
 static void	set_quote(t_parse *parse, char *input, int **i)
 {
 	int		dollar_start;
@@ -51,10 +43,6 @@ static void	set_quote(t_parse *parse, char *input, int **i)
 		parse->quote = input[**i];
 }
 
-/* double quote가 열려있을 때 인풋값이 달러이면 트루와 동시에 함수에 들어감
- * 아직 열리지 않은 상태에서 input이 quote이면 함수로 들어가서 버퍼에 저장해야하니까 true
- * 쿼트가 열려있을 때 같은 문자가 들어오면 닫아야 하므로, true 리턴 후 함수로 들어감
-*/
 static int	check_quote(t_parse *parse, char c, char next)
 {
 	if (parse->quote == c)
@@ -112,14 +100,11 @@ static int	no_quote(t_double_list *list, t_parse *parse, char *input, int *i)
 	return (SUCCESS);
 }
 
-void	parser(char *input_tmp, t_data *data, \
-				t_double_list *list, t_parse *parse)
+void	parser(char *input, t_data *data, t_double_list *list, t_parse *parse)
 {
 	int		i;
 	int		token_cnt;
-	char	*input;
 
-	input = ft_strtrim(input_tmp, " ");
 	token_cnt = count_word(input);
 	init_list(list);
 	init_parse(parse, token_cnt, data, (int) ft_strlen(input));
@@ -127,8 +112,12 @@ void	parser(char *input_tmp, t_data *data, \
 	while (input[++i])
 	{
 		if (parse_char(list, parse, input, &i) < 0)
+		{
+			free(input);
 			return (parse_error(list, parse, NULL, SYNTAX_ERROR));
+		}
 	}
+	free(input);
 	if (parse->buff[0])
 		put_buff_to_cmd(parse);
 	if (parse->quote != 0 || add_node(list, parse) < 0)
@@ -138,5 +127,4 @@ void	parser(char *input_tmp, t_data *data, \
 	set_pipe_type(list);
 	set_list_idx(list);
 	parse_error(NULL, parse, NULL, NULL);
-	free(input);
 }
