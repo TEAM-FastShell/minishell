@@ -6,7 +6,7 @@
 /*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:46:21 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/12 16:22:19 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/09/14 19:30:20 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	execute(t_data *data)
 		{
 			if (cur->redir_type != NO_REDIR)
 			{
+				g_exit_status = 0;
 				exec_redir(data, cur);
 				if (g_exit_status)
 					break ;
