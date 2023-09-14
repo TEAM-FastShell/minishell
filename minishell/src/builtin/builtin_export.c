@@ -6,7 +6,7 @@
 /*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:46:06 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/12 22:48:48 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/09/14 12:10:21 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,11 @@ void	builtin_export(t_data *data, t_node *node)
 		if (ft_isdigit(node->cmd_args[1][0]) || node->cmd_args[1][0] == '=')
 		{
 			error_str_str_code(node, NON_VALID_ID, 1);
-			g_exit_status = 1;
+			return ;
+		}
+		if (node->cmd_args[2])
+		{
+			error_str_str_code(node, NON_VALID_ID, 1);
 			return ;
 		}
 		exec_export(data, node->cmd_args[1]);
