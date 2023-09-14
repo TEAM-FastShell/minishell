@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youyoon <youyoon@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:46:39 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/14 18:23:55 by youyoon          ###   ########.fr       */
+/*   Updated: 2023/09/14 19:59:18 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,6 @@ int	parse_char(t_double_list *list, t_parse *parse, char *input, int *i)
 	ret = SUCCESS;
 	if (check_quote(parse, input[*i], input[*i + 1]))
 		set_quote(parse, input, &i);
-	else if (!parse->quote && input[*i] == ';')
-		return (ERROR);
 	else if (!parse->quote && ft_strchr(" |><", input[*i]))
 		ret = no_quote(list, parse, input, i);
 	else
