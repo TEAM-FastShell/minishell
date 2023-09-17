@@ -6,7 +6,7 @@
 /*   By: seokklee <seokklee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:46:04 by seokklee          #+#    #+#             */
-/*   Updated: 2023/09/07 19:46:05 by seokklee         ###   ########.fr       */
+/*   Updated: 2023/09/15 17:29:38 by seokklee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,10 @@ void	builtin_exit(t_node *node)
 		return ;
 	}
 	else
+	{
 		error_str_str_code(node, NUM_ARG_REQ, 255);
+		return ;
+	}
 	if (node->pipe_type == NO_PIPE)
 		exit(g_exit_status);
 }
