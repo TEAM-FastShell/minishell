@@ -127,6 +127,8 @@ static char	*get_cmd(t_data *data, char *cmd_uncertain)
 		return (NULL);
 	else if (cmd_uncertain[0] == '/')
 		return (cmd_uncertain);
+	else if (cmd_uncertain[0] == '.')
+		return (cmd_uncertain);
 	path_tab = ft_split(get_envv_data(data->envp, "PATH"), ':');
 	address = path_tab;
 	while (*path_tab)
