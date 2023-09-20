@@ -1,6 +1,6 @@
 # minishell
 
-### `0. Instruction`
+### `0. Introduction`
 *As beautiful as a shell (23.08.15 ~ 23.09.17)*
 
 |NAME|PART|
